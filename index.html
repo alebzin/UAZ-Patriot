@@ -11,7 +11,6 @@
     <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABaElEQVR4nO2XvUoDQRDHZ/MB+AY2KUKKFFZKVikErVSC+BGkS5HCQhBFQbTQRhC0SGERBMVOSxWLTQgkbxDsTIlgIVe5bHa3dG/3LnP7h6C4u8nsz/82s7M7IQzD0DRgSVr3uqdcPp97D7VodvsADb5AGuZ5FCS0JgYJrmIXdINJjjHnYZ8DA50P5nFS8gpvjR7Qz/ADmFYEeiwyyF2NJC2Pj9vwQQN6GQrAtBq4ZVFABsct6KET9KMl58pWQHEoAFNWCY8r3bjUjKlGEBpmcZ8qQzIECnPWAL+u/MVbRZycABv4DFr0sTd9QvT1pU85tzUC+YWM2E3rsI5BLnaDzq3Aoj4GGfTg0lV0DwWU4QxAh1cX0DmZ0B3LsCILaCGHpE5JRjO6USc9P68i15xq7TOkS2RlnvsoF7YwXfOi7z8HaRusRZ3AZ1eUYcyhAmkS5Nco4gH9j+fiEjQNaLW/1wZNg34BmNFAbPzNAE8AAAAASUVORK5CYII=">
 
     <style>
-        /* ... все стили те же, что и раньше ... */
         * {
             margin: 0;
             padding: 0;
@@ -567,6 +566,7 @@
             animation: fadeIn 0.2s ease;
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
+            overflow-y: auto;
         }
         .modal-overlay.active {
             display: flex;
@@ -590,7 +590,7 @@
             width: 100%;
             padding: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-height: 90vh;
+            max-height: 80vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -914,6 +914,7 @@
             .modal {
                 padding: 16px;
                 margin: 10px;
+                max-height: 70vh;
             }
             .modal-actions .btn-delete-modal {
                 margin-right: 0;
@@ -1423,38 +1424,12 @@
             let swipingCard = null;
             let searchQuery = '';
 
-            // ---- ФУНКЦИЯ ДЛЯ ОБРАБОТКИ ВЫБОРА ФАЙЛА (исправлена для WebView) ----
+            // ---- ПРОСТОЙ И НАДЁЖНЫЙ СПОСОБ ЗАГРУЗКИ ФАЙЛА ----
             function triggerFileInput() {
                 const fileInput = document.getElementById('fileInput');
-
-                // Пытаемся использовать showOpenFilePicker (современные браузеры)
-                if (window.showOpenFilePicker) {
-                    window.showOpenFilePicker({
-                            types: [{
-                                description: 'JSON или HTML',
-                                accept: {
-                                    'application/json': ['.json'],
-                                    'text/html': ['.html', '.htm']
-                                }
-                            }],
-                            multiple: false
-                        })
-                        .then(async (handles) => {
-                            const file = await handles[0].getFile();
-                            importData(file);
-                        })
-                        .catch((err) => {
-                            console.warn('showOpenFilePicker отменён или не поддерживается:', err);
-                            // fallback
-                            fileInput.click();
-                        });
-                } else {
-                    // Стандартный способ для WebView
-                    fileInput.click();
-                }
+                fileInput.click();
             }
 
-            // ---- ОБРАБОТКА ИМПОРТА (остаётся без изменений) ----
             function importData(file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -1498,6 +1473,27 @@
                     showNotification('❌ Ошибка чтения файла!');
                 };
                 reader.readAsText(file);
+            }
+
+            // ---- АВТОПРОКРУТКА МОДАЛКИ ПРИ ФОКУСЕ НА ПОЛЯ ----
+            function setupModalScroll() {
+                const modal = document.querySelector('.modal');
+                const inputs = modal.querySelectorAll('input, textarea');
+
+                inputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        setTimeout(() => {
+                            const rect = this.getBoundingClientRect();
+                            const modalRect = modal.getBoundingClientRect();
+                            if (rect.bottom > modalRect.bottom) {
+                                modal.scrollTop += rect.bottom - modalRect.bottom + 20;
+                            }
+                            if (rect.top < modalRect.top) {
+                                modal.scrollTop -= modalRect.top - rect.top + 20;
+                            }
+                        }, 300);
+                    });
+                });
             }
 
             function isFirstLaunch() {
@@ -1763,6 +1759,8 @@
                 }
 
                 overlay.classList.add('active');
+                // Настраиваем прокрутку модалки
+                setTimeout(setupModalScroll, 100);
             }
 
             function closeModal() { document.getElementById('modalOverlay').classList.remove('active');
@@ -2221,7 +2219,7 @@
                 document.getElementById('saveFileBtn').addEventListener('click', function(e) { e.preventDefault();
                     exportData(); });
 
-                // ---- ИСПРАВЛЕННЫЙ ОБРАБОТЧИК ДЛЯ "ИЗ ФАЙЛА" ----
+                // ---- ИСПРАВЛЕННЫЙ ОБРАБОТЧИК ДЛЯ "ИЗ ФАЙЛА" (простой и надёжный) ----
                 document.getElementById('loadFileBtn').addEventListener('click', function(e) {
                     e.preventDefault();
                     triggerFileInput();
