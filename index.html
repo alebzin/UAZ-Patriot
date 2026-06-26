@@ -198,9 +198,27 @@
             font-size: 13px;
             background: #f9fafb;
             color: #1e2a3a;
-            width: 130px;
+            width: 120px;
         }
         .control-row input[type="date"]:focus {
+            border-color: #1e2a3a;
+            outline: none;
+            background: white;
+        }
+
+        .control-row input[type="text"] {
+            padding: 6px 10px;
+            min-height: 34px;
+            border: 1.5px solid #d0d7de;
+            border-radius: 30px;
+            font-size: 13px;
+            background: #f9fafb;
+            color: #1e2a3a;
+            flex: 1;
+            min-width: 80px;
+            transition: 0.2s;
+        }
+        .control-row input[type="text"]:focus {
             border-color: #1e2a3a;
             outline: none;
             background: white;
@@ -210,16 +228,16 @@
             background: #eef2f6;
             border: none;
             border-radius: 30px;
-            padding: 6px 14px;
-            min-height: 38px;
-            font-size: 13px;
+            padding: 6px 12px;
+            min-height: 36px;
+            font-size: 12px;
             font-weight: 600;
             color: #1e2a3a;
             cursor: pointer;
             transition: 0.15s;
             touch-action: manipulation;
             user-select: none;
-            min-width: 44px;
+            min-width: 38px;
             display: flex;
             align-items: center;
             gap: 3px;
@@ -229,8 +247,8 @@
             transform: scale(0.95);
         }
         .step-btn svg {
-            width: 14px;
-            height: 14px;
+            width: 12px;
+            height: 12px;
             fill: none;
             stroke: currentColor;
             stroke-width: 2.5;
@@ -243,9 +261,9 @@
             color: white;
             border: none;
             border-radius: 30px;
-            padding: 6px 14px;
-            min-height: 38px;
-            font-size: 12px;
+            padding: 6px 10px;
+            min-height: 36px;
+            font-size: 11px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.15s;
@@ -260,11 +278,42 @@
             transform: scale(0.95);
         }
         .btn-today svg {
-            width: 16px;
-            height: 16px;
+            width: 14px;
+            height: 14px;
             fill: none;
             stroke: currentColor;
             stroke-width: 2;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+
+        .btn-clear-search {
+            background: #dc3545;
+            color: white;
+            border: none;
+            border-radius: 30px;
+            padding: 6px 12px;
+            min-height: 34px;
+            font-size: 13px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: 0.15s;
+            touch-action: manipulation;
+            white-space: nowrap;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+        .btn-clear-search:active {
+            background: #a71d2a;
+            transform: scale(0.95);
+        }
+        .btn-clear-search svg {
+            width: 14px;
+            height: 14px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -284,16 +333,20 @@
             padding: 12px 14px 10px;
             box-shadow: 0 2px 8px rgba(0,0,0,0.04);
             border-left: 5px solid #6c7a8a;
-            transition: transform 0.2s ease, opacity 0.2s ease;
+            transition: transform 0.2s ease, opacity 0.2s ease, max-height 0.3s ease;
             display: flex;
             flex-direction: column;
             position: relative;
             cursor: pointer;
             touch-action: pan-y;
             user-select: none;
+            overflow: hidden;
         }
         .card:active {
             transform: scale(0.99);
+        }
+        .card.hidden {
+            display: none;
         }
 
         .card.border-ok { border-left-color: #28a745; }
@@ -696,12 +749,14 @@
             text-align: center;
             border-top: 1px solid #dce2ea;
             padding-top: 16px;
+            padding-bottom: 8px;
             width: 100%;
             line-height: 1.6;
         }
-        .footer strong {
-            color: #1e2a3a;
-        }
+        .footer .line1 { display: block; height: 6px; }
+        .footer .line2 { display: block; font-weight: 700; color: #1e2a3a; }
+        .footer .line3 { display: block; color: #4a5a6a; }
+        .footer .line4 { display: block; font-weight: 600; color: #1e2a3a; margin-top: 2px; }
 
         /* ----- АДАПТИВ ----- */
         @media (max-width: 600px) {
@@ -734,10 +789,56 @@
             .control-row {
                 justify-content: flex-start;
                 flex-wrap: wrap;
+                gap: 4px;
             }
             .control-row label {
-                min-width: 60px;
-                font-size: 16px;
+                min-width: 50px;
+                font-size: 15px;
+            }
+            .control-row input[type="date"] {
+                width: 120px !important;
+                font-size: 12px;
+                padding: 6px 8px;
+                min-height: 34px;
+            }
+            .control-row input[type="number"] {
+                width: 75px;
+                font-size: 14px;
+                padding: 6px 8px;
+                min-height: 34px;
+            }
+            .control-row input[type="text"] {
+                min-height: 34px;
+                font-size: 12px;
+                padding: 6px 10px;
+            }
+            .step-btn {
+                font-size: 11px;
+                padding: 4px 8px;
+                min-height: 32px;
+                min-width: 32px;
+            }
+            .step-btn svg {
+                width: 11px;
+                height: 11px;
+            }
+            .btn-today {
+                font-size: 10px;
+                padding: 4px 8px;
+                min-height: 32px;
+            }
+            .btn-today svg {
+                width: 12px;
+                height: 12px;
+            }
+            .btn-clear-search {
+                font-size: 11px;
+                padding: 4px 10px;
+                min-height: 34px;
+            }
+            .btn-clear-search svg {
+                width: 12px;
+                height: 12px;
             }
             .card-info {
                 grid-template-columns: 1fr 1fr;
@@ -756,14 +857,6 @@
             }
             .progress-vertical .p-value {
                 font-size: 8px;
-            }
-            .control-row input[type="date"] {
-                width: 115px;
-                font-size: 12px;
-            }
-            .control-row input[type="number"] {
-                width: 85px;
-                font-size: 14px;
             }
             .modal {
                 padding: 16px;
@@ -785,6 +878,9 @@
             .footer {
                 font-size: 11px;
             }
+            .footer .line2 { font-size: 11px; }
+            .footer .line3 { font-size: 10px; }
+            .footer .line4 { font-size: 11px; }
             .card-icon-btn {
                 min-height: 32px;
                 min-width: 32px;
@@ -815,36 +911,60 @@
                 height: 28px;
             }
             .control-row input[type="date"] {
-                width: 100px;
+                width: 120px !important;
                 font-size: 11px;
+                padding: 4px 6px;
+                min-height: 30px;
             }
             .control-row input[type="number"] {
-                width: 75px;
+                width: 65px;
                 font-size: 13px;
+                padding: 4px 6px;
+                min-height: 30px;
             }
-            .step-btn {
+            .control-row input[type="text"] {
+                min-height: 30px;
                 font-size: 11px;
                 padding: 4px 8px;
-                min-height: 34px;
-                min-width: 30px;
+            }
+            .step-btn {
+                font-size: 10px;
+                padding: 3px 6px;
+                min-height: 28px;
+                min-width: 28px;
             }
             .step-btn svg {
-                width: 12px;
-                height: 12px;
+                width: 10px;
+                height: 10px;
             }
             .btn-today {
-                font-size: 10px;
-                padding: 4px 10px;
-                min-height: 34px;
+                font-size: 9px;
+                padding: 3px 8px;
+                min-height: 28px;
             }
             .btn-today svg {
-                width: 14px;
-                height: 14px;
+                width: 11px;
+                height: 11px;
+            }
+            .btn-clear-search {
+                font-size: 10px;
+                padding: 3px 8px;
+                min-height: 30px;
+            }
+            .btn-clear-search svg {
+                width: 11px;
+                height: 11px;
             }
             .control-row label {
-                font-size: 14px;
-                min-width: 50px;
+                font-size: 13px;
+                min-width: 40px;
             }
+            .control-row {
+                gap: 3px;
+            }
+            .footer .line2 { font-size: 10px; }
+            .footer .line3 { font-size: 9px; }
+            .footer .line4 { font-size: 10px; }
         }
 
         /* ----- Для WebView ----- */
@@ -894,18 +1014,14 @@
     <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
     <div class="control-panel">
         <div class="control-row">
-            <label style="min-width:40px;font-size:16px;font-weight:700;color:#6a7a8a;">📅</label>
-            <input type="date" id="dateInput" style="width:130px;">
-            <button class="step-btn" id="dateDec" type="button">
-                <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> 1мес
-            </button>
+            <label style="min-width:32px;font-size:16px;font-weight:700;color:#6a7a8a;">📅</label>
+            <input type="date" id="dateInput" style="width:120px;font-size:13px;">
+            <button class="step-btn" id="dateDec" type="button">&lt;1м</button>
             <button class="btn-today" id="todayBtn" type="button">
                 <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
                 Сегодня
             </button>
-            <button class="step-btn" id="dateInc" type="button">
-                <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg> 1мес
-            </button>
+            <button class="step-btn" id="dateInc" type="button">&gt;1м</button>
         </div>
         <div class="control-row">
             <label style="min-width:70px;font-size:18px;font-weight:700;">📟 Пробег</label>
@@ -915,6 +1031,14 @@
             </button>
             <button class="step-btn" id="mileageInc" type="button">
                 <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
+            </button>
+        </div>
+        <div class="control-row" style="gap:4px;">
+            <label style="min-width:70px;font-size:16px;font-weight:700;color:#1e2a3a;">🔍 Поиск</label>
+            <input type="text" id="searchInput" placeholder="Фильтр по названию..." style="flex:1;min-width:80px;">
+            <button class="btn-clear-search" id="clearSearchBtn" type="button">
+                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                Очистить
             </button>
         </div>
     </div>
@@ -927,8 +1051,10 @@
 
     <!-- ФУТЕР -->
     <div class="footer">
-        <strong>Источник данных:</strong> официальное руководство по эксплуатации автомобилей УАЗ Патриот и УАЗ Пикап<br>
-        (модели УАЗ-3163, УАЗ-23632, руководство 316300-3902002-18, издание 2019 г.)
+        <span class="line1">&nbsp;</span>
+        <span class="line2">Официальное руководство по эксплуатации автомобилей</span>
+        <span class="line3">УАЗ Патриот и УАЗ Пикап (модели УАЗ-3163, УАЗ-23632)</span>
+        <span class="line4">Издание 2019 г.</span>
     </div>
 </div>
 
@@ -990,6 +1116,8 @@
             <strong>Пробег при замене</strong> будет установлен в <strong>0</strong> для всех карточек.
             <br>
             <strong>Последнее действие</strong> будет очищено.
+            <br><br>
+            <strong>Пробег в панели управления</strong> будет сброшен в <strong>0</strong>.
         </div>
         <div class="modal-field">
             <label>Дата начала отсчёта</label>
@@ -1006,7 +1134,7 @@
 <div class="modal-overlay" id="replaceModalOverlay">
     <div class="modal">
         <div class="modal-header">
-            <h2>🔧 Заменено сегодня</h2>
+            <h2>Заменено сегодня?</h2>
             <button class="modal-close" id="replaceModalClose">&times;</button>
         </div>
         <div style="margin-bottom:16px;color:#4a5a6a;font-size:14px;line-height:1.6;">
@@ -1208,6 +1336,7 @@
         let touchStartX = 0;
         let touchStartY = 0;
         let swipingCard = null;
+        let searchQuery = '';
 
         // ----- ПРОВЕРКА ПЕРВОГО ОТКРЫТИЯ -----
         function isFirstLaunch() {
@@ -1409,21 +1538,26 @@
             const selectedDate = parseDate(resetDate);
             const today = new Date();
             if (selectedDate && selectedDate > today) { showNotification('❌ Дата не может быть в будущем!'); return; }
+            
             itemsData.forEach(item => {
                 item.lastAction = '';
                 item.lastDate = resetDate;
                 item.lastMileage = 0;
             });
+            
+            const mileageInput = document.getElementById('mileageInput');
+            mileageInput.value = 0;
+            currentMileage = 0;
+            
             originalItemsData = JSON.parse(JSON.stringify(itemsData));
             document.getElementById('resetModalOverlay').classList.remove('active');
-            const mileageInput = document.getElementById('mileageInput');
+            
             const dateInput = document.getElementById('dateInput');
-            const mileage = parseInt(mileageInput.value) || 0;
             const parts = dateInput.value.split('-');
             const todayDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-            renderTable(mileage, todayDate, false);
+            renderTable(0, todayDate, false);
             saveToStorage();
-            showNotification('🔄 Все карточки сброшены! Дата начала отсчёта: ' + resetDate);
+            showNotification('🔄 Все карточки сброшены! Пробег = 0, дата начала отсчёта: ' + resetDate);
             hapticMedium();
         }
 
@@ -1431,7 +1565,7 @@
         function openModal(item) {
             hapticMedium();
             const overlay = document.getElementById('modalOverlay');
-            document.getElementById('modalTitle').textContent = item ? '✏️ Редактирование' : '➕ Новая карточка';
+            document.getElementById('modalTitle').textContent = item ? 'Редактирование' : '➕ Новая карточка';
             document.getElementById('modalTitleInput').value = item ? item.title || '' : '';
             document.getElementById('modalActionInput').value = item ? item.lastAction || '' : '';
             document.getElementById('modalDateInput').value = item ? item.lastDate || '' : '';
@@ -1496,7 +1630,7 @@
             hapticMedium();
         }
 
-        // ----- ЭКСПОРТ ДАННЫХ (только JSON с карточками) -----
+        // ----- ЭКСПОРТ ДАННЫХ -----
         function exportData() {
             const dataToSave = {
                 version: '2.0',
@@ -1520,7 +1654,7 @@
             hapticMedium();
         }
 
-        // ----- ИМПОРТ ДАННЫХ ИЗ JSON -----
+        // ----- ИМПОРТ ДАННЫХ -----
         function importData(file) {
             const reader = new FileReader();
             reader.onload = function(e) {
@@ -1564,6 +1698,22 @@
                 showNotification('❌ Ошибка чтения файла!');
             };
             reader.readAsText(file);
+        }
+
+        // ----- ПОИСК И ФИЛЬТРАЦИЯ -----
+        function filterCards(query) {
+            searchQuery = query.toLowerCase().trim();
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const title = card.querySelector('.card-title');
+                if (!title) return;
+                const titleText = title.textContent.toLowerCase();
+                if (searchQuery === '' || titleText.includes(searchQuery)) {
+                    card.classList.remove('hidden');
+                } else {
+                    card.classList.add('hidden');
+                }
+            });
         }
 
         // ----- РЕНДЕР -----
@@ -1674,6 +1824,12 @@
                 `;
                 container.appendChild(card);
             });
+            
+            // Применяем фильтр после рендера
+            const searchInput = document.getElementById('searchInput');
+            if (searchInput && searchInput.value) {
+                filterCards(searchInput.value);
+            }
             
             // ----- ОБРАБОТЧИКИ ДЛЯ КНОПОК -----
             document.querySelectorAll('.card-icon-btn.edit-btn').forEach(btn => {
@@ -1844,6 +2000,7 @@
             
             const mileageInput = document.getElementById('mileageInput');
             const dateInput = document.getElementById('dateInput');
+            const searchInput = document.getElementById('searchInput');
             
             if (isFirst) {
                 mileageInput.value = 0;
@@ -1892,13 +2049,23 @@
             mileageInput.addEventListener('input', updateAppFromPanel);
             dateInput.addEventListener('input', updateAppFromPanel);
             
-            // Экспорт в JSON (новая кнопка "В файл")
+            // Поиск
+            searchInput.addEventListener('input', function() {
+                filterCards(this.value);
+            });
+            document.getElementById('clearSearchBtn').addEventListener('click', function() {
+                searchInput.value = '';
+                filterCards('');
+                searchInput.focus();
+            });
+            
+            // Экспорт в JSON
             document.getElementById('saveFileBtn').addEventListener('click', function(e) {
                 e.preventDefault();
                 exportData();
             });
             
-            // Импорт из JSON (кнопка "Из файла")
+            // Импорт из JSON
             document.getElementById('fileInput').addEventListener('change', function(e) {
                 if (this.files && this.files[0]) {
                     importData(this.files[0]);
@@ -1906,7 +2073,7 @@
                 this.value = '';
             });
             
-            // Загрузка встроенных данных из HTML (для совместимости со старыми файлами)
+            // Загрузка встроенных данных из HTML
             const savedDataScript = document.getElementById('savedData');
             if (savedDataScript) {
                 try {
