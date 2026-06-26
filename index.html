@@ -886,15 +886,15 @@
             <button class="action-btn file-input-btn" id="loadFileBtn" type="button">
                 <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                 Из файла
-                <input type="file" id="fileInput" accept=".html,.htm">
+                <input type="file" id="fileInput" accept=".json,.html,.htm">
             </button>
         </div>
     </div>
 
-    <!-- ПАНЕЛЬ УПРАВЛЕНИЯ (сначала дата, потом пробег) -->
+    <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
     <div class="control-panel">
         <div class="control-row">
-            <label style="min-width:40px;font-size:18px;font-weight:700;">📅</label>
+            <label style="min-width:40px;font-size:16px;font-weight:700;color:#6a7a8a;">📅</label>
             <input type="date" id="dateInput" style="width:130px;">
             <button class="step-btn" id="dateDec" type="button">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> 1мес
@@ -908,7 +908,7 @@
             </button>
         </div>
         <div class="control-row">
-            <label style="min-width:40px;font-size:18px;font-weight:700;">📟</label>
+            <label style="min-width:70px;font-size:18px;font-weight:700;">📟 Пробег</label>
             <input type="number" id="mileageInput" value="0" step="1000" min="0" style="width:100px;">
             <button class="step-btn" id="mileageDec" type="button">
                 <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
@@ -1496,82 +1496,65 @@
             hapticMedium();
         }
 
-        // ----- ВОССТАНОВЛЕНИЕ ИЗ ФАЙЛА (исправлено) -----
-        function loadFromFile(file) {
+        // ----- ЭКСПОРТ ДАННЫХ (только JSON с карточками) -----
+        function exportData() {
+            const dataToSave = {
+                version: '2.0',
+                exportedAt: new Date().toISOString(),
+                items: itemsData,
+                currentMileage: currentMileage,
+                currentDate: formatDate(currentDate)
+            };
+            const json = JSON.stringify(dataToSave, null, 2);
+            const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            const now = new Date();
+            a.download = `uaz_patriot_data_${formatDateTime(now)}.json`;
+            a.href = url;
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+            showNotification('✅ Данные экспортированы в JSON!');
+            hapticMedium();
+        }
+
+        // ----- ИМПОРТ ДАННЫХ ИЗ JSON -----
+        function importData(file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
-                    const htmlContent = e.target.result;
-                    // Ищем встроенные данные в HTML — ищем тег <script id="savedData">
-                    const match = htmlContent.match(/<script id="savedData" type="application\/json">([\s\S]*?)<\/script>/);
-                    if (match && match[1]) {
-                        const data = JSON.parse(match[1]);
-                        if (data.items && Array.isArray(data.items)) {
-                            itemsData = data.items;
-                            data.items.forEach(item => {
-                                if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
-                                    const num = parseInt(item.id);
-                                    if (num >= nextId) nextId = num + 1;
-                                }
-                            });
-                            if (data.currentMileage !== undefined) {
-                                currentMileage = data.currentMileage;
-                                document.getElementById('mileageInput').value = currentMileage;
+                    const data = JSON.parse(e.target.result);
+                    if (data.items && Array.isArray(data.items)) {
+                        itemsData = data.items;
+                        data.items.forEach(item => {
+                            if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
+                                const num = parseInt(item.id);
+                                if (num >= nextId) nextId = num + 1;
                             }
-                            if (data.currentDate) {
-                                currentDate = parseDate(data.currentDate) || new Date();
-                                document.getElementById('dateInput').value = formatDate(currentDate);
-                            }
-                            originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                            saveToStorage();
-                            const mileageInput = document.getElementById('mileageInput');
-                            const dateInput = document.getElementById('dateInput');
-                            const mileage = parseInt(mileageInput.value) || 0;
-                            const parts = dateInput.value.split('-');
-                            const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-                            renderTable(mileage, today, false);
-                            showNotification('✅ Данные восстановлены из файла!');
-                            hapticMedium();
-                            return;
+                        });
+                        if (data.currentMileage !== undefined) {
+                            currentMileage = data.currentMileage;
+                            document.getElementById('mileageInput').value = currentMileage;
                         }
+                        if (data.currentDate) {
+                            currentDate = parseDate(data.currentDate) || new Date();
+                            document.getElementById('dateInput').value = formatDate(currentDate);
+                        }
+                        originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                        saveToStorage();
+                        const mileageInput = document.getElementById('mileageInput');
+                        const dateInput = document.getElementById('dateInput');
+                        const mileage = parseInt(mileageInput.value) || 0;
+                        const parts = dateInput.value.split('-');
+                        const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                        renderTable(mileage, today, false);
+                        showNotification('✅ Данные импортированы!');
+                        hapticMedium();
+                        return;
                     }
-                    // Если не нашли #savedData, ищем другие способы
-                    // Пробуем найти JSON напрямую в тексте
-                    const jsonMatch = htmlContent.match(/\{[\s\S]*"items"[\s\S]*\}/);
-                    if (jsonMatch) {
-                        try {
-                            const data = JSON.parse(jsonMatch[0]);
-                            if (data.items && Array.isArray(data.items)) {
-                                itemsData = data.items;
-                                data.items.forEach(item => {
-                                    if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
-                                        const num = parseInt(item.id);
-                                        if (num >= nextId) nextId = num + 1;
-                                    }
-                                });
-                                if (data.currentMileage !== undefined) {
-                                    currentMileage = data.currentMileage;
-                                    document.getElementById('mileageInput').value = currentMileage;
-                                }
-                                if (data.currentDate) {
-                                    currentDate = parseDate(data.currentDate) || new Date();
-                                    document.getElementById('dateInput').value = formatDate(currentDate);
-                                }
-                                originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                                saveToStorage();
-                                const mileageInput = document.getElementById('mileageInput');
-                                const dateInput = document.getElementById('dateInput');
-                                const mileage = parseInt(mileageInput.value) || 0;
-                                const parts = dateInput.value.split('-');
-                                const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-                                renderTable(mileage, today, false);
-                                showNotification('✅ Данные восстановлены из файла!');
-                                hapticMedium();
-                                return;
-                            }
-                        } catch(e2) {}
-                    }
-                    showNotification('❌ Файл не содержит данных! Проверьте, что это файл, сохранённый из приложения.');
+                    showNotification('❌ Файл не содержит данных!');
                 } catch (err) {
                     console.error('Ошибка чтения файла:', err);
                     showNotification('❌ Ошибка чтения файла!');
@@ -1854,29 +1837,6 @@
             pullStartY = 0;
         }, { passive: true });
 
-        // ----- СОХРАНЕНИЕ В ФАЙЛ -----
-        function saveToHtmlFile() {
-            const dataToSave = { items: itemsData, currentMileage: currentMileage, currentDate: formatDate(currentDate), version: '2.0', savedAt: new Date().toISOString() };
-            const htmlContent = document.documentElement.outerHTML;
-            const dataScript = `<script id="savedData" type="application/json">${JSON.stringify(dataToSave)}<\/script>`;
-            let newHtml = htmlContent;
-            const bodyEnd = newHtml.lastIndexOf('</body>');
-            if (bodyEnd !== -1) newHtml = newHtml.slice(0, bodyEnd) + dataScript + newHtml.slice(bodyEnd);
-            else newHtml = newHtml + dataScript;
-            const blob = new Blob([newHtml], { type: 'text/html;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            const now = new Date();
-            a.download = `uaz_patriot_${formatDateTime(now)}.html`;
-            a.href = url;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showNotification('✅ Файл сохранён!');
-            hapticMedium();
-        }
-
         // ----- ИНИЦИАЛИЗАЦИЯ -----
         document.addEventListener('DOMContentLoaded', function() {
             const isFirst = isFirstLaunch();
@@ -1932,18 +1892,21 @@
             mileageInput.addEventListener('input', updateAppFromPanel);
             dateInput.addEventListener('input', updateAppFromPanel);
             
-            // Сохранение в файл
-            document.getElementById('saveFileBtn').addEventListener('click', function(e) { e.preventDefault(); saveToHtmlFile(); });
+            // Экспорт в JSON (новая кнопка "В файл")
+            document.getElementById('saveFileBtn').addEventListener('click', function(e) {
+                e.preventDefault();
+                exportData();
+            });
             
-            // Загрузка из файла
+            // Импорт из JSON (кнопка "Из файла")
             document.getElementById('fileInput').addEventListener('change', function(e) {
                 if (this.files && this.files[0]) {
-                    loadFromFile(this.files[0]);
+                    importData(this.files[0]);
                 }
                 this.value = '';
             });
             
-            // Загрузка встроенных данных из HTML
+            // Загрузка встроенных данных из HTML (для совместимости со старыми файлами)
             const savedDataScript = document.getElementById('savedData');
             if (savedDataScript) {
                 try {
