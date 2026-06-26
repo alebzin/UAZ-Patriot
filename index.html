@@ -1436,42 +1436,39 @@
             let swipingCard = null;
             let searchQuery = '';
 
-            // ---- ПРОСТОЙ И НАДЁЖНЫЙ СПОСОБ ЗАГРУЗКИ ФАЙЛА ----
-            // В WebView это должно работать через стандартный input[type="file"]
+            // ---- УНИВЕРСАЛЬНЫЙ СПОСОБ ЗАГРУЗКИ ФАЙЛА (для браузера и WebView) ----
             function triggerFileInput() {
                 const fileInput = document.getElementById('fileInput');
-                // Пытаемся имитировать клик с задержкой для WebView
-                fileInput.click();
-            }
 
-            // ---- АВТОПРОКРУТКА МОДАЛКИ ПРИ ФОКУСЕ НА ПОЛЯ ----
-            function setupModalScroll() {
-                const modal = document.querySelector('.modal');
-                const inputs = modal.querySelectorAll('input, textarea');
-
-                inputs.forEach(input => {
-                    input.addEventListener('focus', function() {
-                        setTimeout(() => {
-                            // Прокручиваем окно, чтобы модалка была видна
-                            const overlay = document.getElementById('modalOverlay');
-                            const modalRect = modal.getBoundingClientRect();
-                            const inputRect = this.getBoundingClientRect();
-
-                            if (inputRect.bottom > window.innerHeight - 50) {
-                                const scrollY = inputRect.bottom - window.innerHeight + 50;
-                                window.scrollBy(0, scrollY);
+                // Способ 1: через showOpenFilePicker (современные браузеры)
+                if (window.showOpenFilePicker) {
+                    window.showOpenFilePicker({
+                            types: [{
+                                description: 'JSON или HTML',
+                                accept: {
+                                    'application/json': ['.json'],
+                                    'text/html': ['.html', '.htm']
+                                }
+                            }],
+                            multiple: false
+                        })
+                        .then(async (handles) => {
+                            try {
+                                const file = await handles[0].getFile();
+                                importData(file);
+                            } catch (err) {
+                                console.warn('Ошибка получения файла:', err);
+                                fileInput.click();
                             }
-
-                            // Прокручиваем саму модалку
-                            if (inputRect.bottom > modalRect.bottom) {
-                                modal.scrollTop += inputRect.bottom - modalRect.bottom + 20;
-                            }
-                            if (inputRect.top < modalRect.top) {
-                                modal.scrollTop -= modalRect.top - inputRect.top + 20;
-                            }
-                        }, 300);
-                    });
-                });
+                        })
+                        .catch((err) => {
+                            console.warn('showOpenFilePicker отменён:', err);
+                            fileInput.click();
+                        });
+                } else {
+                    // Способ 2: стандартный input для WebView
+                    fileInput.click();
+                }
             }
 
             function importData(file) {
@@ -2164,7 +2161,42 @@
                 pullStartY = 0;
             }, { passive: true });
 
-            // ---- ДОПОЛНИТЕЛЬНАЯ ИНИЦИАЛИЗАЦИЯ ДЛЯ WEBVIEW ----
+            // ---- АВТОПРОКРУТКА МОДАЛКИ ПРИ ФОКУСЕ ----
+            function setupModalScroll() {
+                const modal = document.querySelector('.modal');
+                const inputs = modal.querySelectorAll('input, textarea');
+
+                inputs.forEach(input => {
+                    // Убираем старые обработчики
+                    input.removeEventListener('focus', handleFocus);
+                    input.addEventListener('focus', handleFocus);
+                });
+            }
+
+            function handleFocus(e) {
+                const input = e.target;
+                setTimeout(() => {
+                    // Прокручиваем основное окно
+                    const rect = input.getBoundingClientRect();
+                    const windowHeight = window.innerHeight;
+                    if (rect.bottom > windowHeight - 50) {
+                        window.scrollBy(0, rect.bottom - windowHeight + 50);
+                    }
+
+                    // Прокручиваем модалку
+                    const modal = input.closest('.modal');
+                    if (modal) {
+                        const modalRect = modal.getBoundingClientRect();
+                        if (rect.bottom > modalRect.bottom) {
+                            modal.scrollTop += rect.bottom - modalRect.bottom + 20;
+                        }
+                        if (rect.top < modalRect.top) {
+                            modal.scrollTop -= modalRect.top - rect.top + 20;
+                        }
+                    }
+                }, 350);
+            }
+
             document.addEventListener('DOMContentLoaded', function() {
                 const isFirst = isFirstLaunch();
                 loadFromStorage();
@@ -2271,26 +2303,15 @@
                     exportData();
                 });
 
-                // ---- ИСПРАВЛЕННЫЙ ОБРАБОТЧИК ДЛЯ "ИЗ ФАЙЛА" ----
-                // Для WebView используем прямой вызов click() с обработкой
+                // ---- УНИВЕРСАЛЬНЫЙ ОБРАБОТЧИК ДЛЯ "ИЗ ФАЙЛА" ----
                 document.getElementById('loadFileBtn').addEventListener('click', function(e) {
                     e.preventDefault();
-                    const fileInput = document.getElementById('fileInput');
-                    // Принудительно сбрасываем значение перед кликом
-                    fileInput.value = '';
-                    fileInput.click();
+                    triggerFileInput();
                 });
 
-                // Обработчик изменения файла
                 document.getElementById('fileInput').addEventListener('change', function(e) {
                     if (this.files && this.files.length > 0) {
-                        const file = this.files[0];
-                        // Проверяем размер и тип
-                        if (file.size > 0) {
-                            importData(file);
-                        } else {
-                            showNotification('❌ Файл пустой!');
-                        }
+                        importData(this.files[0]);
                     }
                     this.value = '';
                 });
