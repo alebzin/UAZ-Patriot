@@ -574,9 +574,7 @@
             animation: fadeIn 0.2s ease;
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
-            touch-action: none;
+            overflow: hidden;
         }
         .modal-overlay.active {
             display: flex;
@@ -600,12 +598,11 @@
             width: 100%;
             padding: 24px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-height: 80vh;
+            max-height: 75vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
             transform: translateY(0);
             transition: transform 0.3s ease;
-            touch-action: pan-y;
         }
 
         .modal-header {
@@ -618,6 +615,7 @@
             background: white;
             z-index: 10;
             padding-bottom: 8px;
+            border-bottom: 1px solid #f0f2f5;
         }
         .modal-header h2 {
             font-size: 18px;
@@ -1117,11 +1115,11 @@
                     <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
                     В файл
                 </button>
-                <button class="action-btn file-input-btn" id="loadFileBtn" type="button">
+                <button class="action-btn" id="loadFileBtn" type="button">
                     <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
                     Из файла
-                    <input type="file" id="fileInput" accept=".json,.html,.htm">
                 </button>
+                <input type="file" id="fileInput" accept=".json,.html,.htm" style="display:none;">
             </div>
         </div>
 
@@ -1449,14 +1447,11 @@
             let searchQuery = '';
             let isModalOpen = false;
 
-            // ---- ЗАГРУЗКА ФАЙЛА (УНИВЕРСАЛЬНАЯ) ----
+            // ---- ЗАГРУЗКА ФАЙЛА (ДЛЯ APK) ----
             function triggerFileInput() {
                 const fileInput = document.getElementById('fileInput');
 
-                // Сбрасываем значение перед каждым вызовом
-                fileInput.value = '';
-
-                // Пробуем showOpenFilePicker (современные браузеры)
+                // Пробуем через showOpenFilePicker (современные браузеры)
                 if (window.showOpenFilePicker) {
                     window.showOpenFilePicker({
                             types: [{
@@ -1489,12 +1484,18 @@
             function fallbackFileInput() {
                 const fileInput = document.getElementById('fileInput');
                 fileInput.value = '';
-                // Для WebView нужна небольшая задержка
+                // Для WebView используем прямой клик с задержкой
                 setTimeout(() => {
-                    fileInput.click();
+                    try {
+                        fileInput.click();
+                    } catch (e) {
+                        console.warn('Ошибка клика по fileInput:', e);
+                        showNotification('❌ Выбор файла недоступен в этом приложении');
+                    }
                 }, 100);
             }
 
+            // ---- ВСПОМОГАТЕЛЬНЫЕ ФУНКЦИИ ----
             function importData(file) {
                 const reader = new FileReader();
                 reader.onload = function(e) {
@@ -1538,106 +1539,6 @@
                     showNotification('❌ Ошибка чтения файла!');
                 };
                 reader.readAsText(file);
-            }
-
-            // ---- УПРАВЛЕНИЕ МОДАЛКАМИ (с блокировкой скролла) ----
-            function openModal(item) {
-                hapticMedium();
-                const overlay = document.getElementById('modalOverlay');
-                document.getElementById('modalTitle').textContent = item ? 'Редактирование' : 'Новая карточка';
-                document.getElementById('modalTitleInput').value = item ? item.title || '' : '';
-                document.getElementById('modalActionInput').value = item ? item.lastAction || '' : '';
-                document.getElementById('modalDateInput').value = item ? item.lastDate || '' : '';
-                document.getElementById('modalMileageInput').value = item && item.lastMileage !== null ? item.lastMileage :
-                    '';
-                document.getElementById('modalIntervalKm').value = item && item.intervalKm !== null ? item.intervalKm : '';
-                document.getElementById('modalIntervalMonths').value = item && item.intervalMonths !== null ? item
-                    .intervalMonths : '';
-                document.getElementById('modalNoteInput').value = item ? item.note || '' : '';
-                document.getElementById('modalDeleteBtn').style.display = item ? 'block' : 'none';
-                editingId = item ? item.id : null;
-
-                if (!item) {
-                    const mileageInput = document.getElementById('mileageInput');
-                    const dateInput = document.getElementById('dateInput');
-                    document.getElementById('modalMileageInput').value = parseInt(mileageInput.value) || 0;
-                    document.getElementById('modalDateInput').value = dateInput.value || formatDate(new Date());
-                }
-
-                isModalOpen = true;
-                document.body.classList.add('modal-open');
-                overlay.classList.add('active');
-                history.pushState({ modal: true }, '');
-            }
-
-            function closeModal() {
-                const overlay = document.getElementById('modalOverlay');
-                overlay.classList.remove('active');
-                document.body.classList.remove('modal-open');
-                editingId = null;
-                isModalOpen = false;
-                if (history.state && history.state.modal) {
-                    history.back();
-                }
-            }
-
-            // ---- ОБРАБОТКА СВАЙПА НАЗАД ----
-            function setupBackHandler() {
-                window.addEventListener('popstate', function(e) {
-                    const overlay = document.getElementById('modalOverlay');
-                    if (overlay.classList.contains('active')) {
-                        e.preventDefault();
-                        closeModal();
-                    }
-                    const resetModal = document.getElementById('resetModalOverlay');
-                    if (resetModal.classList.contains('active')) {
-                        e.preventDefault();
-                        closeModalExternal('reset');
-                    }
-                    const replaceModal = document.getElementById('replaceModalOverlay');
-                    if (replaceModal.classList.contains('active')) {
-                        e.preventDefault();
-                        closeModalExternal('replace');
-                        replaceCardId = null;
-                    }
-                });
-            }
-
-            function openModalExternal(type) {
-                const overlay = document.getElementById(type === 'replace' ? 'replaceModalOverlay' : 'resetModalOverlay');
-                isModalOpen = true;
-                document.body.classList.add('modal-open');
-                overlay.classList.add('active');
-                history.pushState({ modal: true }, '');
-            }
-
-            function closeModalExternal(type) {
-                const overlay = document.getElementById(type === 'replace' ? 'replaceModalOverlay' : 'resetModalOverlay');
-                overlay.classList.remove('active');
-                document.body.classList.remove('modal-open');
-                isModalOpen = false;
-                if (history.state && history.state.modal) {
-                    history.back();
-                }
-            }
-
-            // ---- ОСТАЛЬНЫЕ ФУНКЦИИ ----
-            function showReplaceModal(cardId) {
-                const item = itemsData.find(i => i.id === cardId);
-                if (!item) return;
-                replaceCardId = cardId;
-                document.getElementById('replaceCardTitle').textContent = item.title;
-
-                const mileageInput = document.getElementById('mileageInput');
-                const dateInput = document.getElementById('dateInput');
-                const mileage = parseInt(mileageInput.value) || 0;
-                const date = dateInput.value || formatDate(new Date());
-
-                document.getElementById('replaceMileageDisplay').textContent = mileage;
-                document.getElementById('replaceDateDisplay').textContent = date;
-
-                openModalExternal('replace');
-                hapticMedium();
             }
 
             function isFirstLaunch() {
@@ -1720,6 +1621,87 @@
 
             function hapticMedium() { if (navigator.vibrate) navigator.vibrate(15); }
 
+            // ---- УПРАВЛЕНИЕ МОДАЛКАМИ ----
+            function openModal(item) {
+                hapticMedium();
+                const overlay = document.getElementById('modalOverlay');
+                document.getElementById('modalTitle').textContent = item ? 'Редактирование' : 'Новая карточка';
+                document.getElementById('modalTitleInput').value = item ? item.title || '' : '';
+                document.getElementById('modalActionInput').value = item ? item.lastAction || '' : '';
+                document.getElementById('modalDateInput').value = item ? item.lastDate || '' : '';
+                document.getElementById('modalMileageInput').value = item && item.lastMileage !== null ? item.lastMileage :
+                    '';
+                document.getElementById('modalIntervalKm').value = item && item.intervalKm !== null ? item.intervalKm : '';
+                document.getElementById('modalIntervalMonths').value = item && item.intervalMonths !== null ? item
+                    .intervalMonths : '';
+                document.getElementById('modalNoteInput').value = item ? item.note || '' : '';
+                document.getElementById('modalDeleteBtn').style.display = item ? 'block' : 'none';
+                editingId = item ? item.id : null;
+
+                if (!item) {
+                    const mileageInput = document.getElementById('mileageInput');
+                    const dateInput = document.getElementById('dateInput');
+                    document.getElementById('modalMileageInput').value = parseInt(mileageInput.value) || 0;
+                    document.getElementById('modalDateInput').value = dateInput.value || formatDate(new Date());
+                }
+
+                isModalOpen = true;
+                document.body.classList.add('modal-open');
+                overlay.classList.add('active');
+                history.pushState({ modal: true }, '');
+            }
+
+            function closeModal() {
+                const overlay = document.getElementById('modalOverlay');
+                overlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                editingId = null;
+                isModalOpen = false;
+                if (history.state && history.state.modal) {
+                    history.back();
+                }
+            }
+
+            function openModalExternal(type) {
+                const overlay = document.getElementById(type === 'replace' ? 'replaceModalOverlay' : 'resetModalOverlay');
+                isModalOpen = true;
+                document.body.classList.add('modal-open');
+                overlay.classList.add('active');
+                history.pushState({ modal: true }, '');
+            }
+
+            function closeModalExternal(type) {
+                const overlay = document.getElementById(type === 'replace' ? 'replaceModalOverlay' : 'resetModalOverlay');
+                overlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                isModalOpen = false;
+                if (history.state && history.state.modal) {
+                    history.back();
+                }
+            }
+
+            function setupBackHandler() {
+                window.addEventListener('popstate', function(e) {
+                    const overlay = document.getElementById('modalOverlay');
+                    if (overlay.classList.contains('active')) {
+                        e.preventDefault();
+                        closeModal();
+                    }
+                    const resetModal = document.getElementById('resetModalOverlay');
+                    if (resetModal.classList.contains('active')) {
+                        e.preventDefault();
+                        closeModalExternal('reset');
+                    }
+                    const replaceModal = document.getElementById('replaceModalOverlay');
+                    if (replaceModal.classList.contains('active')) {
+                        e.preventDefault();
+                        closeModalExternal('replace');
+                        replaceCardId = null;
+                    }
+                });
+            }
+
+            // ---- ОСТАЛЬНЫЕ ФУНКЦИИ (calc, sort, render, etc.) ----
             function calcStatusAndProgress(item, mileage, today) {
                 const { lastDate, lastMileage, intervalKm, intervalMonths } = item;
                 let status = { badge: 'ok', label: '🟢 ОК', score: 0 };
@@ -1794,6 +1776,24 @@
                 }
                 if (!hasData) return 0.5;
                 return maxScore;
+            }
+
+            function showReplaceModal(cardId) {
+                const item = itemsData.find(i => i.id === cardId);
+                if (!item) return;
+                replaceCardId = cardId;
+                document.getElementById('replaceCardTitle').textContent = item.title;
+
+                const mileageInput = document.getElementById('mileageInput');
+                const dateInput = document.getElementById('dateInput');
+                const mileage = parseInt(mileageInput.value) || 0;
+                const date = dateInput.value || formatDate(new Date());
+
+                document.getElementById('replaceMileageDisplay').textContent = mileage;
+                document.getElementById('replaceDateDisplay').textContent = date;
+
+                openModalExternal('replace');
+                hapticMedium();
             }
 
             function executeReplace() {
@@ -2198,13 +2198,12 @@
                 e) {}
             }
 
-            // ---- PULL-TO-REFRESH (с проверкой на модалку) ----
+            // ---- PULL-TO-REFRESH (ИГНОРИРУЕМ В МОДАЛКЕ) ----
             let pullStartY = 0;
             let pullActive = false;
             const pullIndicator = document.getElementById('pullIndicator');
 
             document.addEventListener('touchstart', function(e) {
-                // Если открыта модалка — игнорируем pull-to-refresh
                 if (isModalOpen) {
                     pullStartY = 0;
                     return;
@@ -2257,6 +2256,7 @@
                 pullStartY = 0;
             }, { passive: true });
 
+            // ---- ИНИЦИАЛИЗАЦИЯ ----
             document.addEventListener('DOMContentLoaded', function() {
                 const isFirst = isFirstLaunch();
                 loadFromStorage();
@@ -2368,17 +2368,10 @@
                     exportData();
                 });
 
-                // ---- ЗАГРУЗКА ИЗ ФАЙЛА (с защитой от множественных вызовов) ----
-                let isFileProcessing = false;
-
+                // ---- ЗАГРУЗКА ИЗ ФАЙЛА (ИСПРАВЛЕННАЯ) ----
                 document.getElementById('loadFileBtn').addEventListener('click', function(e) {
                     e.preventDefault();
-                    if (isFileProcessing) return;
-                    isFileProcessing = true;
                     triggerFileInput();
-                    setTimeout(() => {
-                        isFileProcessing = false;
-                    }, 1000);
                 });
 
                 document.getElementById('fileInput').addEventListener('change', function(e) {
@@ -2386,7 +2379,6 @@
                         importData(this.files[0]);
                     }
                     this.value = '';
-                    isFileProcessing = false;
                 });
 
                 searchInput.addEventListener('input', function() {
