@@ -198,7 +198,7 @@
             font-size: 13px;
             background: #f9fafb;
             color: #1e2a3a;
-            width: 115px;
+            width: 130px;
         }
         .control-row input[type="date"]:focus {
             border-color: #1e2a3a;
@@ -758,7 +758,7 @@
                 font-size: 8px;
             }
             .control-row input[type="date"] {
-                width: 100px;
+                width: 115px;
                 font-size: 12px;
             }
             .control-row input[type="number"] {
@@ -815,7 +815,7 @@
                 height: 28px;
             }
             .control-row input[type="date"] {
-                width: 90px;
+                width: 100px;
                 font-size: 11px;
             }
             .control-row input[type="number"] {
@@ -891,21 +891,11 @@
         </div>
     </div>
 
-    <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
+    <!-- ПАНЕЛЬ УПРАВЛЕНИЯ (сначала дата, потом пробег) -->
     <div class="control-panel">
         <div class="control-row">
-            <label>📟 Пробег</label>
-            <input type="number" id="mileageInput" value="0" step="1000" min="0">
-            <button class="step-btn" id="mileageDec" type="button">
-                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
-            </button>
-            <button class="step-btn" id="mileageInc" type="button">
-                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
-            </button>
-        </div>
-        <div class="control-row">
-            <label style="min-width:30px;font-size:18px;">📅</label>
-            <input type="date" id="dateInput" style="width:115px;">
+            <label style="min-width:40px;font-size:18px;font-weight:700;">📅</label>
+            <input type="date" id="dateInput" style="width:130px;">
             <button class="step-btn" id="dateDec" type="button">
                 <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg> 1мес
             </button>
@@ -915,6 +905,16 @@
             </button>
             <button class="step-btn" id="dateInc" type="button">
                 <svg viewBox="0 0 24 24"><polyline points="9 18 15 12 9 6"/></svg> 1мес
+            </button>
+        </div>
+        <div class="control-row">
+            <label style="min-width:40px;font-size:18px;font-weight:700;">📟</label>
+            <input type="number" id="mileageInput" value="0" step="1000" min="0" style="width:100px;">
+            <button class="step-btn" id="mileageDec" type="button">
+                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
+            </button>
+            <button class="step-btn" id="mileageInc" type="button">
+                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
             </button>
         </div>
     </div>
@@ -1387,7 +1387,7 @@
             const mileageVal = parseInt(mileageInput.value) || 0;
             const parts = dateInput.value.split('-');
             const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-            renderTable(mileageVal, today, false); // false = пересортировать
+            renderTable(mileageVal, today, false);
             saveToStorage();
             showNotification('✅ Заменено! Дата: ' + date + ', пробег: ' + mileage + ' км');
             hapticMedium();
@@ -1473,7 +1473,7 @@
             const mileage = parseInt(mileageInput.value) || 0;
             const parts = dateInput.value.split('-');
             const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-            renderTable(mileage, today, false); // false = пересортировать
+            renderTable(mileage, today, false);
             saveToStorage();
             showNotification('✅ Сохранено!');
             hapticMedium();
@@ -1496,13 +1496,13 @@
             hapticMedium();
         }
 
-        // ----- ВОССТАНОВЛЕНИЕ ИЗ ФАЙЛА -----
+        // ----- ВОССТАНОВЛЕНИЕ ИЗ ФАЙЛА (исправлено) -----
         function loadFromFile(file) {
             const reader = new FileReader();
             reader.onload = function(e) {
                 try {
                     const htmlContent = e.target.result;
-                    // Ищем встроенные данные в HTML
+                    // Ищем встроенные данные в HTML — ищем тег <script id="savedData">
                     const match = htmlContent.match(/<script id="savedData" type="application\/json">([\s\S]*?)<\/script>/);
                     if (match && match[1]) {
                         const data = JSON.parse(match[1]);
@@ -1514,8 +1514,14 @@
                                     if (num >= nextId) nextId = num + 1;
                                 }
                             });
-                            if (data.currentMileage !== undefined) { currentMileage = data.currentMileage; document.getElementById('mileageInput').value = currentMileage; }
-                            if (data.currentDate) { currentDate = parseDate(data.currentDate) || new Date(); document.getElementById('dateInput').value = formatDate(currentDate); }
+                            if (data.currentMileage !== undefined) {
+                                currentMileage = data.currentMileage;
+                                document.getElementById('mileageInput').value = currentMileage;
+                            }
+                            if (data.currentDate) {
+                                currentDate = parseDate(data.currentDate) || new Date();
+                                document.getElementById('dateInput').value = formatDate(currentDate);
+                            }
                             originalItemsData = JSON.parse(JSON.stringify(itemsData));
                             saveToStorage();
                             const mileageInput = document.getElementById('mileageInput');
@@ -1529,11 +1535,50 @@
                             return;
                         }
                     }
-                    showNotification('❌ Файл не содержит данных!');
+                    // Если не нашли #savedData, ищем другие способы
+                    // Пробуем найти JSON напрямую в тексте
+                    const jsonMatch = htmlContent.match(/\{[\s\S]*"items"[\s\S]*\}/);
+                    if (jsonMatch) {
+                        try {
+                            const data = JSON.parse(jsonMatch[0]);
+                            if (data.items && Array.isArray(data.items)) {
+                                itemsData = data.items;
+                                data.items.forEach(item => {
+                                    if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
+                                        const num = parseInt(item.id);
+                                        if (num >= nextId) nextId = num + 1;
+                                    }
+                                });
+                                if (data.currentMileage !== undefined) {
+                                    currentMileage = data.currentMileage;
+                                    document.getElementById('mileageInput').value = currentMileage;
+                                }
+                                if (data.currentDate) {
+                                    currentDate = parseDate(data.currentDate) || new Date();
+                                    document.getElementById('dateInput').value = formatDate(currentDate);
+                                }
+                                originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                                saveToStorage();
+                                const mileageInput = document.getElementById('mileageInput');
+                                const dateInput = document.getElementById('dateInput');
+                                const mileage = parseInt(mileageInput.value) || 0;
+                                const parts = dateInput.value.split('-');
+                                const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                                renderTable(mileage, today, false);
+                                showNotification('✅ Данные восстановлены из файла!');
+                                hapticMedium();
+                                return;
+                            }
+                        } catch(e2) {}
+                    }
+                    showNotification('❌ Файл не содержит данных! Проверьте, что это файл, сохранённый из приложения.');
                 } catch (err) {
+                    console.error('Ошибка чтения файла:', err);
                     showNotification('❌ Ошибка чтения файла!');
-                    console.error(err);
                 }
+            };
+            reader.onerror = function() {
+                showNotification('❌ Ошибка чтения файла!');
             };
             reader.readAsText(file);
         }
@@ -1809,7 +1854,7 @@
             pullStartY = 0;
         }, { passive: true });
 
-        // ----- СОХРАНЕНИЕ В ФАЙЛ (с датой и временем) -----
+        // ----- СОХРАНЕНИЕ В ФАЙЛ -----
         function saveToHtmlFile() {
             const dataToSave = { items: itemsData, currentMileage: currentMileage, currentDate: formatDate(currentDate), version: '2.0', savedAt: new Date().toISOString() };
             const htmlContent = document.documentElement.outerHTML;
