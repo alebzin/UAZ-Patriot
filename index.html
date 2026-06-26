@@ -561,7 +561,7 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             padding: 20px;
             animation: fadeIn 0.2s ease;
             backdrop-filter: blur(4px);
@@ -589,12 +589,12 @@
             max-width: 500px;
             width: 100%;
             padding: 24px;
-            margin-top: 20px;
-            margin-bottom: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-height: 80vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
+            transform: translateY(0);
+            transition: transform 0.3s ease;
         }
 
         .modal-header {
@@ -1436,39 +1436,15 @@
             let swipingCard = null;
             let searchQuery = '';
 
-            // ---- УНИВЕРСАЛЬНЫЙ СПОСОБ ЗАГРУЗКИ ФАЙЛА (для браузера и WebView) ----
+            // ---- УНИВЕРСАЛЬНЫЙ СПОСОБ ЗАГРУЗКИ ФАЙЛА ----
             function triggerFileInput() {
                 const fileInput = document.getElementById('fileInput');
-
-                // Способ 1: через showOpenFilePicker (современные браузеры)
-                if (window.showOpenFilePicker) {
-                    window.showOpenFilePicker({
-                            types: [{
-                                description: 'JSON или HTML',
-                                accept: {
-                                    'application/json': ['.json'],
-                                    'text/html': ['.html', '.htm']
-                                }
-                            }],
-                            multiple: false
-                        })
-                        .then(async (handles) => {
-                            try {
-                                const file = await handles[0].getFile();
-                                importData(file);
-                            } catch (err) {
-                                console.warn('Ошибка получения файла:', err);
-                                fileInput.click();
-                            }
-                        })
-                        .catch((err) => {
-                            console.warn('showOpenFilePicker отменён:', err);
-                            fileInput.click();
-                        });
-                } else {
-                    // Способ 2: стандартный input для WebView
+                // Сбрасываем значение, чтобы событие change срабатывало
+                fileInput.value = '';
+                // Небольшая задержка для WebView
+                setTimeout(() => {
                     fileInput.click();
-                }
+                }, 100);
             }
 
             function importData(file) {
@@ -1514,6 +1490,52 @@
                     showNotification('❌ Ошибка чтения файла!');
                 };
                 reader.readAsText(file);
+            }
+
+            // ---- ОБРАБОТКА СВАЙПА НАЗАД ДЛЯ ЗАКРЫТИЯ МОДАЛКИ ----
+            function setupBackHandler() {
+                window.addEventListener('popstate', function(e) {
+                    const modal = document.getElementById('modalOverlay');
+                    if (modal.classList.contains('active')) {
+                        e.preventDefault();
+                        closeModal();
+                    }
+                });
+            }
+
+            // ---- ОБРАБОТКА КЛАВИАТУРЫ ДЛЯ МОДАЛКИ ----
+            function setupKeyboardHandler() {
+                const overlay = document.getElementById('modalOverlay');
+                const modal = document.querySelector('.modal');
+
+                // При открытии сохраняем текущую позицию
+                let lastScrollY = 0;
+
+                const observer = new MutationObserver(() => {
+                    if (overlay.classList.contains('active')) {
+                        lastScrollY = window.scrollY;
+                        // Добавляем обработчик изменения размера окна (клавиатура)
+                        window.addEventListener('resize', handleKeyboardOpen);
+                    } else {
+                        window.removeEventListener('resize', handleKeyboardOpen);
+                        // Возвращаем позицию
+                        window.scrollTo(0, lastScrollY);
+                    }
+                });
+
+                observer.observe(overlay, { attributes: true, attributeFilter: ['class'] });
+
+                function handleKeyboardOpen() {
+                    const activeElement = document.activeElement;
+                    if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA')) {
+                        const rect = activeElement.getBoundingClientRect();
+                        const windowHeight = window.innerHeight;
+                        if (rect.bottom > windowHeight - 20) {
+                            const scrollY = rect.bottom - windowHeight + 20;
+                            window.scrollBy(0, scrollY);
+                        }
+                    }
+                }
             }
 
             function isFirstLaunch() {
@@ -1687,6 +1709,8 @@
                 document.getElementById('replaceDateDisplay').textContent = date;
 
                 document.getElementById('replaceModalOverlay').classList.add('active');
+                // Добавляем запись в историю для обработки свайпа назад
+                history.pushState({ modal: true }, '');
                 hapticMedium();
             }
 
@@ -1723,6 +1747,7 @@
                 const resetDateInput = document.getElementById('resetDateInput');
                 resetDateInput.value = formatDate(new Date());
                 resetModal.classList.add('active');
+                history.pushState({ modal: true }, '');
             }
 
             function executeReset() {
@@ -1779,12 +1804,18 @@
                 }
 
                 overlay.classList.add('active');
-                // Настраиваем прокрутку модалки
-                setTimeout(setupModalScroll, 300);
+                // Добавляем запись в историю для обработки свайпа назад
+                history.pushState({ modal: true }, '');
             }
 
-            function closeModal() { document.getElementById('modalOverlay').classList.remove('active');
-                editingId = null; }
+            function closeModal() {
+                document.getElementById('modalOverlay').classList.remove('active');
+                editingId = null;
+                // Убираем запись из истории, если она есть
+                if (history.state && history.state.modal) {
+                    history.back();
+                }
+            }
 
             function saveModal() {
                 const titleInput = document.getElementById('modalTitleInput');
@@ -2161,42 +2192,6 @@
                 pullStartY = 0;
             }, { passive: true });
 
-            // ---- АВТОПРОКРУТКА МОДАЛКИ ПРИ ФОКУСЕ ----
-            function setupModalScroll() {
-                const modal = document.querySelector('.modal');
-                const inputs = modal.querySelectorAll('input, textarea');
-
-                inputs.forEach(input => {
-                    // Убираем старые обработчики
-                    input.removeEventListener('focus', handleFocus);
-                    input.addEventListener('focus', handleFocus);
-                });
-            }
-
-            function handleFocus(e) {
-                const input = e.target;
-                setTimeout(() => {
-                    // Прокручиваем основное окно
-                    const rect = input.getBoundingClientRect();
-                    const windowHeight = window.innerHeight;
-                    if (rect.bottom > windowHeight - 50) {
-                        window.scrollBy(0, rect.bottom - windowHeight + 50);
-                    }
-
-                    // Прокручиваем модалку
-                    const modal = input.closest('.modal');
-                    if (modal) {
-                        const modalRect = modal.getBoundingClientRect();
-                        if (rect.bottom > modalRect.bottom) {
-                            modal.scrollTop += rect.bottom - modalRect.bottom + 20;
-                        }
-                        if (rect.top < modalRect.top) {
-                            modal.scrollTop -= modalRect.top - rect.top + 20;
-                        }
-                    }
-                }, 350);
-            }
-
             document.addEventListener('DOMContentLoaded', function() {
                 const isFirst = isFirstLaunch();
                 loadFromStorage();
@@ -2222,6 +2217,7 @@
                     dateInput.value = formatDate(currentDate);
                 }
 
+                // ---- НАСТРОЙКА ОБРАБОТЧИКОВ МОДАЛОК ----
                 document.getElementById('modalClose').addEventListener('click', closeModal);
                 document.getElementById('modalCancel').addEventListener('click', closeModal);
                 document.getElementById('modalSave').addEventListener('click', saveModal);
@@ -2257,6 +2253,11 @@
                     }
                 });
 
+                // ---- ОБРАБОТКА СВАЙПА НАЗАД (закрытие модалки) ----
+                setupBackHandler();
+                setupKeyboardHandler();
+
+                // ---- КНОПКИ ----
                 document.getElementById('addCardBtn').addEventListener('click', function() { openModal(null); });
                 document.getElementById('resetBtn').addEventListener('click', resetAllCards);
                 document.getElementById('todayBtn').addEventListener('click', function() {
@@ -2303,7 +2304,7 @@
                     exportData();
                 });
 
-                // ---- УНИВЕРСАЛЬНЫЙ ОБРАБОТЧИК ДЛЯ "ИЗ ФАЙЛА" ----
+                // ---- ЗАГРУЗКА ИЗ ФАЙЛА (исправленная) ----
                 document.getElementById('loadFileBtn').addEventListener('click', function(e) {
                     e.preventDefault();
                     triggerFileInput();
