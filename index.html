@@ -19,6 +19,7 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html,
         body {
             background: #eef2f6;
             padding: 10px 8px 30px;
@@ -28,6 +29,13 @@
             align-items: center;
             overscroll-behavior: contain;
             background-color: #1e2a3a;
+        }
+
+        body.modal-open {
+            overflow: hidden;
+            position: fixed;
+            width: 100%;
+            height: 100%;
         }
 
         .app-container {
@@ -567,6 +575,8 @@
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
             overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
+            touch-action: none;
         }
         .modal-overlay.active {
             display: flex;
@@ -595,6 +605,7 @@
             -webkit-overflow-scrolling: touch;
             transform: translateY(0);
             transition: transform 0.3s ease;
+            touch-action: pan-y;
         }
 
         .modal-header {
@@ -1436,12 +1447,44 @@
             let swipingCard = null;
             let searchQuery = '';
 
-            // ---- УНИВЕРСАЛЬНЫЙ СПОСОБ ЗАГРУЗКИ ФАЙЛА ----
+            // ---- ЗАГРУЗКА ФАЙЛА (УНИВЕРСАЛЬНАЯ) ----
             function triggerFileInput() {
                 const fileInput = document.getElementById('fileInput');
-                // Сбрасываем значение, чтобы событие change срабатывало
+
+                // Пробуем showOpenFilePicker (современные браузеры)
+                if (window.showOpenFilePicker) {
+                    window.showOpenFilePicker({
+                            types: [{
+                                description: 'JSON или HTML',
+                                accept: {
+                                    'application/json': ['.json'],
+                                    'text/html': ['.html', '.htm']
+                                }
+                            }],
+                            multiple: false
+                        })
+                        .then(async (handles) => {
+                            try {
+                                const file = await handles[0].getFile();
+                                importData(file);
+                            } catch (err) {
+                                console.warn('Ошибка получения файла:', err);
+                                fallbackFileInput();
+                            }
+                        })
+                        .catch((err) => {
+                            console.warn('showOpenFilePicker отменён:', err);
+                            fallbackFileInput();
+                        });
+                } else {
+                    fallbackFileInput();
+                }
+            }
+
+            function fallbackFileInput() {
+                const fileInput = document.getElementById('fileInput');
                 fileInput.value = '';
-                // Небольшая задержка для WebView
+                // Для WebView нужна небольшая задержка
                 setTimeout(() => {
                     fileInput.click();
                 }, 100);
@@ -1492,49 +1535,91 @@
                 reader.readAsText(file);
             }
 
-            // ---- ОБРАБОТКА СВАЙПА НАЗАД ДЛЯ ЗАКРЫТИЯ МОДАЛКИ ----
+            // ---- УПРАВЛЕНИЕ МОДАЛКАМИ (с блокировкой скролла) ----
+            function openModal(item) {
+                hapticMedium();
+                const overlay = document.getElementById('modalOverlay');
+                document.getElementById('modalTitle').textContent = item ? 'Редактирование' : 'Новая карточка';
+                document.getElementById('modalTitleInput').value = item ? item.title || '' : '';
+                document.getElementById('modalActionInput').value = item ? item.lastAction || '' : '';
+                document.getElementById('modalDateInput').value = item ? item.lastDate || '' : '';
+                document.getElementById('modalMileageInput').value = item && item.lastMileage !== null ? item.lastMileage :
+                    '';
+                document.getElementById('modalIntervalKm').value = item && item.intervalKm !== null ? item.intervalKm : '';
+                document.getElementById('modalIntervalMonths').value = item && item.intervalMonths !== null ? item
+                    .intervalMonths : '';
+                document.getElementById('modalNoteInput').value = item ? item.note || '' : '';
+                document.getElementById('modalDeleteBtn').style.display = item ? 'block' : 'none';
+                editingId = item ? item.id : null;
+
+                if (!item) {
+                    const mileageInput = document.getElementById('mileageInput');
+                    const dateInput = document.getElementById('dateInput');
+                    document.getElementById('modalMileageInput').value = parseInt(mileageInput.value) || 0;
+                    document.getElementById('modalDateInput').value = dateInput.value || formatDate(new Date());
+                }
+
+                // Блокируем скролл тела
+                document.body.classList.add('modal-open');
+                overlay.classList.add('active');
+                // Добавляем запись в историю для обработки свайпа назад
+                history.pushState({ modal: true }, '');
+            }
+
+            function closeModal() {
+                const overlay = document.getElementById('modalOverlay');
+                overlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                editingId = null;
+                // Убираем запись из истории
+                if (history.state && history.state.modal) {
+                    history.back();
+                }
+            }
+
+            // ---- ОБРАБОТКА СВАЙПА НАЗАД ----
             function setupBackHandler() {
                 window.addEventListener('popstate', function(e) {
-                    const modal = document.getElementById('modalOverlay');
-                    if (modal.classList.contains('active')) {
+                    const overlay = document.getElementById('modalOverlay');
+                    if (overlay.classList.contains('active')) {
                         e.preventDefault();
                         closeModal();
                     }
                 });
             }
 
-            // ---- ОБРАБОТКА КЛАВИАТУРЫ ДЛЯ МОДАЛКИ ----
-            function setupKeyboardHandler() {
-                const overlay = document.getElementById('modalOverlay');
-                const modal = document.querySelector('.modal');
+            // ---- ОСТАЛЬНЫЕ ФУНКЦИИ (без изменений) ----
+            function showReplaceModal(cardId) {
+                const item = itemsData.find(i => i.id === cardId);
+                if (!item) return;
+                replaceCardId = cardId;
+                document.getElementById('replaceCardTitle').textContent = item.title;
 
-                // При открытии сохраняем текущую позицию
-                let lastScrollY = 0;
+                const mileageInput = document.getElementById('mileageInput');
+                const dateInput = document.getElementById('dateInput');
+                const mileage = parseInt(mileageInput.value) || 0;
+                const date = dateInput.value || formatDate(new Date());
 
-                const observer = new MutationObserver(() => {
-                    if (overlay.classList.contains('active')) {
-                        lastScrollY = window.scrollY;
-                        // Добавляем обработчик изменения размера окна (клавиатура)
-                        window.addEventListener('resize', handleKeyboardOpen);
-                    } else {
-                        window.removeEventListener('resize', handleKeyboardOpen);
-                        // Возвращаем позицию
-                        window.scrollTo(0, lastScrollY);
-                    }
-                });
+                document.getElementById('replaceMileageDisplay').textContent = mileage;
+                document.getElementById('replaceDateDisplay').textContent = date;
 
-                observer.observe(overlay, { attributes: true, attributeFilter: ['class'] });
+                openModalExternal('replace');
+                hapticMedium();
+            }
 
-                function handleKeyboardOpen() {
-                    const activeElement = document.activeElement;
-                    if (activeElement && (activeElement.tagName === 'INPUT' || activeElement.tagName === 'TEXTAREA')) {
-                        const rect = activeElement.getBoundingClientRect();
-                        const windowHeight = window.innerHeight;
-                        if (rect.bottom > windowHeight - 20) {
-                            const scrollY = rect.bottom - windowHeight + 20;
-                            window.scrollBy(0, scrollY);
-                        }
-                    }
+            function openModalExternal(type) {
+                const overlay = document.getElementById(type === 'replace' ? 'replaceModalOverlay' : 'resetModalOverlay');
+                document.body.classList.add('modal-open');
+                overlay.classList.add('active');
+                history.pushState({ modal: true }, '');
+            }
+
+            function closeModalExternal(type) {
+                const overlay = document.getElementById(type === 'replace' ? 'replaceModalOverlay' : 'resetModalOverlay');
+                overlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                if (history.state && history.state.modal) {
+                    history.back();
                 }
             }
 
@@ -1694,26 +1779,6 @@
                 return maxScore;
             }
 
-            function showReplaceModal(cardId) {
-                const item = itemsData.find(i => i.id === cardId);
-                if (!item) return;
-                replaceCardId = cardId;
-                document.getElementById('replaceCardTitle').textContent = item.title;
-
-                const mileageInput = document.getElementById('mileageInput');
-                const dateInput = document.getElementById('dateInput');
-                const mileage = parseInt(mileageInput.value) || 0;
-                const date = dateInput.value || formatDate(new Date());
-
-                document.getElementById('replaceMileageDisplay').textContent = mileage;
-                document.getElementById('replaceDateDisplay').textContent = date;
-
-                document.getElementById('replaceModalOverlay').classList.add('active');
-                // Добавляем запись в историю для обработки свайпа назад
-                history.pushState({ modal: true }, '');
-                hapticMedium();
-            }
-
             function executeReplace() {
                 if (!replaceCardId) return;
                 const item = itemsData.find(i => i.id === replaceCardId);
@@ -1730,6 +1795,7 @@
 
                 originalItemsData = JSON.parse(JSON.stringify(itemsData));
                 document.getElementById('replaceModalOverlay').classList.remove('active');
+                document.body.classList.remove('modal-open');
                 replaceCardId = null;
 
                 const mileageVal = parseInt(mileageInput.value) || 0;
@@ -1746,8 +1812,7 @@
                 const resetModal = document.getElementById('resetModalOverlay');
                 const resetDateInput = document.getElementById('resetDateInput');
                 resetDateInput.value = formatDate(new Date());
-                resetModal.classList.add('active');
-                history.pushState({ modal: true }, '');
+                openModalExternal('reset');
             }
 
             function executeReset() {
@@ -1770,6 +1835,7 @@
 
                 originalItemsData = JSON.parse(JSON.stringify(itemsData));
                 document.getElementById('resetModalOverlay').classList.remove('active');
+                document.body.classList.remove('modal-open');
 
                 const dateInput = document.getElementById('dateInput');
                 const parts = dateInput.value.split('-');
@@ -1778,43 +1844,6 @@
                 saveToStorage();
                 showNotification('🔄 Все карточки сброшены! Пробег = 0, дата начала отсчёта: ' + resetDate);
                 hapticMedium();
-            }
-
-            function openModal(item) {
-                hapticMedium();
-                const overlay = document.getElementById('modalOverlay');
-                document.getElementById('modalTitle').textContent = item ? 'Редактирование' : 'Новая карточка';
-                document.getElementById('modalTitleInput').value = item ? item.title || '' : '';
-                document.getElementById('modalActionInput').value = item ? item.lastAction || '' : '';
-                document.getElementById('modalDateInput').value = item ? item.lastDate || '' : '';
-                document.getElementById('modalMileageInput').value = item && item.lastMileage !== null ? item.lastMileage :
-                    '';
-                document.getElementById('modalIntervalKm').value = item && item.intervalKm !== null ? item.intervalKm : '';
-                document.getElementById('modalIntervalMonths').value = item && item.intervalMonths !== null ? item
-                    .intervalMonths : '';
-                document.getElementById('modalNoteInput').value = item ? item.note || '' : '';
-                document.getElementById('modalDeleteBtn').style.display = item ? 'block' : 'none';
-                editingId = item ? item.id : null;
-
-                if (!item) {
-                    const mileageInput = document.getElementById('mileageInput');
-                    const dateInput = document.getElementById('dateInput');
-                    document.getElementById('modalMileageInput').value = parseInt(mileageInput.value) || 0;
-                    document.getElementById('modalDateInput').value = dateInput.value || formatDate(new Date());
-                }
-
-                overlay.classList.add('active');
-                // Добавляем запись в историю для обработки свайпа назад
-                history.pushState({ modal: true }, '');
-            }
-
-            function closeModal() {
-                document.getElementById('modalOverlay').classList.remove('active');
-                editingId = null;
-                // Убираем запись из истории, если она есть
-                if (history.state && history.state.modal) {
-                    history.back();
-                }
             }
 
             function saveModal() {
@@ -2217,7 +2246,7 @@
                     dateInput.value = formatDate(currentDate);
                 }
 
-                // ---- НАСТРОЙКА ОБРАБОТЧИКОВ МОДАЛОК ----
+                // ---- НАСТРОЙКА МОДАЛОК ----
                 document.getElementById('modalClose').addEventListener('click', closeModal);
                 document.getElementById('modalCancel').addEventListener('click', closeModal);
                 document.getElementById('modalSave').addEventListener('click', saveModal);
@@ -2227,35 +2256,34 @@
                 });
 
                 document.getElementById('resetModalClose').addEventListener('click', function() {
-                    document.getElementById('resetModalOverlay').classList.remove('active');
+                    closeModalExternal('reset');
                 });
                 document.getElementById('resetModalCancel').addEventListener('click', function() {
-                    document.getElementById('resetModalOverlay').classList.remove('active');
+                    closeModalExternal('reset');
                 });
                 document.getElementById('resetModalConfirm').addEventListener('click', executeReset);
                 document.getElementById('resetModalOverlay').addEventListener('click', function(e) {
-                    if (e.target === this) this.classList.remove('active');
+                    if (e.target === this) closeModalExternal('reset');
                 });
 
                 document.getElementById('replaceModalClose').addEventListener('click', function() {
-                    document.getElementById('replaceModalOverlay').classList.remove('active');
+                    closeModalExternal('replace');
                     replaceCardId = null;
                 });
                 document.getElementById('replaceModalCancel').addEventListener('click', function() {
-                    document.getElementById('replaceModalOverlay').classList.remove('active');
+                    closeModalExternal('replace');
                     replaceCardId = null;
                 });
                 document.getElementById('replaceModalConfirm').addEventListener('click', executeReplace);
                 document.getElementById('replaceModalOverlay').addEventListener('click', function(e) {
                     if (e.target === this) {
-                        this.classList.remove('active');
+                        closeModalExternal('replace');
                         replaceCardId = null;
                     }
                 });
 
-                // ---- ОБРАБОТКА СВАЙПА НАЗАД (закрытие модалки) ----
+                // ---- ОБРАБОТКА СВАЙПА НАЗАД ----
                 setupBackHandler();
-                setupKeyboardHandler();
 
                 // ---- КНОПКИ ----
                 document.getElementById('addCardBtn').addEventListener('click', function() { openModal(null); });
@@ -2304,7 +2332,7 @@
                     exportData();
                 });
 
-                // ---- ЗАГРУЗКА ИЗ ФАЙЛА (исправленная) ----
+                // ---- ЗАГРУЗКА ИЗ ФАЙЛА ----
                 document.getElementById('loadFileBtn').addEventListener('click', function(e) {
                     e.preventDefault();
                     triggerFileInput();
