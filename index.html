@@ -139,6 +139,10 @@
         .action-btn.file-input-btn {
             position: relative;
             overflow: hidden;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 5px;
         }
         .action-btn.file-input-btn input[type="file"] {
             position: absolute;
@@ -569,12 +573,13 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 20px;
             animation: fadeIn 0.2s ease;
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            overflow: hidden;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         .modal-overlay.active {
             display: flex;
@@ -597,12 +602,12 @@
             max-width: 500px;
             width: 100%;
             padding: 24px;
+            margin-top: 20px;
+            margin-bottom: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-height: 75vh;
+            max-height: 80vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
-            transform: translateY(0);
-            transition: transform 0.3s ease;
         }
 
         .modal-header {
@@ -615,7 +620,6 @@
             background: white;
             z-index: 10;
             padding-bottom: 8px;
-            border-bottom: 1px solid #f0f2f5;
         }
         .modal-header h2 {
             font-size: 18px;
@@ -1447,17 +1451,11 @@
             let searchQuery = '';
             let isModalOpen = false;
 
-            // ---- ЗАГРУЗКА ФАЙЛА (РАБОТАЕТ В APK) ----
+            // ---- ЗАГРУЗКА ФАЙЛА (ОРИГИНАЛЬНЫЙ РАБОЧИЙ СПОСОБ) ----
             function triggerFileInput() {
                 const fileInput = document.getElementById('fileInput');
                 fileInput.value = '';
-                // Прямой вызов click() без задержки для WebView
-                try {
-                    fileInput.click();
-                } catch (e) {
-                    console.warn('Ошибка клика по fileInput:', e);
-                    showNotification('❌ Выбор файла недоступен');
-                }
+                fileInput.click();
             }
 
             function importData(file) {
@@ -2329,7 +2327,7 @@
                     exportData();
                 });
 
-                // ---- ЗАГРУЗКА ИЗ ФАЙЛА (ОРИГИНАЛЬНЫЙ РАБОЧИЙ СПОСОБ) ----
+                // ---- ЗАГРУЗКА ИЗ ФАЙЛА (ПРЯМОЙ ВЫЗОВ) ----
                 document.getElementById('loadFileBtn').addEventListener('click', function(e) {
                     e.preventDefault();
                     triggerFileInput();
