@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
@@ -11,7 +11,6 @@
     <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABaElEQVR4nO2XvUoDQRDHZ/MB+AY2KUKKFFZKVikErVSC+BGkS5HCQhBFQbTQRhC0SGERBMVOSxWLTQgkbxDsTIlgIVe5bHa3dG/3LnP7h6C4u8nsz/82s7M7IQzD0DRgSVr3uqdcPp97D7VodvsADb5AGuZ5FCS0JgYJrmIXdINJjjHnYZ8DA50P5nFS8gpvjR7Qz/ADmFYEeiwyyF2NJC2Pj9vwQQN6GQrAtBq4ZVFABsct6KET9KMl58pWQHEoAFNWCY8r3bjUjKlGEBpmcZ8qQzIECnPWAL+u/MVbRZycABv4DFr0sTd9QvT1pU85tzUC+YWM2E3rsI5BLnaDzq3Aoj4GGfTg0lV0DwWU4QxAh1cX0DmZ0B3LsCILaCGHpE5JRjO6USc9P68i15xq7TOkS2RlnvsoF7YwXfOi7z8HaRusRZ3AZ1eUYcyhAmkS5Nco4gH9j+fiEjQNaLW/1wZNg34BmNFAbPzNAE8AAAAASUVORK5CYII=">
 
     <style>
-        /* ----- RESET & BASE ----- */
         * {
             margin: 0;
             padding: 0;
@@ -36,13 +35,12 @@
             width: 100%;
         }
 
-        /* ----- ШАПКА ----- */
         .header {
             background: #1e2a3a;
             color: white;
             padding: 14px 16px 12px;
             border-radius: 20px 20px 0 0;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.12);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.12);
             display: flex;
             align-items: center;
             justify-content: space-between;
@@ -71,7 +69,6 @@
             letter-spacing: -0.3px;
             line-height: 1.2;
         }
-
         .header-logo h1 small {
             font-weight: 400;
             font-size: 10px;
@@ -86,13 +83,13 @@
         }
 
         .action-btn {
-            background: rgba(255,255,255,0.12);
+            background: rgba(255, 255, 255, 0.12);
             color: white;
             border: none;
             border-radius: 30px;
-            padding: 8px 14px;
-            min-height: 38px;
-            font-size: 11px;
+            padding: 8px 16px;
+            min-height: 42px;
+            font-size: 12px;
             font-weight: 500;
             cursor: pointer;
             transition: 0.15s;
@@ -145,12 +142,11 @@
             cursor: pointer;
         }
 
-        /* ----- ПАНЕЛЬ УПРАВЛЕНИЯ ----- */
         .control-panel {
             background: white;
             padding: 12px 14px;
             border-radius: 0 0 20px 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
             margin-bottom: 14px;
             display: flex;
             flex-direction: column;
@@ -175,7 +171,7 @@
 
         .control-row input[type="number"] {
             padding: 8px 10px;
-            min-height: 38px;
+            min-height: 42px;
             border: 1.5px solid #d0d7de;
             border-radius: 30px;
             font-size: 15px;
@@ -192,7 +188,7 @@
 
         .control-row input[type="date"] {
             padding: 8px 10px;
-            min-height: 38px;
+            min-height: 42px;
             border: 1.5px solid #d0d7de;
             border-radius: 30px;
             font-size: 13px;
@@ -208,7 +204,7 @@
 
         .control-row input[type="text"] {
             padding: 6px 10px;
-            min-height: 34px;
+            min-height: 38px;
             border: 1.5px solid #d0d7de;
             border-radius: 30px;
             font-size: 13px;
@@ -228,16 +224,16 @@
             background: #eef2f6;
             border: none;
             border-radius: 30px;
-            padding: 6px 12px;
-            min-height: 36px;
-            font-size: 12px;
+            padding: 6px 14px;
+            min-height: 40px;
+            font-size: 13px;
             font-weight: 600;
             color: #1e2a3a;
             cursor: pointer;
             transition: 0.15s;
             touch-action: manipulation;
             user-select: none;
-            min-width: 38px;
+            min-width: 44px;
             display: flex;
             align-items: center;
             gap: 3px;
@@ -247,8 +243,8 @@
             transform: scale(0.95);
         }
         .step-btn svg {
-            width: 12px;
-            height: 12px;
+            width: 14px;
+            height: 14px;
             fill: none;
             stroke: currentColor;
             stroke-width: 2.5;
@@ -261,9 +257,9 @@
             color: white;
             border: none;
             border-radius: 30px;
-            padding: 6px 10px;
-            min-height: 36px;
-            font-size: 11px;
+            padding: 6px 12px;
+            min-height: 40px;
+            font-size: 12px;
             font-weight: 600;
             cursor: pointer;
             transition: 0.15s;
@@ -278,8 +274,8 @@
             transform: scale(0.95);
         }
         .btn-today svg {
-            width: 14px;
-            height: 14px;
+            width: 16px;
+            height: 16px;
             fill: none;
             stroke: currentColor;
             stroke-width: 2;
@@ -293,7 +289,7 @@
             border: none;
             border-radius: 30px;
             padding: 6px 12px;
-            min-height: 34px;
+            min-height: 38px;
             font-size: 13px;
             font-weight: 600;
             cursor: pointer;
@@ -318,7 +314,6 @@
             stroke-linejoin: round;
         }
 
-        /* ----- КАРТОЧКИ ----- */
         .card-list {
             display: flex;
             flex-direction: column;
@@ -331,7 +326,7 @@
             background: white;
             border-radius: 16px;
             padding: 12px 14px 10px;
-            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04);
             border-left: 5px solid #6c7a8a;
             transition: transform 0.2s ease, opacity 0.2s ease, max-height 0.3s ease;
             display: flex;
@@ -349,9 +344,15 @@
             display: none;
         }
 
-        .card.border-ok { border-left-color: #28a745; }
-        .card.border-warn { border-left-color: #ffc107; }
-        .card.border-crit { border-left-color: #dc3545; }
+        .card.border-ok {
+            border-left-color: #28a745;
+        }
+        .card.border-warn {
+            border-left-color: #ffc107;
+        }
+        .card.border-crit {
+            border-left-color: #dc3545;
+        }
 
         .card-top {
             display: flex;
@@ -440,7 +441,6 @@
             color: #721c24;
         }
 
-        /* ----- ОСНОВНАЯ ИНФОРМАЦИЯ + ВЕРТИКАЛЬНЫЕ БАРЫ ----- */
         .card-body-row {
             display: flex;
             align-items: stretch;
@@ -482,7 +482,6 @@
             display: inline-block;
         }
 
-        /* ----- ВЕРТИКАЛЬНЫЕ ПРОГРЕСС-БАРЫ ----- */
         .progress-vertical-group {
             display: flex;
             gap: 6px;
@@ -552,7 +551,6 @@
             pointer-events: none;
         }
 
-        /* ----- МОДАЛЬНЫЕ ОКНА ----- */
         .modal-overlay {
             display: none;
             position: fixed;
@@ -560,7 +558,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            background: rgba(0,0,0,0.5);
+            background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             justify-content: center;
             align-items: center;
@@ -574,8 +572,14 @@
         }
 
         @keyframes fadeIn {
-            from { opacity: 0; transform: scale(0.95); }
-            to { opacity: 1; transform: scale(1); }
+            from {
+                opacity: 0;
+                transform: scale(0.95);
+            }
+            to {
+                opacity: 1;
+                transform: scale(1);
+            }
         }
 
         .modal {
@@ -584,11 +588,12 @@
             max-width: 500px;
             width: 100%;
             padding: 24px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-height: 90vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
+
         .modal-header {
             display: flex;
             justify-content: space-between;
@@ -648,6 +653,38 @@
         .modal-field input[type="number"]::-webkit-inner-spin-button {
             -webkit-appearance: none;
         }
+        .modal-field textarea {
+            width: 100%;
+            padding: 10px 12px;
+            min-height: 80px;
+            border: 1.5px solid #d0d7de;
+            border-radius: 12px;
+            font-size: 14px;
+            background: #f9fafb;
+            transition: 0.2s;
+            font-family: inherit;
+            resize: vertical;
+        }
+        .modal-field textarea:focus {
+            border-color: #1e2a3a;
+            outline: none;
+            background: white;
+        }
+
+        .modal-row {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        .modal-row .modal-field {
+            flex: 1;
+            min-width: 80px;
+            max-width: 48%;
+        }
+        .modal-row .modal-field input {
+            width: 100%;
+            min-width: 60px;
+        }
 
         .modal-actions {
             display: flex;
@@ -694,7 +731,6 @@
             background: #a71d2a;
         }
 
-        /* ----- УВЕДОМЛЕНИЕ ----- */
         .notification-toast {
             position: fixed;
             bottom: 20px;
@@ -707,7 +743,7 @@
             border-radius: 30px;
             font-size: 14px;
             font-weight: 500;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.3);
             z-index: 2000;
             opacity: 0;
             transition: all 0.3s ease;
@@ -720,7 +756,6 @@
             transform: translateX(-50%) scale(1);
         }
 
-        /* ----- PULL-TO-REFRESH ИНДИКАТОР ----- */
         .pull-indicator {
             text-align: center;
             color: #6a7a8a;
@@ -734,14 +769,17 @@
             opacity: 1;
         }
 
-        /* ----- СВАЙП-ЗАМЕНА (анимация) ----- */
         .card.swiping {
             transform: translateX(-100%);
             opacity: 0;
             transition: transform 0.3s ease, opacity 0.3s ease;
         }
+        .card.swiping-right {
+            transform: translateX(100%);
+            opacity: 0;
+            transition: transform 0.3s ease, opacity 0.3s ease;
+        }
 
-        /* ----- ФУТЕР ----- */
         .footer {
             margin-top: 20px;
             font-size: 12px;
@@ -753,12 +791,26 @@
             width: 100%;
             line-height: 1.6;
         }
-        .footer .line1 { display: block; height: 6px; }
-        .footer .line2 { display: block; font-weight: 700; color: #1e2a3a; }
-        .footer .line3 { display: block; color: #4a5a6a; }
-        .footer .line4 { display: block; font-weight: 600; color: #1e2a3a; margin-top: 2px; }
+        .footer .line1 {
+            display: block;
+            height: 6px;
+        }
+        .footer .line2 {
+            display: block;
+            font-weight: 700;
+            color: #1e2a3a;
+        }
+        .footer .line3 {
+            display: block;
+            color: #4a5a6a;
+        }
+        .footer .line4 {
+            display: block;
+            font-weight: 600;
+            color: #1e2a3a;
+            margin-top: 2px;
+        }
 
-        /* ----- АДАПТИВ ----- */
         @media (max-width: 600px) {
             .header {
                 flex-direction: column;
@@ -771,9 +823,9 @@
             .header-actions .action-btn {
                 flex: 1;
                 justify-content: center;
-                font-size: 10px;
-                padding: 6px 10px;
-                min-height: 36px;
+                font-size: 11px;
+                padding: 6px 12px;
+                min-height: 38px;
             }
             .header-actions .action-btn svg {
                 width: 14px;
@@ -799,46 +851,46 @@
                 width: 120px !important;
                 font-size: 12px;
                 padding: 6px 8px;
-                min-height: 34px;
+                min-height: 38px;
             }
             .control-row input[type="number"] {
                 width: 75px;
                 font-size: 14px;
                 padding: 6px 8px;
-                min-height: 34px;
+                min-height: 38px;
             }
             .control-row input[type="text"] {
-                min-height: 34px;
+                min-height: 38px;
                 font-size: 12px;
                 padding: 6px 10px;
             }
             .step-btn {
-                font-size: 11px;
-                padding: 4px 8px;
-                min-height: 32px;
-                min-width: 32px;
+                font-size: 12px;
+                padding: 4px 10px;
+                min-height: 36px;
+                min-width: 36px;
             }
             .step-btn svg {
-                width: 11px;
-                height: 11px;
+                width: 12px;
+                height: 12px;
             }
             .btn-today {
-                font-size: 10px;
-                padding: 4px 8px;
-                min-height: 32px;
-            }
-            .btn-today svg {
-                width: 12px;
-                height: 12px;
-            }
-            .btn-clear-search {
                 font-size: 11px;
                 padding: 4px 10px;
-                min-height: 34px;
+                min-height: 36px;
+            }
+            .btn-today svg {
+                width: 14px;
+                height: 14px;
+            }
+            .btn-clear-search {
+                font-size: 12px;
+                padding: 4px 10px;
+                min-height: 36px;
             }
             .btn-clear-search svg {
-                width: 12px;
-                height: 12px;
+                width: 14px;
+                height: 14px;
             }
             .card-info {
                 grid-template-columns: 1fr 1fr;
@@ -871,16 +923,37 @@
                 flex: 1;
                 min-width: 60px;
                 text-align: center;
-                font-size: 12px;
+                font-size: 13px;
                 padding: 8px 16px;
                 min-height: 40px;
+            }
+            .modal-row {
+                flex-direction: row;
+                flex-wrap: wrap;
+                gap: 6px;
+            }
+            .modal-row .modal-field {
+                min-width: 60px;
+                max-width: 48%;
+            }
+            .modal-row .modal-field input {
+                min-width: 50px;
+                font-size: 12px;
+                padding: 6px 8px;
+                min-height: 36px;
             }
             .footer {
                 font-size: 11px;
             }
-            .footer .line2 { font-size: 11px; }
-            .footer .line3 { font-size: 10px; }
-            .footer .line4 { font-size: 11px; }
+            .footer .line2 {
+                font-size: 11px;
+            }
+            .footer .line3 {
+                font-size: 10px;
+            }
+            .footer .line4 {
+                font-size: 11px;
+            }
             .card-icon-btn {
                 min-height: 32px;
                 min-width: 32px;
@@ -914,46 +987,46 @@
                 width: 120px !important;
                 font-size: 11px;
                 padding: 4px 6px;
-                min-height: 30px;
+                min-height: 34px;
             }
             .control-row input[type="number"] {
                 width: 65px;
                 font-size: 13px;
                 padding: 4px 6px;
-                min-height: 30px;
+                min-height: 34px;
             }
             .control-row input[type="text"] {
-                min-height: 30px;
+                min-height: 34px;
                 font-size: 11px;
                 padding: 4px 8px;
             }
             .step-btn {
-                font-size: 10px;
-                padding: 3px 6px;
-                min-height: 28px;
-                min-width: 28px;
+                font-size: 11px;
+                padding: 3px 8px;
+                min-height: 32px;
+                min-width: 32px;
             }
             .step-btn svg {
-                width: 10px;
-                height: 10px;
+                width: 11px;
+                height: 11px;
             }
             .btn-today {
-                font-size: 9px;
-                padding: 3px 8px;
-                min-height: 28px;
-            }
-            .btn-today svg {
-                width: 11px;
-                height: 11px;
-            }
-            .btn-clear-search {
                 font-size: 10px;
                 padding: 3px 8px;
-                min-height: 30px;
+                min-height: 32px;
+            }
+            .btn-today svg {
+                width: 12px;
+                height: 12px;
+            }
+            .btn-clear-search {
+                font-size: 11px;
+                padding: 3px 8px;
+                min-height: 32px;
             }
             .btn-clear-search svg {
-                width: 11px;
-                height: 11px;
+                width: 12px;
+                height: 12px;
             }
             .control-row label {
                 font-size: 13px;
@@ -962,207 +1035,216 @@
             .control-row {
                 gap: 3px;
             }
-            .footer .line2 { font-size: 10px; }
-            .footer .line3 { font-size: 9px; }
-            .footer .line4 { font-size: 10px; }
+            .modal-row .modal-field {
+                min-width: 50px;
+                max-width: 48%;
+            }
+            .modal-row .modal-field input {
+                min-width: 40px;
+                font-size: 11px;
+                padding: 4px 6px;
+                min-height: 32px;
+            }
+            .footer .line2 {
+                font-size: 10px;
+            }
+            .footer .line3 {
+                font-size: 9px;
+            }
+            .footer .line4 {
+                font-size: 10px;
+            }
         }
 
-        /* ----- Для WebView ----- */
         * {
             -webkit-touch-callout: none;
             -webkit-user-select: none;
             user-select: none;
         }
-        input, textarea {
+        input,
+        textarea {
             -webkit-user-select: text;
             user-select: text;
         }
     </style>
 </head>
 <body>
-<div class="app-container">
-    <!-- ШАПКА -->
-    <div class="header">
-        <div class="header-logo">
-            <img src="https://toplogos.ru/images/thumbs/preview-logo-uaz.jpg" alt="Логотип УАЗ" loading="lazy">
-            <h1>
-                УАЗ Патриот
-                <small>Журнал ТО • Универсальный</small>
-            </h1>
+    <div class="app-container">
+        <div class="header">
+            <div class="header-logo">
+                <img src="https://toplogos.ru/images/thumbs/preview-logo-uaz.jpg" alt="Логотип УАЗ" loading="lazy">
+                <h1>
+                    УАЗ Патриот
+                    <small>Журнал ТО • Универсальный</small>
+                </h1>
+            </div>
+            <div class="header-actions">
+                <button class="action-btn add-btn" id="addCardBtn" type="button">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
+                    Добавить
+                </button>
+                <button class="action-btn reset-btn" id="resetBtn" type="button">
+                    <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
+                    Сброс
+                </button>
+                <button class="action-btn" id="saveFileBtn" type="button">
+                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
+                    В файл
+                </button>
+                <button class="action-btn file-input-btn" id="loadFileBtn" type="button">
+                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
+                    Из файла
+                    <input type="file" id="fileInput" accept=".json,.html,.htm">
+                </button>
+            </div>
         </div>
-        <div class="header-actions">
-            <button class="action-btn add-btn" id="addCardBtn" type="button">
-                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                Добавить
-            </button>
-            <button class="action-btn reset-btn" id="resetBtn" type="button">
-                <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                Сброс
-            </button>
-            <button class="action-btn" id="saveFileBtn" type="button">
-                <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
-                В файл
-            </button>
-            <button class="action-btn file-input-btn" id="loadFileBtn" type="button">
-                <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                Из файла
-                <input type="file" id="fileInput" accept=".json,.html,.htm">
-            </button>
+
+        <div class="control-panel">
+            <div class="control-row">
+                <label style="min-width:32px;font-size:16px;font-weight:700;color:#6a7a8a;">📅</label>
+                <input type="date" id="dateInput" style="width:120px;font-size:13px;">
+                <button class="step-btn" id="dateDec" type="button">&lt;1 мес</button>
+                <button class="btn-today" id="todayBtn" type="button">
+                    <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+                    Сегодня
+                </button>
+                <button class="step-btn" id="dateInc" type="button">&gt;1 мес</button>
+            </div>
+            <div class="control-row">
+                <label style="min-width:70px;font-size:18px;font-weight:700;">📟 Пробег</label>
+                <input type="number" id="mileageInput" value="0" step="1000" min="0" style="width:100px;">
+                <button class="step-btn" id="mileageDec" type="button">
+                    <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
+                </button>
+                <button class="step-btn" id="mileageInc" type="button">
+                    <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
+                </button>
+            </div>
+            <div class="control-row" style="gap:4px;">
+                <label style="min-width:70px;font-size:16px;font-weight:700;color:#1e2a3a;">🔍 Поиск</label>
+                <input type="text" id="searchInput" placeholder="Фильтр по названию..." style="flex:1;min-width:80px;">
+                <button class="btn-clear-search" id="clearSearchBtn" type="button">
+                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    Очистить
+                </button>
+            </div>
+        </div>
+
+        <div class="pull-indicator" id="pullIndicator">⬇ Потяните для обновления</div>
+
+        <div class="card-list" id="cardContainer"></div>
+
+        <div class="footer">
+            <span class="line1">&nbsp;</span>
+            <span class="line2">Официальное руководство по эксплуатации автомобилей</span>
+            <span class="line3">УАЗ Патриот и УАЗ Пикап (модели УАЗ-3163, УАЗ-23632)</span>
+            <span class="line4">Издание 2019 г.</span>
         </div>
     </div>
 
-    <!-- ПАНЕЛЬ УПРАВЛЕНИЯ -->
-    <div class="control-panel">
-        <div class="control-row">
-            <label style="min-width:32px;font-size:16px;font-weight:700;color:#6a7a8a;">📅</label>
-            <input type="date" id="dateInput" style="width:120px;font-size:13px;">
-            <button class="step-btn" id="dateDec" type="button">&lt;1м</button>
-            <button class="btn-today" id="todayBtn" type="button">
-                <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
-                Сегодня
-            </button>
-            <button class="step-btn" id="dateInc" type="button">&gt;1м</button>
-        </div>
-        <div class="control-row">
-            <label style="min-width:70px;font-size:18px;font-weight:700;">📟 Пробег</label>
-            <input type="number" id="mileageInput" value="0" step="1000" min="0" style="width:100px;">
-            <button class="step-btn" id="mileageDec" type="button">
-                <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
-            </button>
-            <button class="step-btn" id="mileageInc" type="button">
-                <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
-            </button>
-        </div>
-        <div class="control-row" style="gap:4px;">
-            <label style="min-width:70px;font-size:16px;font-weight:700;color:#1e2a3a;">🔍 Поиск</label>
-            <input type="text" id="searchInput" placeholder="Фильтр по названию..." style="flex:1;min-width:80px;">
-            <button class="btn-clear-search" id="clearSearchBtn" type="button">
-                <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                Очистить
-            </button>
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2 id="modalTitle">Редактирование</h2>
+                <button class="modal-close" id="modalClose">&times;</button>
+            </div>
+            <div id="modalBody">
+                <div class="modal-field">
+                    <label>Название</label>
+                    <input type="text" id="modalTitleInput" placeholder="Например: Масло в двигателе">
+                </div>
+                <div class="modal-field">
+                    <label>Последнее действие</label>
+                    <input type="text" id="modalActionInput" placeholder="Что было сделано">
+                </div>
+                <div class="modal-row">
+                    <div class="modal-field">
+                        <label>Дата замены</label>
+                        <input type="date" id="modalDateInput">
+                    </div>
+                    <div class="modal-field">
+                        <label>Пробег при замене (км)</label>
+                        <input type="number" id="modalMileageInput" placeholder="Пробег" min="0" step="100">
+                    </div>
+                </div>
+                <div class="modal-row">
+                    <div class="modal-field">
+                        <label>Регламент (км)</label>
+                        <input type="number" id="modalIntervalKm" placeholder="Например: 15000" min="0" step="1000">
+                    </div>
+                    <div class="modal-field">
+                        <label>Регламент (месяцы)</label>
+                        <input type="number" id="modalIntervalMonths" placeholder="Например: 12" min="0" step="1">
+                    </div>
+                </div>
+                <div class="modal-field">
+                    <label>Примечание</label>
+                    <textarea id="modalNoteInput" rows="3" placeholder="Дополнительная информация"></textarea>
+                </div>
+            </div>
+            <div class="modal-actions">
+                <button class="btn-delete-modal" id="modalDeleteBtn" style="display:none;">Удалить</button>
+                <button class="btn-cancel" id="modalCancel">Отмена</button>
+                <button class="btn-save" id="modalSave">Сохранить</button>
+            </div>
         </div>
     </div>
 
-    <!-- PULL-TO-REFRESH ИНДИКАТОР -->
-    <div class="pull-indicator" id="pullIndicator">⬇ Потяните для обновления</div>
-
-    <!-- КАРТОЧКИ -->
-    <div class="card-list" id="cardContainer"></div>
-
-    <!-- ФУТЕР -->
-    <div class="footer">
-        <span class="line1">&nbsp;</span>
-        <span class="line2">Официальное руководство по эксплуатации автомобилей</span>
-        <span class="line3">УАЗ Патриот и УАЗ Пикап (модели УАЗ-3163, УАЗ-23632)</span>
-        <span class="line4">Издание 2019 г.</span>
-    </div>
-</div>
-
-<!-- МОДАЛЬНОЕ ОКНО ОСНОВНОЕ -->
-<div class="modal-overlay" id="modalOverlay">
-    <div class="modal">
-        <div class="modal-header">
-            <h2 id="modalTitle">Редактирование</h2>
-            <button class="modal-close" id="modalClose">&times;</button>
-        </div>
-        <div id="modalBody">
-            <div class="modal-field">
-                <label>Название</label>
-                <input type="text" id="modalTitleInput" placeholder="Например: Масло в двигателе">
+    <div class="modal-overlay" id="resetModalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>🔄 Сброс всех карточек</h2>
+                <button class="modal-close" id="resetModalClose">&times;</button>
+            </div>
+            <div style="margin-bottom:16px;color:#4a5a6a;font-size:14px;line-height:1.6;">
+                Укажите дату, с которой начинается отсчёт ресурса по срокам.
+                <br><br>
+                <strong>Пробег при замене</strong> будет установлен в <strong>0</strong> для всех карточек.
+                <br>
+                <strong>Последнее действие</strong> будет очищено.
+                <br><br>
+                <strong>Пробег в панели управления</strong> будет сброшен в <strong>0</strong>.
             </div>
             <div class="modal-field">
-                <label>Последнее действие</label>
-                <input type="text" id="modalActionInput" placeholder="Что было сделано">
+                <label>Дата начала отсчёта</label>
+                <input type="date" id="resetDateInput">
             </div>
-            <div class="modal-field">
-                <label>Дата замены</label>
-                <input type="date" id="modalDateInput">
+            <div class="modal-actions">
+                <button class="btn-cancel" id="resetModalCancel">Отмена</button>
+                <button class="btn-save" id="resetModalConfirm">✅ Подтвердить сброс</button>
             </div>
-            <div class="modal-field">
-                <label>Пробег при замене (км)</label>
-                <input type="number" id="modalMileageInput" placeholder="Пробег" min="0" step="100">
-            </div>
-            <div class="modal-field">
-                <label>Регламент (км)</label>
-                <input type="number" id="modalIntervalKm" placeholder="Например: 15000" min="0" step="1000">
-            </div>
-            <div class="modal-field">
-                <label>Регламент (месяцы)</label>
-                <input type="number" id="modalIntervalMonths" placeholder="Например: 12" min="0" step="1">
-            </div>
-            <div class="modal-field">
-                <label>Примечание</label>
-                <input type="text" id="modalNoteInput" placeholder="Дополнительная информация">
-            </div>
-        </div>
-        <div class="modal-actions">
-            <button class="btn-delete-modal" id="modalDeleteBtn" style="display:none;">🗑️ Удалить</button>
-            <button class="btn-cancel" id="modalCancel">Отмена</button>
-            <button class="btn-save" id="modalSave">💾 Сохранить</button>
         </div>
     </div>
-</div>
 
-<!-- МОДАЛЬНОЕ ОКНО ДЛЯ СБРОСА -->
-<div class="modal-overlay" id="resetModalOverlay">
-    <div class="modal">
-        <div class="modal-header">
-            <h2>🔄 Сброс всех карточек</h2>
-            <button class="modal-close" id="resetModalClose">&times;</button>
-        </div>
-        <div style="margin-bottom:16px;color:#4a5a6a;font-size:14px;line-height:1.6;">
-            Укажите дату, с которой начинается отсчёт ресурса по срокам.
-            <br><br>
-            <strong>Пробег при замене</strong> будет установлен в <strong>0</strong> для всех карточек.
-            <br>
-            <strong>Последнее действие</strong> будет очищено.
-            <br><br>
-            <strong>Пробег в панели управления</strong> будет сброшен в <strong>0</strong>.
-        </div>
-        <div class="modal-field">
-            <label>Дата начала отсчёта</label>
-            <input type="date" id="resetDateInput">
-        </div>
-        <div class="modal-actions">
-            <button class="btn-cancel" id="resetModalCancel">Отмена</button>
-            <button class="btn-save" id="resetModalConfirm">✅ Подтвердить сброс</button>
+    <div class="modal-overlay" id="replaceModalOverlay">
+        <div class="modal">
+            <div class="modal-header">
+                <h2>Заменено сегодня?</h2>
+                <button class="modal-close" id="replaceModalClose">&times;</button>
+            </div>
+            <div style="margin-bottom:16px;color:#4a5a6a;font-size:14px;line-height:1.6;">
+                Подтвердите замену для карточки:
+                <br><br>
+                <strong id="replaceCardTitle">—</strong>
+                <br><br>
+                Будет установлено:
+                <br>
+                📅 Дата замены: <strong id="replaceDateDisplay">—</strong>
+                <br>
+                📟 Пробег при замене: <strong id="replaceMileageDisplay">—</strong> км
+            </div>
+            <div class="modal-actions">
+                <button class="btn-cancel" id="replaceModalCancel">Отмена</button>
+                <button class="btn-save" id="replaceModalConfirm">✅ Подтвердить замену</button>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- МОДАЛЬНОЕ ОКНО ДЛЯ ПОДТВЕРЖДЕНИЯ ЗАМЕНЫ (свайп) -->
-<div class="modal-overlay" id="replaceModalOverlay">
-    <div class="modal">
-        <div class="modal-header">
-            <h2>Заменено сегодня?</h2>
-            <button class="modal-close" id="replaceModalClose">&times;</button>
-        </div>
-        <div style="margin-bottom:16px;color:#4a5a6a;font-size:14px;line-height:1.6;">
-            Подтвердите замену для карточки:
-            <br><br>
-            <strong id="replaceCardTitle">—</strong>
-            <br><br>
-            Будет установлено:
-            <br>
-            📅 Дата замены: <strong id="replaceDateDisplay">—</strong>
-            <br>
-            📟 Пробег при замене: <strong id="replaceMileageDisplay">—</strong> км
-        </div>
-        <div class="modal-actions">
-            <button class="btn-cancel" id="replaceModalCancel">Отмена</button>
-            <button class="btn-save" id="replaceModalConfirm">✅ Подтвердить замену</button>
-        </div>
-    </div>
-</div>
+    <div class="notification-toast" id="notificationToast"></div>
 
-<!-- УВЕДОМЛЕНИЕ -->
-<div class="notification-toast" id="notificationToast"></div>
-
-<script>
-    (function() {
-        // ----- БАЗА ДАННЫХ -----
-        let itemsData = [
-            {
+    <script>
+        (function() {
+            let itemsData = [{
                 id: 'akpp',
                 title: 'Масло в АКПП',
                 lastAction: '',
@@ -1171,8 +1253,7 @@
                 intervalKm: 45000,
                 intervalMonths: 48,
                 note: 'Рекомендуется замена масла в автоматической коробке передач каждые 45 000 км или раз в 4 года. Используйте только рекомендованные жидкости.'
-            },
-            {
+            }, {
                 id: 'engineOil',
                 title: 'Масло моторное',
                 lastAction: '',
@@ -1181,8 +1262,7 @@
                 intervalKm: 15000,
                 intervalMonths: 12,
                 note: 'Замена моторного масла и масляного фильтра каждые 15 000 км или раз в год. Рекомендуется масло 5W-40 или 10W-40 по классификации API не ниже SL.'
-            },
-            {
+            }, {
                 id: 'airFilter',
                 title: 'Воздушный фильтр',
                 lastAction: '',
@@ -1191,8 +1271,7 @@
                 intervalKm: 15000,
                 intervalMonths: 12,
                 note: 'Замена воздушного фильтра каждые 15 000 км или при сильном загрязнении. В пыльных условиях интервал сокращается до 7 500 км.'
-            },
-            {
+            }, {
                 id: 'cabinFilter',
                 title: 'Салонный фильтр',
                 lastAction: '',
@@ -1201,8 +1280,7 @@
                 intervalKm: 20000,
                 intervalMonths: 12,
                 note: 'Рекомендуется замена салонного фильтра раз в год или каждые 20 000 км для обеспечения качественной очистки воздуха в салоне.'
-            },
-            {
+            }, {
                 id: 'axles',
                 title: 'Масло в мостах (перед/зад)',
                 lastAction: '',
@@ -1211,8 +1289,7 @@
                 intervalKm: 45000,
                 intervalMonths: 36,
                 note: 'Замена масла в переднем и заднем мостах каждые 45 000 км или раз в 3 года. Используйте трансмиссионное масло 75W-90 GL-5.'
-            },
-            {
+            }, {
                 id: 'transferCase',
                 title: 'Масло в раздатке',
                 lastAction: '',
@@ -1221,8 +1298,7 @@
                 intervalKm: 45000,
                 intervalMonths: 36,
                 note: 'Замена масла в раздаточной коробке каждые 45 000 км или раз в 3 года. Объём зависит от модели раздатки.'
-            },
-            {
+            }, {
                 id: 'gur',
                 title: 'Масло в ГУР',
                 lastAction: '',
@@ -1231,8 +1307,7 @@
                 intervalKm: 45000,
                 intervalMonths: 24,
                 note: 'Замена жидкости гидроусилителя руля каждые 45 000 км или раз в 2 года. Используйте ATF Dexron III.'
-            },
-            {
+            }, {
                 id: 'coolant',
                 title: 'Охлаждающая жидкость',
                 lastAction: '',
@@ -1241,8 +1316,7 @@
                 intervalKm: 60000,
                 intervalMonths: 36,
                 note: 'Замена антифриза каждые 60 000 км или раз в 3 года. Используйте G12+ или G12++ с интервалом замены согласно рекомендациям.'
-            },
-            {
+            }, {
                 id: 'brakeFluid',
                 title: 'Тормозная жидкость',
                 lastAction: '',
@@ -1251,8 +1325,7 @@
                 intervalKm: 60000,
                 intervalMonths: 24,
                 note: 'Замена тормозной жидкости раз в 2 года или при пробеге 60 000 км. Используйте DOT-4. Влажность ухудшает свойства жидкости.'
-            },
-            {
+            }, {
                 id: 'sparkPlugs',
                 title: 'Свечи зажигания',
                 lastAction: '',
@@ -1261,8 +1334,7 @@
                 intervalKm: 45000,
                 intervalMonths: 48,
                 note: 'Замена свечей зажигания каждые 45 000 км или раз в 4 года. Для двигателей ЗМЗ-409 рекомендуется зазор 0,7–0,8 мм.'
-            },
-            {
+            }, {
                 id: 'fuelFilter',
                 title: 'Топливный фильтр',
                 lastAction: '',
@@ -1271,8 +1343,7 @@
                 intervalKm: 40000,
                 intervalMonths: 36,
                 note: 'Замена топливного фильтра каждые 40 000 км или раз в 3 года. Защищает топливную систему от загрязнений.'
-            },
-            {
+            }, {
                 id: 'timingChain',
                 title: 'Цепь ГРМ',
                 lastAction: '',
@@ -1281,8 +1352,7 @@
                 intervalKm: 50000,
                 intervalMonths: null,
                 note: 'Срочная диагностика цепи ГРМ при пробеге 40 000 – 50 000 км. Проверка натяжения, износ звёздочек и успокоителей.'
-            },
-            {
+            }, {
                 id: 'driveBelt',
                 title: 'Приводной ремень',
                 lastAction: '',
@@ -1291,8 +1361,7 @@
                 intervalKm: null,
                 intervalMonths: null,
                 note: 'Проверка состояния приводного ремня по признакам износа: трещины, износ ручьёв, натяжение. При обнаружении дефектов — замена.'
-            },
-            {
+            }, {
                 id: 'rollers',
                 title: 'Ролики (натяжной/обводные)',
                 lastAction: '',
@@ -1301,8 +1370,7 @@
                 intervalKm: null,
                 intervalMonths: null,
                 note: 'Проверка состояния натяжного и обводных роликов. Признаки: шум, люфт, неравномерный износ. При обнаружении — замена.'
-            },
-            {
+            }, {
                 id: 'tieRods',
                 title: 'Рулевые наконечники',
                 lastAction: '',
@@ -1311,8 +1379,7 @@
                 intervalKm: 40000,
                 intervalMonths: 48,
                 note: 'Проверка рулевых наконечников при пробеге 40 000 км. При наличии люфта или повреждений пыльников — замена.'
-            },
-            {
+            }, {
                 id: 'kingpins',
                 title: 'Шкворни (поворотные кулаки)',
                 lastAction: '',
@@ -1321,473 +1388,526 @@
                 intervalKm: 45000,
                 intervalMonths: 48,
                 note: 'Проверка шкворней поворотных кулаков при пробеге 45 000 км. Смазка через пресс-масленки, проверка люфта.'
+            }, {
+                id: 'brakePads',
+                title: 'Тормозные колодки и диски',
+                lastAction: '',
+                lastDate: null,
+                lastMileage: 0,
+                intervalKm: 40000,
+                intervalMonths: null,
+                note: 'Проверка состояния тормозных колодок и дисков при пробеге 40 000 км. При износе колодок менее 3 мм или появлении рисок на дисках — замена.'
+            }, {
+                id: 'maintenance',
+                title: 'ТО (плановое обслуживание)',
+                lastAction: '',
+                lastDate: null,
+                lastMileage: 0,
+                intervalKm: 15000,
+                intervalMonths: 12,
+                note: 'Плановое техническое обслуживание каждые 15 000 км или раз в год. Включает замену масла, фильтров, проверку всех систем и узлов.'
+            }];
+
+            let nextId = 100;
+            let originalItemsData = JSON.parse(JSON.stringify(itemsData));
+            const STORAGE_KEY = 'uaz_patriot_data';
+            const SCROLL_KEY = 'uaz_patriot_scroll';
+            let currentMileage = 0;
+            let currentDate = new Date();
+            let isUpdatingFromCard = false;
+            let editingId = null;
+            let replaceCardId = null;
+            let touchStartX = 0;
+            let touchStartY = 0;
+            let swipingCard = null;
+            let searchQuery = '';
+
+            function isFirstLaunch() {
+                return !localStorage.getItem(STORAGE_KEY);
             }
-        ];
 
-        let nextId = 100;
-        let originalItemsData = JSON.parse(JSON.stringify(itemsData));
-        const STORAGE_KEY = 'uaz_patriot_data';
-        const SCROLL_KEY = 'uaz_patriot_scroll';
-        let currentMileage = 0;
-        let currentDate = new Date();
-        let isUpdatingFromCard = false;
-        let editingId = null;
-        let replaceCardId = null;
-        let touchStartX = 0;
-        let touchStartY = 0;
-        let swipingCard = null;
-        let searchQuery = '';
-
-        // ----- ПРОВЕРКА ПЕРВОГО ОТКРЫТИЯ -----
-        function isFirstLaunch() {
-            return !localStorage.getItem(STORAGE_KEY);
-        }
-
-        // ----- ЗАГРУЗКА ИЗ localStorage -----
-        function loadFromStorage() {
-            try {
-                const saved = localStorage.getItem(STORAGE_KEY);
-                if (saved) {
-                    const data = JSON.parse(saved);
-                    if (data.items && Array.isArray(data.items)) {
-                        itemsData = data.items;
-                        data.items.forEach(item => {
-                            if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
-                                const num = parseInt(item.id);
-                                if (num >= nextId) nextId = num + 1;
-                            }
-                        });
-                        originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                    }
-                    if (data.currentMileage !== undefined) currentMileage = data.currentMileage;
-                    if (data.currentDate) {
-                        const parts = data.currentDate.split('-');
-                        currentDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-                    }
-                } else {
-                    // Первый запуск — устанавливаем дату замены = текущая
-                    const today = new Date();
-                    const todayStr = formatDate(today);
-                    itemsData.forEach(item => {
-                        item.lastDate = todayStr;
-                        item.lastMileage = 0;
-                    });
-                    originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                    currentDate = today;
-                    currentMileage = 0;
-                    saveToStorage();
-                }
-            } catch (e) { console.warn('Ошибка загрузки из localStorage', e); }
-        }
-
-        // ----- СОХРАНЕНИЕ -----
-        function saveToStorage() {
-            try {
-                const data = { items: itemsData, currentMileage: currentMileage, currentDate: formatDate(currentDate) };
-                localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
-                originalItemsData = JSON.parse(JSON.stringify(itemsData));
-            } catch (e) {
-                console.warn('Ошибка сохранения в localStorage', e);
-            }
-        }
-
-        function showNotification(text) {
-            const toast = document.getElementById('notificationToast');
-            toast.textContent = text;
-            toast.classList.add('show');
-            clearTimeout(toast._timeout);
-            toast._timeout = setTimeout(() => toast.classList.remove('show'), 2500);
-            if (navigator.vibrate) navigator.vibrate(10);
-        }
-
-        function parseDate(str) { if (!str) return null; const parts = str.split('-'); return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2])); }
-        function monthsDiff(d1, d2) { if (!d1 || !d2) return null; return (d2.getFullYear() - d1.getFullYear()) * 12 + (d2.getMonth() - d1.getMonth()); }
-        function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
-        function formatDate(d) { if (!d) return ''; const y = d.getFullYear(); const m = String(d.getMonth() + 1).padStart(2, '0'); const day = String(d.getDate()).padStart(2, '0'); return `${y}-${m}-${day}`; }
-        function formatDateTime(d) { if (!d) return ''; return formatDate(d) + '_' + String(d.getHours()).padStart(2,'0') + '-' + String(d.getMinutes()).padStart(2,'0') + '-' + String(d.getSeconds()).padStart(2,'0'); }
-        function addMonths(date, months) { const d = new Date(date); d.setMonth(d.getMonth() + months); return d; }
-        function generateId() { return String(nextId++); }
-        function hapticMedium() { if (navigator.vibrate) navigator.vibrate(15); }
-
-        function calcStatusAndProgress(item, mileage, today) {
-            const { lastDate, lastMileage, intervalKm, intervalMonths } = item;
-            let status = { badge: 'ok', label: '🟢 ОК', score: 0 };
-            let progressKm = 0, progressMonths = 0, hasDataKm = false, hasDataMonths = false;
-            if (lastMileage !== null && intervalKm && mileage !== null && mileage !== undefined) {
-                const diff = Math.max(0, mileage - lastMileage);
-                progressKm = clamp((diff / intervalKm) * 100, 0, 200);
-                hasDataKm = true;
-            }
-            if (lastDate && intervalMonths) {
-                const lastDt = parseDate(lastDate);
-                if (lastDt && today) {
-                    const diffMonths = monthsDiff(lastDt, today);
-                    if (diffMonths !== null && diffMonths >= 0) {
-                        progressMonths = clamp((diffMonths / intervalMonths) * 100, 0, 200);
-                        hasDataMonths = true;
-                    }
-                }
-            }
-            let maxScore = 0;
-            if (hasDataKm) { if (progressKm > 100) maxScore = Math.max(maxScore, 2); else if (progressKm > 80) maxScore = Math.max(maxScore, 1); }
-            if (hasDataMonths) { if (progressMonths > 100) maxScore = Math.max(maxScore, 2); else if (progressMonths > 80) maxScore = Math.max(maxScore, 1); }
-            if (!hasDataKm && !hasDataMonths) status = { badge: 'warn', label: '⚠️ Нет данных', score: 1 };
-            else if (maxScore === 2) status = { badge: 'crit', label: '🔴 Срочно заменить!', score: 2 };
-            else if (maxScore === 1) status = { badge: 'warn', label: '🟡 Скоро замена', score: 1 };
-            else status = { badge: 'ok', label: '🟢 ОК', score: 0 };
-            return { status, progressKm, progressMonths, hasDataKm, hasDataMonths };
-        }
-
-        function isFieldChanged(item, field) {
-            const original = originalItemsData.find(i => i.id === item.id);
-            if (!original) return false;
-            let currentVal, originalVal;
-            if (field === 'lastDate') { currentVal = item.lastDate || null; originalVal = original.lastDate || null; }
-            else if (field === 'lastMileage') { currentVal = (item.lastMileage !== null && item.lastMileage !== undefined) ? item.lastMileage : null; originalVal = (original.lastMileage !== null && original.lastMileage !== undefined) ? original.lastMileage : null; }
-            else if (field === 'lastAction') { currentVal = item.lastAction || ''; originalVal = original.lastAction || ''; }
-            else return false;
-            return currentVal !== originalVal;
-        }
-
-        function getSortScore(item, mileage, today) {
-            const { lastDate, lastMileage, intervalKm, intervalMonths } = item;
-            let maxScore = 0;
-            let hasData = false;
-            if (lastMileage !== null && intervalKm && mileage !== null && mileage !== undefined) {
-                const diff = Math.max(0, mileage - lastMileage);
-                const progress = clamp((diff / intervalKm) * 100, 0, 200);
-                if (progress > 100) { maxScore = Math.max(maxScore, 2); hasData = true; }
-                else if (progress > 80) { maxScore = Math.max(maxScore, 1); hasData = true; }
-                else { maxScore = Math.max(maxScore, 0); hasData = true; }
-            }
-            if (lastDate && intervalMonths) {
-                const lastDt = parseDate(lastDate);
-                if (lastDt && today) {
-                    const diffMonths = monthsDiff(lastDt, today);
-                    if (diffMonths !== null && diffMonths >= 0) {
-                        const progress = clamp((diffMonths / intervalMonths) * 100, 0, 200);
-                        if (progress > 100) { maxScore = Math.max(maxScore, 2); hasData = true; }
-                        else if (progress > 80) { maxScore = Math.max(maxScore, 1); hasData = true; }
-                        else { maxScore = Math.max(maxScore, 0); hasData = true; }
-                    }
-                }
-            }
-            if (!hasData) return 0.5;
-            return maxScore;
-        }
-
-        // ----- ЗАМЕНА СЕГОДНЯ (свайп) -----
-        function showReplaceModal(cardId) {
-            const item = itemsData.find(i => i.id === cardId);
-            if (!item) return;
-            replaceCardId = cardId;
-            document.getElementById('replaceCardTitle').textContent = item.title;
-            
-            const mileageInput = document.getElementById('mileageInput');
-            const dateInput = document.getElementById('dateInput');
-            const mileage = parseInt(mileageInput.value) || 0;
-            const date = dateInput.value || formatDate(new Date());
-            
-            document.getElementById('replaceMileageDisplay').textContent = mileage;
-            document.getElementById('replaceDateDisplay').textContent = date;
-            
-            document.getElementById('replaceModalOverlay').classList.add('active');
-            hapticMedium();
-        }
-
-        function executeReplace() {
-            if (!replaceCardId) return;
-            const item = itemsData.find(i => i.id === replaceCardId);
-            if (!item) return;
-            
-            const mileageInput = document.getElementById('mileageInput');
-            const dateInput = document.getElementById('dateInput');
-            const mileage = parseInt(mileageInput.value) || 0;
-            const date = dateInput.value || formatDate(new Date());
-            
-            item.lastDate = date;
-            item.lastMileage = mileage;
-            item.lastAction = 'Заменено ' + date;
-            
-            originalItemsData = JSON.parse(JSON.stringify(itemsData));
-            document.getElementById('replaceModalOverlay').classList.remove('active');
-            replaceCardId = null;
-            
-            const mileageVal = parseInt(mileageInput.value) || 0;
-            const parts = dateInput.value.split('-');
-            const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-            renderTable(mileageVal, today, false);
-            saveToStorage();
-            showNotification('✅ Заменено! Дата: ' + date + ', пробег: ' + mileage + ' км');
-            hapticMedium();
-        }
-
-        // ----- СБРОС -----
-        function resetAllCards() {
-            hapticMedium();
-            const resetModal = document.getElementById('resetModalOverlay');
-            const resetDateInput = document.getElementById('resetDateInput');
-            resetDateInput.value = formatDate(new Date());
-            resetModal.classList.add('active');
-        }
-
-        function executeReset() {
-            const resetDateInput = document.getElementById('resetDateInput');
-            const resetDate = resetDateInput.value;
-            if (!resetDate) { showNotification('❌ Выберите дату начала отсчёта!'); return; }
-            const selectedDate = parseDate(resetDate);
-            const today = new Date();
-            if (selectedDate && selectedDate > today) { showNotification('❌ Дата не может быть в будущем!'); return; }
-            
-            itemsData.forEach(item => {
-                item.lastAction = '';
-                item.lastDate = resetDate;
-                item.lastMileage = 0;
-            });
-            
-            const mileageInput = document.getElementById('mileageInput');
-            mileageInput.value = 0;
-            currentMileage = 0;
-            
-            originalItemsData = JSON.parse(JSON.stringify(itemsData));
-            document.getElementById('resetModalOverlay').classList.remove('active');
-            
-            const dateInput = document.getElementById('dateInput');
-            const parts = dateInput.value.split('-');
-            const todayDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-            renderTable(0, todayDate, false);
-            saveToStorage();
-            showNotification('🔄 Все карточки сброшены! Пробег = 0, дата начала отсчёта: ' + resetDate);
-            hapticMedium();
-        }
-
-        // ----- МОДАЛЬНОЕ ОКНО -----
-        function openModal(item) {
-            hapticMedium();
-            const overlay = document.getElementById('modalOverlay');
-            document.getElementById('modalTitle').textContent = item ? 'Редактирование' : '➕ Новая карточка';
-            document.getElementById('modalTitleInput').value = item ? item.title || '' : '';
-            document.getElementById('modalActionInput').value = item ? item.lastAction || '' : '';
-            document.getElementById('modalDateInput').value = item ? item.lastDate || '' : '';
-            document.getElementById('modalMileageInput').value = item && item.lastMileage !== null ? item.lastMileage : '';
-            document.getElementById('modalIntervalKm').value = item && item.intervalKm !== null ? item.intervalKm : '';
-            document.getElementById('modalIntervalMonths').value = item && item.intervalMonths !== null ? item.intervalMonths : '';
-            document.getElementById('modalNoteInput').value = item ? item.note || '' : '';
-            document.getElementById('modalDeleteBtn').style.display = item ? 'block' : 'none';
-            editingId = item ? item.id : null;
-            overlay.classList.add('active');
-        }
-
-        function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); editingId = null; }
-
-        function saveModal() {
-            const titleInput = document.getElementById('modalTitleInput');
-            const title = titleInput.value.trim();
-            if (!title) { showNotification('❌ Введите название!'); return; }
-            const itemData = {
-                title: title,
-                lastAction: document.getElementById('modalActionInput').value.trim() || '',
-                lastDate: document.getElementById('modalDateInput').value || null,
-                lastMileage: document.getElementById('modalMileageInput').value ? parseInt(document.getElementById('modalMileageInput').value) : null,
-                intervalKm: document.getElementById('modalIntervalKm').value ? parseInt(document.getElementById('modalIntervalKm').value) : null,
-                intervalMonths: document.getElementById('modalIntervalMonths').value ? parseInt(document.getElementById('modalIntervalMonths').value) : null,
-                note: document.getElementById('modalNoteInput').value.trim() || ''
-            };
-            if (editingId) {
-                const existing = itemsData.find(i => i.id === editingId);
-                if (existing) Object.assign(existing, itemData);
-            } else {
-                itemData.id = generateId();
-                itemsData.push(itemData);
-            }
-            closeModal();
-            originalItemsData = JSON.parse(JSON.stringify(itemsData));
-            const mileageInput = document.getElementById('mileageInput');
-            const dateInput = document.getElementById('dateInput');
-            const mileage = parseInt(mileageInput.value) || 0;
-            const parts = dateInput.value.split('-');
-            const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-            renderTable(mileage, today, false);
-            saveToStorage();
-            showNotification('✅ Сохранено!');
-            hapticMedium();
-        }
-
-        function deleteModalItem() {
-            if (!editingId) return;
-            if (!confirm('Удалить эту карточку?')) return;
-            itemsData = itemsData.filter(i => i.id !== editingId);
-            originalItemsData = JSON.parse(JSON.stringify(itemsData));
-            closeModal();
-            const mileageInput = document.getElementById('mileageInput');
-            const dateInput = document.getElementById('dateInput');
-            const mileage = parseInt(mileageInput.value) || 0;
-            const parts = dateInput.value.split('-');
-            const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-            renderTable(mileage, today, false);
-            saveToStorage();
-            showNotification('🗑️ Удалено!');
-            hapticMedium();
-        }
-
-        // ----- ЭКСПОРТ ДАННЫХ -----
-        function exportData() {
-            const dataToSave = {
-                version: '2.0',
-                exportedAt: new Date().toISOString(),
-                items: itemsData,
-                currentMileage: currentMileage,
-                currentDate: formatDate(currentDate)
-            };
-            const json = JSON.stringify(dataToSave, null, 2);
-            const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
-            const url = URL.createObjectURL(blob);
-            const a = document.createElement('a');
-            const now = new Date();
-            a.download = `uaz_patriot_data_${formatDateTime(now)}.json`;
-            a.href = url;
-            document.body.appendChild(a);
-            a.click();
-            document.body.removeChild(a);
-            URL.revokeObjectURL(url);
-            showNotification('✅ Данные экспортированы в JSON!');
-            hapticMedium();
-        }
-
-        // ----- ИМПОРТ ДАННЫХ -----
-        function importData(file) {
-            const reader = new FileReader();
-            reader.onload = function(e) {
+            function loadFromStorage() {
                 try {
-                    const data = JSON.parse(e.target.result);
-                    if (data.items && Array.isArray(data.items)) {
-                        itemsData = data.items;
-                        data.items.forEach(item => {
-                            if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
-                                const num = parseInt(item.id);
-                                if (num >= nextId) nextId = num + 1;
-                            }
-                        });
-                        if (data.currentMileage !== undefined) {
-                            currentMileage = data.currentMileage;
-                            document.getElementById('mileageInput').value = currentMileage;
+                    const saved = localStorage.getItem(STORAGE_KEY);
+                    if (saved) {
+                        const data = JSON.parse(saved);
+                        if (data.items && Array.isArray(data.items)) {
+                            itemsData = data.items;
+                            data.items.forEach(item => {
+                                if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
+                                    const num = parseInt(item.id);
+                                    if (num >= nextId) nextId = num + 1;
+                                }
+                            });
+                            originalItemsData = JSON.parse(JSON.stringify(itemsData));
                         }
+                        if (data.currentMileage !== undefined) currentMileage = data.currentMileage;
                         if (data.currentDate) {
-                            currentDate = parseDate(data.currentDate) || new Date();
-                            document.getElementById('dateInput').value = formatDate(currentDate);
+                            const parts = data.currentDate.split('-');
+                            currentDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
                         }
+                    } else {
+                        const today = new Date();
+                        const todayStr = formatDate(today);
+                        itemsData.forEach(item => {
+                            item.lastDate = todayStr;
+                            item.lastMileage = 0;
+                        });
                         originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                        currentDate = today;
+                        currentMileage = 0;
                         saveToStorage();
-                        const mileageInput = document.getElementById('mileageInput');
-                        const dateInput = document.getElementById('dateInput');
-                        const mileage = parseInt(mileageInput.value) || 0;
-                        const parts = dateInput.value.split('-');
-                        const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-                        renderTable(mileage, today, false);
-                        showNotification('✅ Данные импортированы!');
-                        hapticMedium();
-                        return;
                     }
-                    showNotification('❌ Файл не содержит данных!');
-                } catch (err) {
-                    console.error('Ошибка чтения файла:', err);
-                    showNotification('❌ Ошибка чтения файла!');
-                }
-            };
-            reader.onerror = function() {
-                showNotification('❌ Ошибка чтения файла!');
-            };
-            reader.readAsText(file);
-        }
+                } catch (e) { console.warn('Ошибка загрузки из localStorage', e); }
+            }
 
-        // ----- ПОИСК И ФИЛЬТРАЦИЯ -----
-        function filterCards(query) {
-            searchQuery = query.toLowerCase().trim();
-            const cards = document.querySelectorAll('.card');
-            cards.forEach(card => {
-                const title = card.querySelector('.card-title');
-                if (!title) return;
-                const titleText = title.textContent.toLowerCase();
-                if (searchQuery === '' || titleText.includes(searchQuery)) {
-                    card.classList.remove('hidden');
+            function saveToStorage() {
+                try {
+                    const data = { items: itemsData, currentMileage: currentMileage, currentDate: formatDate(
+                            currentDate) };
+                    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+                    originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                } catch (e) {
+                    console.warn('Ошибка сохранения в localStorage', e);
+                }
+            }
+
+            function showNotification(text) {
+                const toast = document.getElementById('notificationToast');
+                toast.textContent = text;
+                toast.classList.add('show');
+                clearTimeout(toast._timeout);
+                toast._timeout = setTimeout(() => toast.classList.remove('show'), 2500);
+                if (navigator.vibrate) navigator.vibrate(10);
+            }
+
+            function parseDate(str) { if (!str) return null; const parts = str.split('-'); return new Date(parseInt(parts[0]),
+                    parseInt(parts[1]) - 1, parseInt(parts[2])); }
+
+            function monthsDiff(d1, d2) { if (!d1 || !d2) return null; return (d2.getFullYear() - d1.getFullYear()) * 12 + (
+                    d2.getMonth() - d1.getMonth()); }
+
+            function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
+
+            function formatDate(d) { if (!d) return ''; const y = d.getFullYear(); const m = String(d.getMonth() + 1)
+                    .padStart(2, '0'); const day = String(d.getDate()).padStart(2, '0'); return `${y}-${m}-${day}`; }
+
+            function formatDateTime(d) { if (!d) return ''; return formatDate(d) + '_' + String(d.getHours()).padStart(2,
+                    '0') + '-' + String(d.getMinutes()).padStart(2, '0') + '-' + String(d.getSeconds()).padStart(2,
+                    '0'); }
+
+            function addMonths(date, months) { const d = new Date(date); d.setMonth(d.getMonth() + months); return d; }
+
+            function generateId() { return String(nextId++); }
+
+            function hapticMedium() { if (navigator.vibrate) navigator.vibrate(15); }
+
+            function calcStatusAndProgress(item, mileage, today) {
+                const { lastDate, lastMileage, intervalKm, intervalMonths } = item;
+                let status = { badge: 'ok', label: '🟢 ОК', score: 0 };
+                let progressKm = 0,
+                    progressMonths = 0,
+                    hasDataKm = false,
+                    hasDataMonths = false;
+                if (lastMileage !== null && intervalKm && mileage !== null && mileage !== undefined) {
+                    const diff = Math.max(0, mileage - lastMileage);
+                    progressKm = clamp((diff / intervalKm) * 100, 0, 200);
+                    hasDataKm = true;
+                }
+                if (lastDate && intervalMonths) {
+                    const lastDt = parseDate(lastDate);
+                    if (lastDt && today) {
+                        const diffMonths = monthsDiff(lastDt, today);
+                        if (diffMonths !== null && diffMonths >= 0) {
+                            progressMonths = clamp((diffMonths / intervalMonths) * 100, 0, 200);
+                            hasDataMonths = true;
+                        }
+                    }
+                }
+                let maxScore = 0;
+                if (hasDataKm) { if (progressKm > 100) maxScore = Math.max(maxScore, 2);
+                    else if (progressKm > 80) maxScore = Math.max(maxScore, 1); }
+                if (hasDataMonths) { if (progressMonths > 100) maxScore = Math.max(maxScore, 2);
+                    else if (progressMonths > 80) maxScore = Math.max(maxScore, 1); }
+                if (!hasDataKm && !hasDataMonths) status = { badge: 'warn', label: '⚠️ Нет данных', score: 1 };
+                else if (maxScore === 2) status = { badge: 'crit', label: '🔴 Срочно заменить!', score: 2 };
+                else if (maxScore === 1) status = { badge: 'warn', label: '🟡 Скоро замена', score: 1 };
+                else status = { badge: 'ok', label: '🟢 ОК', score: 0 };
+                return { status, progressKm, progressMonths, hasDataKm, hasDataMonths };
+            }
+
+            function isFieldChanged(item, field) {
+                const original = originalItemsData.find(i => i.id === item.id);
+                if (!original) return false;
+                let currentVal, originalVal;
+                if (field === 'lastDate') { currentVal = item.lastDate || null;
+                    originalVal = original.lastDate || null; } else if (field === 'lastMileage') { currentVal = (item
+                        .lastMileage !== null && item.lastMileage !== undefined) ? item.lastMileage : null;
+                    originalVal = (original.lastMileage !== null && original.lastMileage !== undefined) ? original
+                    .lastMileage : null; } else if (field === 'lastAction') { currentVal = item.lastAction || '';
+                    originalVal = original.lastAction || ''; } else return false;
+                return currentVal !== originalVal;
+            }
+
+            function getSortScore(item, mileage, today) {
+                const { lastDate, lastMileage, intervalKm, intervalMonths } = item;
+                let maxScore = 0;
+                let hasData = false;
+                if (lastMileage !== null && intervalKm && mileage !== null && mileage !== undefined) {
+                    const diff = Math.max(0, mileage - lastMileage);
+                    const progress = clamp((diff / intervalKm) * 100, 0, 200);
+                    if (progress > 100) { maxScore = Math.max(maxScore, 2);
+                        hasData = true; } else if (progress > 80) { maxScore = Math.max(maxScore, 1);
+                        hasData = true; } else { maxScore = Math.max(maxScore, 0);
+                        hasData = true; }
+                }
+                if (lastDate && intervalMonths) {
+                    const lastDt = parseDate(lastDate);
+                    if (lastDt && today) {
+                        const diffMonths = monthsDiff(lastDt, today);
+                        if (diffMonths !== null && diffMonths >= 0) {
+                            const progress = clamp((diffMonths / intervalMonths) * 100, 0, 200);
+                            if (progress > 100) { maxScore = Math.max(maxScore, 2);
+                                hasData = true; } else if (progress > 80) { maxScore = Math.max(maxScore, 1);
+                                hasData = true; } else { maxScore = Math.max(maxScore, 0);
+                                hasData = true; }
+                        }
+                    }
+                }
+                if (!hasData) return 0.5;
+                return maxScore;
+            }
+
+            function showReplaceModal(cardId) {
+                const item = itemsData.find(i => i.id === cardId);
+                if (!item) return;
+                replaceCardId = cardId;
+                document.getElementById('replaceCardTitle').textContent = item.title;
+
+                const mileageInput = document.getElementById('mileageInput');
+                const dateInput = document.getElementById('dateInput');
+                const mileage = parseInt(mileageInput.value) || 0;
+                const date = dateInput.value || formatDate(new Date());
+
+                document.getElementById('replaceMileageDisplay').textContent = mileage;
+                document.getElementById('replaceDateDisplay').textContent = date;
+
+                document.getElementById('replaceModalOverlay').classList.add('active');
+                hapticMedium();
+            }
+
+            function executeReplace() {
+                if (!replaceCardId) return;
+                const item = itemsData.find(i => i.id === replaceCardId);
+                if (!item) return;
+
+                const mileageInput = document.getElementById('mileageInput');
+                const dateInput = document.getElementById('dateInput');
+                const mileage = parseInt(mileageInput.value) || 0;
+                const date = dateInput.value || formatDate(new Date());
+
+                item.lastDate = date;
+                item.lastMileage = mileage;
+                item.lastAction = 'Заменено ' + date;
+
+                originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                document.getElementById('replaceModalOverlay').classList.remove('active');
+                replaceCardId = null;
+
+                const mileageVal = parseInt(mileageInput.value) || 0;
+                const parts = dateInput.value.split('-');
+                const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                renderTable(mileageVal, today, false);
+                saveToStorage();
+                showNotification('✅ Заменено! Дата: ' + date + ', пробег: ' + mileage + ' км');
+                hapticMedium();
+            }
+
+            function resetAllCards() {
+                hapticMedium();
+                const resetModal = document.getElementById('resetModalOverlay');
+                const resetDateInput = document.getElementById('resetDateInput');
+                resetDateInput.value = formatDate(new Date());
+                resetModal.classList.add('active');
+            }
+
+            function executeReset() {
+                const resetDateInput = document.getElementById('resetDateInput');
+                const resetDate = resetDateInput.value;
+                if (!resetDate) { showNotification('❌ Выберите дату начала отсчёта!'); return; }
+                const selectedDate = parseDate(resetDate);
+                const today = new Date();
+                if (selectedDate && selectedDate > today) { showNotification('❌ Дата не может быть в будущем!'); return; }
+
+                itemsData.forEach(item => {
+                    item.lastAction = '';
+                    item.lastDate = resetDate;
+                    item.lastMileage = 0;
+                });
+
+                const mileageInput = document.getElementById('mileageInput');
+                mileageInput.value = 0;
+                currentMileage = 0;
+
+                originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                document.getElementById('resetModalOverlay').classList.remove('active');
+
+                const dateInput = document.getElementById('dateInput');
+                const parts = dateInput.value.split('-');
+                const todayDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                renderTable(0, todayDate, false);
+                saveToStorage();
+                showNotification('🔄 Все карточки сброшены! Пробег = 0, дата начала отсчёта: ' + resetDate);
+                hapticMedium();
+            }
+
+            function openModal(item) {
+                hapticMedium();
+                const overlay = document.getElementById('modalOverlay');
+                document.getElementById('modalTitle').textContent = item ? 'Редактирование' : 'Новая карточка';
+                document.getElementById('modalTitleInput').value = item ? item.title || '' : '';
+                document.getElementById('modalActionInput').value = item ? item.lastAction || '' : '';
+                document.getElementById('modalDateInput').value = item ? item.lastDate || '' : '';
+                document.getElementById('modalMileageInput').value = item && item.lastMileage !== null ? item.lastMileage :
+                    '';
+                document.getElementById('modalIntervalKm').value = item && item.intervalKm !== null ? item.intervalKm : '';
+                document.getElementById('modalIntervalMonths').value = item && item.intervalMonths !== null ? item
+                    .intervalMonths : '';
+                document.getElementById('modalNoteInput').value = item ? item.note || '' : '';
+                document.getElementById('modalDeleteBtn').style.display = item ? 'block' : 'none';
+                editingId = item ? item.id : null;
+
+                if (!item) {
+                    const mileageInput = document.getElementById('mileageInput');
+                    const dateInput = document.getElementById('dateInput');
+                    document.getElementById('modalMileageInput').value = parseInt(mileageInput.value) || 0;
+                    document.getElementById('modalDateInput').value = dateInput.value || formatDate(new Date());
+                }
+
+                overlay.classList.add('active');
+            }
+
+            function closeModal() { document.getElementById('modalOverlay').classList.remove('active');
+                editingId = null; }
+
+            function saveModal() {
+                const titleInput = document.getElementById('modalTitleInput');
+                const title = titleInput.value.trim();
+                if (!title) { showNotification('❌ Введите название!'); return; }
+                const itemData = {
+                    title: title,
+                    lastAction: document.getElementById('modalActionInput').value.trim() || '',
+                    lastDate: document.getElementById('modalDateInput').value || null,
+                    lastMileage: document.getElementById('modalMileageInput').value ? parseInt(document.getElementById(
+                        'modalMileageInput').value) : null,
+                    intervalKm: document.getElementById('modalIntervalKm').value ? parseInt(document.getElementById(
+                        'modalIntervalKm').value) : null,
+                    intervalMonths: document.getElementById('modalIntervalMonths').value ? parseInt(document
+                        .getElementById('modalIntervalMonths').value) : null,
+                    note: document.getElementById('modalNoteInput').value.trim() || ''
+                };
+                if (editingId) {
+                    const existing = itemsData.find(i => i.id === editingId);
+                    if (existing) Object.assign(existing, itemData);
                 } else {
-                    card.classList.add('hidden');
+                    itemData.id = generateId();
+                    itemsData.push(itemData);
                 }
-            });
-        }
+                closeModal();
+                originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                const mileageInput = document.getElementById('mileageInput');
+                const dateInput = document.getElementById('dateInput');
+                const mileage = parseInt(mileageInput.value) || 0;
+                const parts = dateInput.value.split('-');
+                const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                renderTable(mileage, today, false);
+                saveToStorage();
+                showNotification('✅ Сохранено!');
+                hapticMedium();
+            }
 
-        // ----- РЕНДЕР -----
-        function renderTable(mileage, today, preserveOrder) {
-            const container = document.getElementById('cardContainer');
-            let items = [...itemsData];
-            
-            if (!preserveOrder) {
-                items.sort((a, b) => {
-                    const scoreA = getSortScore(a, mileage, today);
-                    const scoreB = getSortScore(b, mileage, today);
-                    if (scoreA !== scoreB) return scoreB - scoreA;
-                    return a.title.localeCompare(b.title);
+            function deleteModalItem() {
+                if (!editingId) return;
+                if (!confirm('Удалить эту карточку?')) return;
+                itemsData = itemsData.filter(i => i.id !== editingId);
+                originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                closeModal();
+                const mileageInput = document.getElementById('mileageInput');
+                const dateInput = document.getElementById('dateInput');
+                const mileage = parseInt(mileageInput.value) || 0;
+                const parts = dateInput.value.split('-');
+                const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                renderTable(mileage, today, false);
+                saveToStorage();
+                showNotification('🗑️ Удалено!');
+                hapticMedium();
+            }
+
+            function exportData() {
+                const dataToSave = {
+                    version: '2.0',
+                    exportedAt: new Date().toISOString(),
+                    items: itemsData,
+                    currentMileage: currentMileage,
+                    currentDate: formatDate(currentDate)
+                };
+                const json = JSON.stringify(dataToSave, null, 2);
+                const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
+                const url = URL.createObjectURL(blob);
+                const a = document.createElement('a');
+                const now = new Date();
+                a.download = `uaz_patriot_data_${formatDateTime(now)}.json`;
+                a.href = url;
+                document.body.appendChild(a);
+                a.click();
+                document.body.removeChild(a);
+                URL.revokeObjectURL(url);
+                showNotification('✅ Данные экспортированы в JSON!');
+                hapticMedium();
+            }
+
+            function importData(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if (data.items && Array.isArray(data.items)) {
+                            itemsData = data.items;
+                            data.items.forEach(item => {
+                                if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
+                                    const num = parseInt(item.id);
+                                    if (num >= nextId) nextId = num + 1;
+                                }
+                            });
+                            if (data.currentMileage !== undefined) {
+                                currentMileage = data.currentMileage;
+                                document.getElementById('mileageInput').value = currentMileage;
+                            }
+                            if (data.currentDate) {
+                                currentDate = parseDate(data.currentDate) || new Date();
+                                document.getElementById('dateInput').value = formatDate(currentDate);
+                            }
+                            originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                            saveToStorage();
+                            const mileageInput = document.getElementById('mileageInput');
+                            const dateInput = document.getElementById('dateInput');
+                            const mileage = parseInt(mileageInput.value) || 0;
+                            const parts = dateInput.value.split('-');
+                            const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                            renderTable(mileage, today, false);
+                            showNotification('✅ Данные импортированы!');
+                            hapticMedium();
+                            return;
+                        }
+                        showNotification('❌ Файл не содержит данных!');
+                    } catch (err) {
+                        console.error('Ошибка чтения файла:', err);
+                        showNotification('❌ Ошибка чтения файла!');
+                    }
+                };
+                reader.onerror = function() {
+                    showNotification('❌ Ошибка чтения файла!');
+                };
+                reader.readAsText(file);
+            }
+
+            function filterCards(query) {
+                searchQuery = query.toLowerCase().trim();
+                const cards = document.querySelectorAll('.card');
+                cards.forEach(card => {
+                    const title = card.querySelector('.card-title');
+                    if (!title) return;
+                    const titleText = title.textContent.toLowerCase();
+                    if (searchQuery === '' || titleText.includes(searchQuery)) {
+                        card.classList.remove('hidden');
+                    } else {
+                        card.classList.add('hidden');
+                    }
                 });
             }
-            
-            container.innerHTML = '';
-            if (items.length === 0) {
-                container.innerHTML = `<div style="text-align:center;padding:40px 20px;color:#7a8a9a;background:white;border-radius:16px;border:2px dashed #d0d7de;">
+
+            function renderTable(mileage, today, preserveOrder) {
+                const container = document.getElementById('cardContainer');
+                let items = [...itemsData];
+
+                if (!preserveOrder) {
+                    items.sort((a, b) => {
+                        const scoreA = getSortScore(a, mileage, today);
+                        const scoreB = getSortScore(b, mileage, today);
+                        if (scoreA !== scoreB) return scoreB - scoreA;
+                        return a.title.localeCompare(b.title);
+                    });
+                }
+
+                container.innerHTML = '';
+                if (items.length === 0) {
+                    container.innerHTML =
+                        `<div style="text-align:center;padding:40px 20px;color:#7a8a9a;background:white;border-radius:16px;border:2px dashed #d0d7de;">
                     <div style="font-size:48px;margin-bottom:12px;">📋</div>
                     <div style="font-size:16px;font-weight:500;">Нет карточек</div>
                     <div style="font-size:13px;margin-top:4px;">Нажмите «➕ Добавить» в шапке</div>
                 </div>`;
-                return;
-            }
-            
-            items.forEach(item => {
-                const { status, progressKm, progressMonths, hasDataKm, hasDataMonths } = calcStatusAndProgress(item, mileage, today);
-                let borderClass = 'border-ok';
-                if (status.badge === 'crit') borderClass = 'border-crit';
-                else if (status.badge === 'warn') borderClass = 'border-warn';
-                let dateStr = item.lastDate || '—';
-                let mileageStr = (item.lastMileage !== null && item.lastMileage !== undefined) ? item.lastMileage + ' км' : '—';
-                const dateChanged = isFieldChanged(item, 'lastDate');
-                const mileChanged = isFieldChanged(item, 'lastMileage');
-                const actionChanged = isFieldChanged(item, 'lastAction');
-                let intervalStr = '';
-                if (item.intervalKm && item.intervalMonths) intervalStr = `${item.intervalKm} км / ${item.intervalMonths} мес.`;
-                else if (item.intervalKm) intervalStr = `${item.intervalKm} км`;
-                else if (item.intervalMonths) intervalStr = `${item.intervalMonths} мес.`;
-                else intervalStr = 'По состоянию';
-                const kmDisplay = Math.min(progressKm, 100);
-                const monDisplay = Math.min(progressMonths, 100);
-                const kmClass = progressKm > 100 ? 'crit' : (progressKm > 80 ? 'warn' : '');
-                const monClass = progressMonths > 100 ? 'crit' : (progressMonths > 80 ? 'warn' : '');
-                const kmLabel = hasDataKm ? `${Math.round(progressKm)}%` : '—';
-                const monLabel = hasDataMonths ? `${Math.round(progressMonths)}%` : '—';
-                
-                let hintParts = [], hintHtml = '';
-                if (hasDataKm && item.intervalKm && mileage !== null && mileage !== undefined && item.lastMileage !== null) {
-                    const diff = mileage - item.lastMileage;
-                    const remain = item.intervalKm - diff;
-                    if (remain > 0) hintParts.push({ text: `остаток ~ ${Math.round(remain)} км`, overdue: false });
-                    else if (remain <= 0) hintParts.push({ text: `перепробег ${Math.abs(Math.round(remain))} км`, overdue: true });
+                    return;
                 }
-                if (hasDataMonths && item.lastDate && item.intervalMonths) {
-                    const lastDt = parseDate(item.lastDate);
-                    if (lastDt) {
-                        const diff = monthsDiff(lastDt, today);
-                        if (diff !== null && diff >= 0) {
-                            const remain = item.intervalMonths - diff;
-                            if (remain > 0) hintParts.push({ text: `остаток ~ ${Math.round(remain)} мес.`, overdue: false });
-                            else if (remain <= 0) hintParts.push({ text: `просрочка ${Math.abs(Math.round(remain))} мес.`, overdue: true });
+
+                items.forEach(item => {
+                    const { status, progressKm, progressMonths, hasDataKm, hasDataMonths } = calcStatusAndProgress(
+                        item, mileage, today);
+                    let borderClass = 'border-ok';
+                    if (status.badge === 'crit') borderClass = 'border-crit';
+                    else if (status.badge === 'warn') borderClass = 'border-warn';
+                    let dateStr = item.lastDate || '—';
+                    let mileageStr = (item.lastMileage !== null && item.lastMileage !== undefined) ? item
+                        .lastMileage + ' км' : '—';
+                    const dateChanged = isFieldChanged(item, 'lastDate');
+                    const mileChanged = isFieldChanged(item, 'lastMileage');
+                    const actionChanged = isFieldChanged(item, 'lastAction');
+                    let intervalStr = '';
+                    if (item.intervalKm && item.intervalMonths) intervalStr = `${item.intervalKm} км / ${item.intervalMonths} мес.`;
+                    else if (item.intervalKm) intervalStr = `${item.intervalKm} км`;
+                    else if (item.intervalMonths) intervalStr = `${item.intervalMonths} мес.`;
+                    else intervalStr = 'По состоянию';
+                    const kmDisplay = Math.min(progressKm, 100);
+                    const monDisplay = Math.min(progressMonths, 100);
+                    const kmClass = progressKm > 100 ? 'crit' : (progressKm > 80 ? 'warn' : '');
+                    const monClass = progressMonths > 100 ? 'crit' : (progressMonths > 80 ? 'warn' : '');
+                    const kmLabel = hasDataKm ? `${Math.round(progressKm)}%` : '—';
+                    const monLabel = hasDataMonths ? `${Math.round(progressMonths)}%` : '—';
+
+                    let hintParts = [],
+                        hintHtml = '';
+                    if (hasDataKm && item.intervalKm && mileage !== null && mileage !== undefined && item
+                        .lastMileage !== null) {
+                        const diff = mileage - item.lastMileage;
+                        const remain = item.intervalKm - diff;
+                        if (remain > 0) hintParts.push({ text: `остаток ~ ${Math.round(remain)} км`,
+                            overdue: false });
+                        else if (remain <= 0) hintParts.push({ text: `перепробег ${Math.abs(Math.round(remain))} км`,
+                            overdue: true });
+                    }
+                    if (hasDataMonths && item.lastDate && item.intervalMonths) {
+                        const lastDt = parseDate(item.lastDate);
+                        if (lastDt) {
+                            const diff = monthsDiff(lastDt, today);
+                            if (diff !== null && diff >= 0) {
+                                const remain = item.intervalMonths - diff;
+                                if (remain > 0) hintParts.push({ text: `остаток ~ ${Math.round(remain)} мес.`,
+                                    overdue: false });
+                                else if (remain <= 0) hintParts.push({ text: `просрочка ${Math.abs(Math.round(remain))} мес.`,
+                                    overdue: true });
+                            }
                         }
                     }
-                }
-                if (hintParts.length) {
-                    hintHtml = hintParts.map(p => p.overdue ? `<strong class="text-overdue">${p.text}</strong>` : `<strong>${p.text}</strong>`).join(' • ');
-                }
-                
-                const card = document.createElement('div');
-                card.className = `card ${borderClass}`;
-                card.dataset.itemId = item.id;
-                card.innerHTML = `
+                    if (hintParts.length) {
+                        hintHtml = hintParts.map(p => p.overdue ?
+                            `<strong class="text-overdue">${p.text}</strong>` :
+                            `<strong>${p.text}</strong>`).join(' • ');
+                    }
+
+                    const card = document.createElement('div');
+                    card.className = `card ${borderClass}`;
+                    card.dataset.itemId = item.id;
+                    card.innerHTML = `
                     <div class="card-top">
                         <span class="card-title">${item.title}</span>
                         <div class="card-actions">
@@ -1822,34 +1942,162 @@
                     </div>
                     <div class="card-footnote">${item.note || ''}${hintHtml ? ' ' + hintHtml : ''}</div>
                 `;
-                container.appendChild(card);
-            });
-            
-            // Применяем фильтр после рендера
-            const searchInput = document.getElementById('searchInput');
-            if (searchInput && searchInput.value) {
-                filterCards(searchInput.value);
-            }
-            
-            // ----- ОБРАБОТЧИКИ ДЛЯ КНОПОК -----
-            document.querySelectorAll('.card-icon-btn.edit-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
-                    hapticMedium();
-                    const id = this.dataset.id;
-                    const item = itemsData.find(i => i.id === id);
-                    if (item) openModal(item);
+                    container.appendChild(card);
                 });
-            });
-            
-            document.querySelectorAll('.card-icon-btn.delete-btn').forEach(btn => {
-                btn.addEventListener('click', function(e) {
-                    e.stopPropagation();
+
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput && searchInput.value) {
+                    filterCards(searchInput.value);
+                }
+
+                document.querySelectorAll('.card-icon-btn.edit-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        hapticMedium();
+                        const id = this.dataset.id;
+                        const item = itemsData.find(i => i.id === id);
+                        if (item) openModal(item);
+                    });
+                });
+
+                document.querySelectorAll('.card-icon-btn.delete-btn').forEach(btn => {
+                    btn.addEventListener('click', function(e) {
+                        e.stopPropagation();
+                        hapticMedium();
+                        const id = this.dataset.id;
+                        if (!confirm('Удалить карточку?')) return;
+                        itemsData = itemsData.filter(i => i.id !== id);
+                        originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                        const mileageInput = document.getElementById('mileageInput');
+                        const dateInput = document.getElementById('dateInput');
+                        const mileage = parseInt(mileageInput.value) || 0;
+                        const parts = dateInput.value.split('-');
+                        const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                        renderTable(mileage, today, false);
+                        saveToStorage();
+                        showNotification('🗑️ Удалено!');
+                    });
+                });
+
+                document.querySelectorAll('.card').forEach(card => {
+                    card.addEventListener('click', function(e) {
+                        if (e.target.closest('.card-icon-btn')) return;
+                        hapticMedium();
+                        const id = this.dataset.itemId;
+                        const item = itemsData.find(i => i.id === id);
+                        if (item) openModal(item);
+                    });
+                });
+
+                document.querySelectorAll('.card').forEach(card => {
+                    let longPressTimer = null;
+                    card.addEventListener('touchstart', function(e) {
+                        longPressTimer = setTimeout(() => {
+                            hapticMedium();
+                            const id = this.dataset.itemId;
+                            const item = itemsData.find(i => i.id === id);
+                            if (item) openModal(item);
+                        }, 800);
+                    }, { passive: true });
+                    card.addEventListener('touchend', function() { clearTimeout(longPressTimer); },
+                    { passive: true });
+                    card.addEventListener('touchmove', function() { clearTimeout(longPressTimer); },
+                    { passive: true });
+                });
+
+                document.querySelectorAll('.card').forEach(card => {
+                    card.addEventListener('touchstart', function(e) {
+                        touchStartX = e.touches[0].clientX;
+                        touchStartY = e.touches[0].clientY;
+                        swipingCard = this;
+                    }, { passive: true });
+
+                    card.addEventListener('touchmove', function(e) {
+                        if (!swipingCard) return;
+                        const dx = e.touches[0].clientX - touchStartX;
+                        const dy = e.touches[0].clientY - touchStartY;
+                        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 20) {
+                            swipingCard.style.transform = `translateX(${dx}px)`;
+                            swipingCard.style.opacity = 1 - Math.min(Math.abs(dx) / 200, 0.5);
+                        }
+                    }, { passive: true });
+
+                    card.addEventListener('touchend', function(e) {
+                        if (!swipingCard) return;
+                        const dx = e.changedTouches[0].clientX - touchStartX;
+                        if (Math.abs(dx) > 80) {
+                            const id = swipingCard.dataset.itemId;
+                            swipingCard.style.transform = '';
+                            swipingCard.style.opacity = '';
+                            showReplaceModal(id);
+                        } else {
+                            swipingCard.style.transform = '';
+                            swipingCard.style.opacity = '';
+                        }
+                        swipingCard = null;
+                    }, { passive: true });
+                });
+            }
+
+            function updateAppFromPanel() {
+                if (isUpdatingFromCard) return;
+                const mileageInput = document.getElementById('mileageInput');
+                let mileage = parseInt(mileageInput.value) || 0;
+                currentMileage = mileage;
+                const dateInput = document.getElementById('dateInput');
+                let today;
+                if (dateInput.value) {
+                    const parts = dateInput.value.split('-');
+                    today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                } else {
+                    today = new Date();
+                    dateInput.value = formatDate(today);
+                }
+                currentDate = today;
+                renderTable(mileage, today, false);
+                saveScrollPosition();
+                saveToStorage();
+            }
+
+            function saveScrollPosition() {
+                try { localStorage.setItem(SCROLL_KEY, String(window.scrollY)); } catch (e) {}
+            }
+
+            function restoreScrollPosition() {
+                try { const pos = localStorage.getItem(SCROLL_KEY); if (pos) window.scrollTo(0, parseInt(pos)); } catch (
+                e) {}
+            }
+
+            let pullStartY = 0;
+            let pullActive = false;
+            const pullIndicator = document.getElementById('pullIndicator');
+
+            document.addEventListener('touchstart', function(e) {
+                if (window.scrollY === 0) { pullStartY = e.touches[0].clientY; }
+            }, { passive: true });
+
+            document.addEventListener('touchmove', function(e) {
+                if (window.scrollY === 0 && pullStartY > 0) {
+                    const pullDist = e.touches[0].clientY - pullStartY;
+                    if (pullDist > 60) {
+                        pullActive = true;
+                        pullIndicator.textContent = '🔄 Отпустите для обновления...';
+                        pullIndicator.classList.add('active');
+                    } else if (pullDist > 20) {
+                        pullIndicator.textContent = '⬇ Потяните для обновления';
+                        pullIndicator.classList.add('active');
+                    } else {
+                        pullIndicator.classList.remove('active');
+                    }
+                }
+            }, { passive: true });
+
+            document.addEventListener('touchend', function(e) {
+                if (pullActive) {
+                    pullActive = false;
+                    pullIndicator.classList.remove('active');
+                    pullIndicator.textContent = '⬇ Потяните для обновления';
                     hapticMedium();
-                    const id = this.dataset.id;
-                    if (!confirm('Удалить карточку?')) return;
-                    itemsData = itemsData.filter(i => i.id !== id);
-                    originalItemsData = JSON.parse(JSON.stringify(itemsData));
                     const mileageInput = document.getElementById('mileageInput');
                     const dateInput = document.getElementById('dateInput');
                     const mileage = parseInt(mileageInput.value) || 0;
@@ -1857,243 +2105,129 @@
                     const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
                     renderTable(mileage, today, false);
                     saveToStorage();
-                    showNotification('🗑️ Удалено!');
-                });
-            });
-            
-            // ----- КЛИК ПО КАРТОЧКЕ -----
-            document.querySelectorAll('.card').forEach(card => {
-                card.addEventListener('click', function(e) {
-                    if (e.target.closest('.card-icon-btn')) return;
-                    hapticMedium();
-                    const id = this.dataset.itemId;
-                    const item = itemsData.find(i => i.id === id);
-                    if (item) openModal(item);
-                });
-            });
-            
-            // ----- ДОЛГОЕ НАЖАТИЕ -----
-            document.querySelectorAll('.card').forEach(card => {
-                let longPressTimer = null;
-                card.addEventListener('touchstart', function(e) {
-                    longPressTimer = setTimeout(() => {
-                        hapticMedium();
-                        const id = this.dataset.itemId;
-                        const item = itemsData.find(i => i.id === id);
-                        if (item) openModal(item);
-                    }, 800);
-                }, { passive: true });
-                card.addEventListener('touchend', function() { clearTimeout(longPressTimer); }, { passive: true });
-                card.addEventListener('touchmove', function() { clearTimeout(longPressTimer); }, { passive: true });
-            });
-            
-            // ----- СВАЙП ВЛЕВО ДЛЯ ЗАМЕНЫ -----
-            document.querySelectorAll('.card').forEach(card => {
-                card.addEventListener('touchstart', function(e) {
-                    touchStartX = e.touches[0].clientX;
-                    touchStartY = e.touches[0].clientY;
-                    swipingCard = this;
-                }, { passive: true });
-                
-                card.addEventListener('touchmove', function(e) {
-                    if (!swipingCard) return;
-                    const dx = e.touches[0].clientX - touchStartX;
-                    const dy = e.touches[0].clientY - touchStartY;
-                    if (Math.abs(dx) > Math.abs(dy) && dx < -30) {
-                        swipingCard.style.transform = `translateX(${dx}px)`;
-                        swipingCard.style.opacity = 1 - Math.min(Math.abs(dx) / 200, 0.5);
-                    }
-                }, { passive: true });
-                
-                card.addEventListener('touchend', function(e) {
-                    if (!swipingCard) return;
-                    const dx = e.changedTouches[0].clientX - touchStartX;
-                    if (dx < -80) {
-                        const id = swipingCard.dataset.itemId;
-                        swipingCard.style.transform = '';
-                        swipingCard.style.opacity = '';
-                        showReplaceModal(id);
-                    } else {
-                        swipingCard.style.transform = '';
-                        swipingCard.style.opacity = '';
-                    }
-                    swipingCard = null;
-                }, { passive: true });
-            });
-        }
-
-        function updateAppFromPanel() {
-            if (isUpdatingFromCard) return;
-            const mileageInput = document.getElementById('mileageInput');
-            let mileage = parseInt(mileageInput.value) || 0;
-            currentMileage = mileage;
-            const dateInput = document.getElementById('dateInput');
-            let today;
-            if (dateInput.value) {
-                const parts = dateInput.value.split('-');
-                today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-            } else {
-                today = new Date();
-                dateInput.value = formatDate(today);
-            }
-            currentDate = today;
-            renderTable(mileage, today, false);
-            saveScrollPosition();
-            saveToStorage();
-        }
-
-        function saveScrollPosition() {
-            try { localStorage.setItem(SCROLL_KEY, String(window.scrollY)); } catch(e) {}
-        }
-
-        function restoreScrollPosition() {
-            try { const pos = localStorage.getItem(SCROLL_KEY); if (pos) window.scrollTo(0, parseInt(pos)); } catch(e) {}
-        }
-
-        // ----- PULL-TO-REFRESH -----
-        let pullStartY = 0;
-        let pullActive = false;
-        const pullIndicator = document.getElementById('pullIndicator');
-
-        document.addEventListener('touchstart', function(e) {
-            if (window.scrollY === 0) { pullStartY = e.touches[0].clientY; }
-        }, { passive: true });
-
-        document.addEventListener('touchmove', function(e) {
-            if (window.scrollY === 0 && pullStartY > 0) {
-                const pullDist = e.touches[0].clientY - pullStartY;
-                if (pullDist > 60) {
-                    pullActive = true;
-                    pullIndicator.textContent = '🔄 Отпустите для обновления...';
-                    pullIndicator.classList.add('active');
-                } else if (pullDist > 20) {
-                    pullIndicator.textContent = '⬇ Потяните для обновления';
-                    pullIndicator.classList.add('active');
-                } else {
-                    pullIndicator.classList.remove('active');
+                    showNotification('🔄 Обновлено!');
                 }
-            }
-        }, { passive: true });
+                pullStartY = 0;
+            }, { passive: true });
 
-        document.addEventListener('touchend', function(e) {
-            if (pullActive) {
-                pullActive = false;
-                pullIndicator.classList.remove('active');
-                pullIndicator.textContent = '⬇ Потяните для обновления';
-                hapticMedium();
+            document.addEventListener('DOMContentLoaded', function() {
+                const isFirst = isFirstLaunch();
+                loadFromStorage();
+
                 const mileageInput = document.getElementById('mileageInput');
                 const dateInput = document.getElementById('dateInput');
-                const mileage = parseInt(mileageInput.value) || 0;
-                const parts = dateInput.value.split('-');
-                const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-                renderTable(mileage, today, false);
-                saveToStorage();
-                showNotification('🔄 Обновлено!');
-            }
-            pullStartY = 0;
-        }, { passive: true });
+                const searchInput = document.getElementById('searchInput');
 
-        // ----- ИНИЦИАЛИЗАЦИЯ -----
-        document.addEventListener('DOMContentLoaded', function() {
-            const isFirst = isFirstLaunch();
-            loadFromStorage();
-            
-            const mileageInput = document.getElementById('mileageInput');
-            const dateInput = document.getElementById('dateInput');
-            const searchInput = document.getElementById('searchInput');
-            
-            if (isFirst) {
-                mileageInput.value = 0;
-                dateInput.value = formatDate(new Date());
-                currentMileage = 0;
-                currentDate = new Date();
-                const todayStr = formatDate(new Date());
-                itemsData.forEach(item => {
-                    item.lastDate = todayStr;
-                    item.lastMileage = 0;
-                });
-                originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                saveToStorage();
-            } else {
-                mileageInput.value = currentMileage;
-                dateInput.value = formatDate(currentDate);
-            }
-            
-            // Модальные кнопки
-            document.getElementById('modalClose').addEventListener('click', closeModal);
-            document.getElementById('modalCancel').addEventListener('click', closeModal);
-            document.getElementById('modalSave').addEventListener('click', saveModal);
-            document.getElementById('modalDeleteBtn').addEventListener('click', deleteModalItem);
-            document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this) closeModal(); });
-            
-            // Сброс
-            document.getElementById('resetModalClose').addEventListener('click', function() { document.getElementById('resetModalOverlay').classList.remove('active'); });
-            document.getElementById('resetModalCancel').addEventListener('click', function() { document.getElementById('resetModalOverlay').classList.remove('active'); });
-            document.getElementById('resetModalConfirm').addEventListener('click', executeReset);
-            document.getElementById('resetModalOverlay').addEventListener('click', function(e) { if (e.target === this) this.classList.remove('active'); });
-            
-            // Замена
-            document.getElementById('replaceModalClose').addEventListener('click', function() { document.getElementById('replaceModalOverlay').classList.remove('active'); replaceCardId = null; });
-            document.getElementById('replaceModalCancel').addEventListener('click', function() { document.getElementById('replaceModalOverlay').classList.remove('active'); replaceCardId = null; });
-            document.getElementById('replaceModalConfirm').addEventListener('click', executeReplace);
-            document.getElementById('replaceModalOverlay').addEventListener('click', function(e) { if (e.target === this) { this.classList.remove('active'); replaceCardId = null; } });
-            
-            // Кнопки
-            document.getElementById('addCardBtn').addEventListener('click', function() { openModal(null); });
-            document.getElementById('resetBtn').addEventListener('click', resetAllCards);
-            document.getElementById('todayBtn').addEventListener('click', function() { dateInput.value = formatDate(new Date()); updateAppFromPanel(); });
-            document.getElementById('dateInc').addEventListener('click', function(e) { e.preventDefault(); if (dateInput.value) { const d = parseDate(dateInput.value); if (d) { dateInput.value = formatDate(addMonths(d, 1)); updateAppFromPanel(); } } });
-            document.getElementById('dateDec').addEventListener('click', function(e) { e.preventDefault(); if (dateInput.value) { const d = parseDate(dateInput.value); if (d) { dateInput.value = formatDate(addMonths(d, -1)); updateAppFromPanel(); } } });
-            document.getElementById('mileageInc').addEventListener('click', function(e) { e.preventDefault(); let val = parseInt(mileageInput.value) || 0; mileageInput.value = val + 1000; updateAppFromPanel(); });
-            document.getElementById('mileageDec').addEventListener('click', function(e) { e.preventDefault(); let val = parseInt(mileageInput.value) || 0; mileageInput.value = Math.max(0, val - 1000); updateAppFromPanel(); });
-            mileageInput.addEventListener('input', updateAppFromPanel);
-            dateInput.addEventListener('input', updateAppFromPanel);
-            
-            // Поиск
-            searchInput.addEventListener('input', function() {
-                filterCards(this.value);
-            });
-            document.getElementById('clearSearchBtn').addEventListener('click', function() {
-                searchInput.value = '';
-                filterCards('');
-                searchInput.focus();
-            });
-            
-            // Экспорт в JSON
-            document.getElementById('saveFileBtn').addEventListener('click', function(e) {
-                e.preventDefault();
-                exportData();
-            });
-            
-            // Импорт из JSON
-            document.getElementById('fileInput').addEventListener('change', function(e) {
-                if (this.files && this.files[0]) {
-                    importData(this.files[0]);
+                if (isFirst) {
+                    mileageInput.value = 0;
+                    dateInput.value = formatDate(new Date());
+                    currentMileage = 0;
+                    currentDate = new Date();
+                    const todayStr = formatDate(new Date());
+                    itemsData.forEach(item => {
+                        item.lastDate = todayStr;
+                        item.lastMileage = 0;
+                    });
+                    originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                    saveToStorage();
+                } else {
+                    mileageInput.value = currentMileage;
+                    dateInput.value = formatDate(currentDate);
                 }
-                this.value = '';
-            });
-            
-            // Загрузка встроенных данных из HTML
-            const savedDataScript = document.getElementById('savedData');
-            if (savedDataScript) {
-                try {
-                    const data = JSON.parse(savedDataScript.textContent);
-                    if (data.items && Array.isArray(data.items)) {
-                        itemsData = data.items;
-                        data.items.forEach(item => { if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) { const num = parseInt(item.id); if (num >= nextId) nextId = num + 1; } });
-                        originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                        if (data.currentMileage !== undefined) { currentMileage = data.currentMileage; mileageInput.value = currentMileage; }
-                        if (data.currentDate) { currentDate = parseDate(data.currentDate) || new Date(); dateInput.value = formatDate(currentDate); }
-                        saveToStorage();
+
+                document.getElementById('modalClose').addEventListener('click', closeModal);
+                document.getElementById('modalCancel').addEventListener('click', closeModal);
+                document.getElementById('modalSave').addEventListener('click', saveModal);
+                document.getElementById('modalDeleteBtn').addEventListener('click', deleteModalItem);
+                document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this)
+                        closeModal(); });
+
+                document.getElementById('resetModalClose').addEventListener('click', function() { document
+                        .getElementById('resetModalOverlay').classList.remove('active'); });
+                document.getElementById('resetModalCancel').addEventListener('click', function() { document
+                        .getElementById('resetModalOverlay').classList.remove('active'); });
+                document.getElementById('resetModalConfirm').addEventListener('click', executeReset);
+                document.getElementById('resetModalOverlay').addEventListener('click', function(e) { if (e.target ===
+                        this) this.classList.remove('active'); });
+
+                document.getElementById('replaceModalClose').addEventListener('click', function() { document
+                        .getElementById('replaceModalOverlay').classList.remove('active');
+                    replaceCardId = null; });
+                document.getElementById('replaceModalCancel').addEventListener('click', function() { document
+                        .getElementById('replaceModalOverlay').classList.remove('active');
+                    replaceCardId = null; });
+                document.getElementById('replaceModalConfirm').addEventListener('click', executeReplace);
+                document.getElementById('replaceModalOverlay').addEventListener('click', function(e) { if (e.target ===
+                        this) { this.classList.remove('active');
+                        replaceCardId = null; } });
+
+                document.getElementById('addCardBtn').addEventListener('click', function() { openModal(null); });
+                document.getElementById('resetBtn').addEventListener('click', resetAllCards);
+                document.getElementById('todayBtn').addEventListener('click', function() { dateInput.value =
+                        formatDate(new Date());
+                    updateAppFromPanel(); });
+                document.getElementById('dateInc').addEventListener('click', function(e) { e.preventDefault(); if (
+                        dateInput.value) { const d = parseDate(dateInput.value); if (d) { dateInput.value =
+                            formatDate(addMonths(d, 1));
+                        updateAppFromPanel(); } } });
+                document.getElementById('dateDec').addEventListener('click', function(e) { e.preventDefault(); if (
+                        dateInput.value) { const d = parseDate(dateInput.value); if (d) { dateInput.value =
+                            formatDate(addMonths(d, -1));
+                        updateAppFromPanel(); } } });
+                document.getElementById('mileageInc').addEventListener('click', function(e) { e.preventDefault();
+                    let val = parseInt(mileageInput.value) || 0;
+                    mileageInput.value = val + 1000;
+                    updateAppFromPanel(); });
+                document.getElementById('mileageDec').addEventListener('click', function(e) { e.preventDefault();
+                    let val = parseInt(mileageInput.value) || 0;
+                    mileageInput.value = Math.max(0, val - 1000);
+                    updateAppFromPanel(); });
+                mileageInput.addEventListener('input', updateAppFromPanel);
+                dateInput.addEventListener('input', updateAppFromPanel);
+
+                document.getElementById('saveFileBtn').addEventListener('click', function(e) { e.preventDefault();
+                    exportData(); });
+
+                document.getElementById('fileInput').addEventListener('change', function(e) {
+                    if (this.files && this.files[0]) {
+                        importData(this.files[0]);
                     }
-                } catch (e) { console.warn('Ошибка загрузки встроенных данных', e); }
-            }
-            
-            updateAppFromPanel();
-            restoreScrollPosition();
-            setInterval(updateAppFromPanel, 3600000);
-        });
-    })();
-</script>
+                    this.value = '';
+                });
+
+                searchInput.addEventListener('input', function() {
+                    filterCards(this.value);
+                });
+                document.getElementById('clearSearchBtn').addEventListener('click', function() {
+                    searchInput.value = '';
+                    filterCards('');
+                    searchInput.focus();
+                });
+
+                const savedDataScript = document.getElementById('savedData');
+                if (savedDataScript) {
+                    try {
+                        const data = JSON.parse(savedDataScript.textContent);
+                        if (data.items && Array.isArray(data.items)) {
+                            itemsData = data.items;
+                            data.items.forEach(item => { if (item.id && typeof item.id === 'string' && !isNaN(
+                                    parseInt(item.id))) { const num = parseInt(item.id); if (num >= nextId)
+                                    nextId = num + 1; } });
+                            originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                            if (data.currentMileage !== undefined) { currentMileage = data.currentMileage;
+                                mileageInput.value = currentMileage; }
+                            if (data.currentDate) { currentDate = parseDate(data.currentDate) || new Date();
+                                dateInput.value = formatDate(currentDate); }
+                            saveToStorage();
+                        }
+                    } catch (e) { console.warn('Ошибка загрузки встроенных данных', e); }
+                }
+
+                updateAppFromPanel();
+                restoreScrollPosition();
+                setInterval(updateAppFromPanel, 3600000);
+            });
+        })();
+    </script>
 </body>
 </html>
