@@ -788,6 +788,7 @@
             opacity: 0;
             transition: opacity 0.3s ease;
             user-select: none;
+            pointer-events: none;
         }
         .pull-indicator.active {
             opacity: 1;
@@ -1446,10 +1447,14 @@
             let touchStartY = 0;
             let swipingCard = null;
             let searchQuery = '';
+            let isModalOpen = false;
 
             // ---- ЗАГРУЗКА ФАЙЛА (УНИВЕРСАЛЬНАЯ) ----
             function triggerFileInput() {
                 const fileInput = document.getElementById('fileInput');
+
+                // Сбрасываем значение перед каждым вызовом
+                fileInput.value = '';
 
                 // Пробуем showOpenFilePicker (современные браузеры)
                 if (window.showOpenFilePicker) {
@@ -1559,10 +1564,9 @@
                     document.getElementById('modalDateInput').value = dateInput.value || formatDate(new Date());
                 }
 
-                // Блокируем скролл тела
+                isModalOpen = true;
                 document.body.classList.add('modal-open');
                 overlay.classList.add('active');
-                // Добавляем запись в историю для обработки свайпа назад
                 history.pushState({ modal: true }, '');
             }
 
@@ -1571,7 +1575,7 @@
                 overlay.classList.remove('active');
                 document.body.classList.remove('modal-open');
                 editingId = null;
-                // Убираем запись из истории
+                isModalOpen = false;
                 if (history.state && history.state.modal) {
                     history.back();
                 }
@@ -1585,10 +1589,39 @@
                         e.preventDefault();
                         closeModal();
                     }
+                    const resetModal = document.getElementById('resetModalOverlay');
+                    if (resetModal.classList.contains('active')) {
+                        e.preventDefault();
+                        closeModalExternal('reset');
+                    }
+                    const replaceModal = document.getElementById('replaceModalOverlay');
+                    if (replaceModal.classList.contains('active')) {
+                        e.preventDefault();
+                        closeModalExternal('replace');
+                        replaceCardId = null;
+                    }
                 });
             }
 
-            // ---- ОСТАЛЬНЫЕ ФУНКЦИИ (без изменений) ----
+            function openModalExternal(type) {
+                const overlay = document.getElementById(type === 'replace' ? 'replaceModalOverlay' : 'resetModalOverlay');
+                isModalOpen = true;
+                document.body.classList.add('modal-open');
+                overlay.classList.add('active');
+                history.pushState({ modal: true }, '');
+            }
+
+            function closeModalExternal(type) {
+                const overlay = document.getElementById(type === 'replace' ? 'replaceModalOverlay' : 'resetModalOverlay');
+                overlay.classList.remove('active');
+                document.body.classList.remove('modal-open');
+                isModalOpen = false;
+                if (history.state && history.state.modal) {
+                    history.back();
+                }
+            }
+
+            // ---- ОСТАЛЬНЫЕ ФУНКЦИИ ----
             function showReplaceModal(cardId) {
                 const item = itemsData.find(i => i.id === cardId);
                 if (!item) return;
@@ -1605,22 +1638,6 @@
 
                 openModalExternal('replace');
                 hapticMedium();
-            }
-
-            function openModalExternal(type) {
-                const overlay = document.getElementById(type === 'replace' ? 'replaceModalOverlay' : 'resetModalOverlay');
-                document.body.classList.add('modal-open');
-                overlay.classList.add('active');
-                history.pushState({ modal: true }, '');
-            }
-
-            function closeModalExternal(type) {
-                const overlay = document.getElementById(type === 'replace' ? 'replaceModalOverlay' : 'resetModalOverlay');
-                overlay.classList.remove('active');
-                document.body.classList.remove('modal-open');
-                if (history.state && history.state.modal) {
-                    history.back();
-                }
             }
 
             function isFirstLaunch() {
@@ -1796,6 +1813,7 @@
                 originalItemsData = JSON.parse(JSON.stringify(itemsData));
                 document.getElementById('replaceModalOverlay').classList.remove('active');
                 document.body.classList.remove('modal-open');
+                isModalOpen = false;
                 replaceCardId = null;
 
                 const mileageVal = parseInt(mileageInput.value) || 0;
@@ -1836,6 +1854,7 @@
                 originalItemsData = JSON.parse(JSON.stringify(itemsData));
                 document.getElementById('resetModalOverlay').classList.remove('active');
                 document.body.classList.remove('modal-open');
+                isModalOpen = false;
 
                 const dateInput = document.getElementById('dateInput');
                 const parts = dateInput.value.split('-');
@@ -2179,15 +2198,27 @@
                 e) {}
             }
 
+            // ---- PULL-TO-REFRESH (с проверкой на модалку) ----
             let pullStartY = 0;
             let pullActive = false;
             const pullIndicator = document.getElementById('pullIndicator');
 
             document.addEventListener('touchstart', function(e) {
-                if (window.scrollY === 0) { pullStartY = e.touches[0].clientY; }
+                // Если открыта модалка — игнорируем pull-to-refresh
+                if (isModalOpen) {
+                    pullStartY = 0;
+                    return;
+                }
+                if (window.scrollY === 0) {
+                    pullStartY = e.touches[0].clientY;
+                }
             }, { passive: true });
 
             document.addEventListener('touchmove', function(e) {
+                if (isModalOpen) {
+                    pullIndicator.classList.remove('active');
+                    return;
+                }
                 if (window.scrollY === 0 && pullStartY > 0) {
                     const pullDist = e.touches[0].clientY - pullStartY;
                     if (pullDist > 60) {
@@ -2204,6 +2235,11 @@
             }, { passive: true });
 
             document.addEventListener('touchend', function(e) {
+                if (isModalOpen) {
+                    pullActive = false;
+                    pullIndicator.classList.remove('active');
+                    return;
+                }
                 if (pullActive) {
                     pullActive = false;
                     pullIndicator.classList.remove('active');
@@ -2332,10 +2368,17 @@
                     exportData();
                 });
 
-                // ---- ЗАГРУЗКА ИЗ ФАЙЛА ----
+                // ---- ЗАГРУЗКА ИЗ ФАЙЛА (с защитой от множественных вызовов) ----
+                let isFileProcessing = false;
+
                 document.getElementById('loadFileBtn').addEventListener('click', function(e) {
                     e.preventDefault();
+                    if (isFileProcessing) return;
+                    isFileProcessing = true;
                     triggerFileInput();
+                    setTimeout(() => {
+                        isFileProcessing = false;
+                    }, 1000);
                 });
 
                 document.getElementById('fileInput').addEventListener('change', function(e) {
@@ -2343,6 +2386,7 @@
                         importData(this.files[0]);
                     }
                     this.value = '';
+                    isFileProcessing = false;
                 });
 
                 searchInput.addEventListener('input', function() {
