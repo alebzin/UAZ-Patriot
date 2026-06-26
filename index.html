@@ -561,7 +561,7 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 20px;
             animation: fadeIn 0.2s ease;
             backdrop-filter: blur(4px);
@@ -589,6 +589,8 @@
             max-width: 500px;
             width: 100%;
             padding: 24px;
+            margin-top: 20px;
+            margin-bottom: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
             max-height: 80vh;
             overflow-y: auto;
@@ -600,6 +602,11 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            position: sticky;
+            top: 0;
+            background: white;
+            z-index: 10;
+            padding-bottom: 8px;
         }
         .modal-header h2 {
             font-size: 18px;
@@ -693,6 +700,11 @@
             margin-top: 20px;
             justify-content: flex-end;
             flex-wrap: wrap;
+            position: sticky;
+            bottom: 0;
+            background: white;
+            padding-top: 12px;
+            border-top: 1px solid #eee;
         }
         .modal-actions button {
             padding: 10px 24px;
@@ -1425,9 +1437,41 @@
             let searchQuery = '';
 
             // ---- ПРОСТОЙ И НАДЁЖНЫЙ СПОСОБ ЗАГРУЗКИ ФАЙЛА ----
+            // В WebView это должно работать через стандартный input[type="file"]
             function triggerFileInput() {
                 const fileInput = document.getElementById('fileInput');
+                // Пытаемся имитировать клик с задержкой для WebView
                 fileInput.click();
+            }
+
+            // ---- АВТОПРОКРУТКА МОДАЛКИ ПРИ ФОКУСЕ НА ПОЛЯ ----
+            function setupModalScroll() {
+                const modal = document.querySelector('.modal');
+                const inputs = modal.querySelectorAll('input, textarea');
+
+                inputs.forEach(input => {
+                    input.addEventListener('focus', function() {
+                        setTimeout(() => {
+                            // Прокручиваем окно, чтобы модалка была видна
+                            const overlay = document.getElementById('modalOverlay');
+                            const modalRect = modal.getBoundingClientRect();
+                            const inputRect = this.getBoundingClientRect();
+
+                            if (inputRect.bottom > window.innerHeight - 50) {
+                                const scrollY = inputRect.bottom - window.innerHeight + 50;
+                                window.scrollBy(0, scrollY);
+                            }
+
+                            // Прокручиваем саму модалку
+                            if (inputRect.bottom > modalRect.bottom) {
+                                modal.scrollTop += inputRect.bottom - modalRect.bottom + 20;
+                            }
+                            if (inputRect.top < modalRect.top) {
+                                modal.scrollTop -= modalRect.top - inputRect.top + 20;
+                            }
+                        }, 300);
+                    });
+                });
             }
 
             function importData(file) {
@@ -1473,27 +1517,6 @@
                     showNotification('❌ Ошибка чтения файла!');
                 };
                 reader.readAsText(file);
-            }
-
-            // ---- АВТОПРОКРУТКА МОДАЛКИ ПРИ ФОКУСЕ НА ПОЛЯ ----
-            function setupModalScroll() {
-                const modal = document.querySelector('.modal');
-                const inputs = modal.querySelectorAll('input, textarea');
-
-                inputs.forEach(input => {
-                    input.addEventListener('focus', function() {
-                        setTimeout(() => {
-                            const rect = this.getBoundingClientRect();
-                            const modalRect = modal.getBoundingClientRect();
-                            if (rect.bottom > modalRect.bottom) {
-                                modal.scrollTop += rect.bottom - modalRect.bottom + 20;
-                            }
-                            if (rect.top < modalRect.top) {
-                                modal.scrollTop -= modalRect.top - rect.top + 20;
-                            }
-                        }, 300);
-                    });
-                });
             }
 
             function isFirstLaunch() {
@@ -1760,7 +1783,7 @@
 
                 overlay.classList.add('active');
                 // Настраиваем прокрутку модалки
-                setTimeout(setupModalScroll, 100);
+                setTimeout(setupModalScroll, 300);
             }
 
             function closeModal() { document.getElementById('modalOverlay').classList.remove('active');
@@ -2141,6 +2164,7 @@
                 pullStartY = 0;
             }, { passive: true });
 
+            // ---- ДОПОЛНИТЕЛЬНАЯ ИНИЦИАЛИЗАЦИЯ ДЛЯ WEBVIEW ----
             document.addEventListener('DOMContentLoaded', function() {
                 const isFirst = isFirstLaunch();
                 loadFromStorage();
@@ -2170,64 +2194,103 @@
                 document.getElementById('modalCancel').addEventListener('click', closeModal);
                 document.getElementById('modalSave').addEventListener('click', saveModal);
                 document.getElementById('modalDeleteBtn').addEventListener('click', deleteModalItem);
-                document.getElementById('modalOverlay').addEventListener('click', function(e) { if (e.target === this)
-                        closeModal(); });
+                document.getElementById('modalOverlay').addEventListener('click', function(e) {
+                    if (e.target === this) closeModal();
+                });
 
-                document.getElementById('resetModalClose').addEventListener('click', function() { document
-                        .getElementById('resetModalOverlay').classList.remove('active'); });
-                document.getElementById('resetModalCancel').addEventListener('click', function() { document
-                        .getElementById('resetModalOverlay').classList.remove('active'); });
+                document.getElementById('resetModalClose').addEventListener('click', function() {
+                    document.getElementById('resetModalOverlay').classList.remove('active');
+                });
+                document.getElementById('resetModalCancel').addEventListener('click', function() {
+                    document.getElementById('resetModalOverlay').classList.remove('active');
+                });
                 document.getElementById('resetModalConfirm').addEventListener('click', executeReset);
-                document.getElementById('resetModalOverlay').addEventListener('click', function(e) { if (e.target ===
-                        this) this.classList.remove('active'); });
+                document.getElementById('resetModalOverlay').addEventListener('click', function(e) {
+                    if (e.target === this) this.classList.remove('active');
+                });
 
-                document.getElementById('replaceModalClose').addEventListener('click', function() { document
-                        .getElementById('replaceModalOverlay').classList.remove('active');
-                    replaceCardId = null; });
-                document.getElementById('replaceModalCancel').addEventListener('click', function() { document
-                        .getElementById('replaceModalOverlay').classList.remove('active');
-                    replaceCardId = null; });
+                document.getElementById('replaceModalClose').addEventListener('click', function() {
+                    document.getElementById('replaceModalOverlay').classList.remove('active');
+                    replaceCardId = null;
+                });
+                document.getElementById('replaceModalCancel').addEventListener('click', function() {
+                    document.getElementById('replaceModalOverlay').classList.remove('active');
+                    replaceCardId = null;
+                });
                 document.getElementById('replaceModalConfirm').addEventListener('click', executeReplace);
-                document.getElementById('replaceModalOverlay').addEventListener('click', function(e) { if (e.target ===
-                        this) { this.classList.remove('active');
-                        replaceCardId = null; } });
+                document.getElementById('replaceModalOverlay').addEventListener('click', function(e) {
+                    if (e.target === this) {
+                        this.classList.remove('active');
+                        replaceCardId = null;
+                    }
+                });
 
                 document.getElementById('addCardBtn').addEventListener('click', function() { openModal(null); });
                 document.getElementById('resetBtn').addEventListener('click', resetAllCards);
-                document.getElementById('todayBtn').addEventListener('click', function() { dateInput.value =
-                        formatDate(new Date());
-                    updateAppFromPanel(); });
-                document.getElementById('dateInc').addEventListener('click', function(e) { e.preventDefault(); if (
-                        dateInput.value) { const d = parseDate(dateInput.value); if (d) { dateInput.value =
-                            formatDate(addMonths(d, 1));
-                        updateAppFromPanel(); } } });
-                document.getElementById('dateDec').addEventListener('click', function(e) { e.preventDefault(); if (
-                        dateInput.value) { const d = parseDate(dateInput.value); if (d) { dateInput.value =
-                            formatDate(addMonths(d, -1));
-                        updateAppFromPanel(); } } });
-                document.getElementById('mileageInc').addEventListener('click', function(e) { e.preventDefault();
+                document.getElementById('todayBtn').addEventListener('click', function() {
+                    dateInput.value = formatDate(new Date());
+                    updateAppFromPanel();
+                });
+                document.getElementById('dateInc').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (dateInput.value) {
+                        const d = parseDate(dateInput.value);
+                        if (d) {
+                            dateInput.value = formatDate(addMonths(d, 1));
+                            updateAppFromPanel();
+                        }
+                    }
+                });
+                document.getElementById('dateDec').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    if (dateInput.value) {
+                        const d = parseDate(dateInput.value);
+                        if (d) {
+                            dateInput.value = formatDate(addMonths(d, -1));
+                            updateAppFromPanel();
+                        }
+                    }
+                });
+                document.getElementById('mileageInc').addEventListener('click', function(e) {
+                    e.preventDefault();
                     let val = parseInt(mileageInput.value) || 0;
                     mileageInput.value = val + 1000;
-                    updateAppFromPanel(); });
-                document.getElementById('mileageDec').addEventListener('click', function(e) { e.preventDefault();
+                    updateAppFromPanel();
+                });
+                document.getElementById('mileageDec').addEventListener('click', function(e) {
+                    e.preventDefault();
                     let val = parseInt(mileageInput.value) || 0;
                     mileageInput.value = Math.max(0, val - 1000);
-                    updateAppFromPanel(); });
+                    updateAppFromPanel();
+                });
                 mileageInput.addEventListener('input', updateAppFromPanel);
                 dateInput.addEventListener('input', updateAppFromPanel);
 
-                document.getElementById('saveFileBtn').addEventListener('click', function(e) { e.preventDefault();
-                    exportData(); });
-
-                // ---- ИСПРАВЛЕННЫЙ ОБРАБОТЧИК ДЛЯ "ИЗ ФАЙЛА" (простой и надёжный) ----
-                document.getElementById('loadFileBtn').addEventListener('click', function(e) {
+                document.getElementById('saveFileBtn').addEventListener('click', function(e) {
                     e.preventDefault();
-                    triggerFileInput();
+                    exportData();
                 });
 
+                // ---- ИСПРАВЛЕННЫЙ ОБРАБОТЧИК ДЛЯ "ИЗ ФАЙЛА" ----
+                // Для WebView используем прямой вызов click() с обработкой
+                document.getElementById('loadFileBtn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    const fileInput = document.getElementById('fileInput');
+                    // Принудительно сбрасываем значение перед кликом
+                    fileInput.value = '';
+                    fileInput.click();
+                });
+
+                // Обработчик изменения файла
                 document.getElementById('fileInput').addEventListener('change', function(e) {
-                    if (this.files && this.files[0]) {
-                        importData(this.files[0]);
+                    if (this.files && this.files.length > 0) {
+                        const file = this.files[0];
+                        // Проверяем размер и тип
+                        if (file.size > 0) {
+                            importData(file);
+                        } else {
+                            showNotification('❌ Файл пустой!');
+                        }
                     }
                     this.value = '';
                 });
@@ -2247,14 +2310,21 @@
                         const data = JSON.parse(savedDataScript.textContent);
                         if (data.items && Array.isArray(data.items)) {
                             itemsData = data.items;
-                            data.items.forEach(item => { if (item.id && typeof item.id === 'string' && !isNaN(
-                                    parseInt(item.id))) { const num = parseInt(item.id); if (num >= nextId)
-                                    nextId = num + 1; } });
+                            data.items.forEach(item => {
+                                if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
+                                    const num = parseInt(item.id);
+                                    if (num >= nextId) nextId = num + 1;
+                                }
+                            });
                             originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                            if (data.currentMileage !== undefined) { currentMileage = data.currentMileage;
-                                mileageInput.value = currentMileage; }
-                            if (data.currentDate) { currentDate = parseDate(data.currentDate) || new Date();
-                                dateInput.value = formatDate(currentDate); }
+                            if (data.currentMileage !== undefined) {
+                                currentMileage = data.currentMileage;
+                                mileageInput.value = currentMileage;
+                            }
+                            if (data.currentDate) {
+                                currentDate = parseDate(data.currentDate) || new Date();
+                                dateInput.value = formatDate(currentDate);
+                            }
                             saveToStorage();
                         }
                     } catch (e) { console.warn('Ошибка загрузки встроенных данных', e); }
@@ -2264,6 +2334,7 @@
                 restoreScrollPosition();
                 setInterval(updateAppFromPanel, 3600000);
             });
+
         })();
     </script>
 </body>
