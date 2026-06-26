@@ -19,7 +19,6 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html,
         body {
             background: #eef2f6;
             padding: 10px 8px 30px;
@@ -139,10 +138,6 @@
         .action-btn.file-input-btn {
             position: relative;
             overflow: hidden;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            gap: 5px;
         }
         .action-btn.file-input-btn input[type="file"] {
             position: absolute;
@@ -573,13 +568,11 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 1000;
             justify-content: center;
-            align-items: flex-start;
+            align-items: center;
             padding: 20px;
             animation: fadeIn 0.2s ease;
             backdrop-filter: blur(4px);
             -webkit-backdrop-filter: blur(4px);
-            overflow-y: auto;
-            -webkit-overflow-scrolling: touch;
         }
         .modal-overlay.active {
             display: flex;
@@ -602,10 +595,8 @@
             max-width: 500px;
             width: 100%;
             padding: 24px;
-            margin-top: 20px;
-            margin-bottom: 20px;
             box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            max-height: 80vh;
+            max-height: 90vh;
             overflow-y: auto;
             -webkit-overflow-scrolling: touch;
         }
@@ -615,11 +606,6 @@
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
-            position: sticky;
-            top: 0;
-            background: white;
-            z-index: 10;
-            padding-bottom: 8px;
         }
         .modal-header h2 {
             font-size: 18px;
@@ -713,11 +699,6 @@
             margin-top: 20px;
             justify-content: flex-end;
             flex-wrap: wrap;
-            position: sticky;
-            bottom: 0;
-            background: white;
-            padding-top: 12px;
-            border-top: 1px solid #eee;
         }
         .modal-actions button {
             padding: 10px 24px;
@@ -790,7 +771,6 @@
             opacity: 0;
             transition: opacity 0.3s ease;
             user-select: none;
-            pointer-events: none;
         }
         .pull-indicator.active {
             opacity: 1;
@@ -1451,10 +1431,11 @@
             let searchQuery = '';
             let isModalOpen = false;
 
-            // ---- ЗАГРУЗКА ФАЙЛА (ОРИГИНАЛЬНЫЙ РАБОЧИЙ СПОСОБ) ----
+            // ---- ЗАГРУЗКА ИЗ ФАЙЛА (ПРОСТОЙ И НАДЁЖНЫЙ СПОСОБ) ----
             function triggerFileInput() {
                 const fileInput = document.getElementById('fileInput');
                 fileInput.value = '';
+                // Вызываем клик напрямую
                 fileInput.click();
             }
 
@@ -1583,82 +1564,6 @@
 
             function hapticMedium() { if (navigator.vibrate) navigator.vibrate(15); }
 
-            function calcStatusAndProgress(item, mileage, today) {
-                const { lastDate, lastMileage, intervalKm, intervalMonths } = item;
-                let status = { badge: 'ok', label: '🟢 ОК', score: 0 };
-                let progressKm = 0,
-                    progressMonths = 0,
-                    hasDataKm = false,
-                    hasDataMonths = false;
-                if (lastMileage !== null && intervalKm && mileage !== null && mileage !== undefined) {
-                    const diff = Math.max(0, mileage - lastMileage);
-                    progressKm = clamp((diff / intervalKm) * 100, 0, 200);
-                    hasDataKm = true;
-                }
-                if (lastDate && intervalMonths) {
-                    const lastDt = parseDate(lastDate);
-                    if (lastDt && today) {
-                        const diffMonths = monthsDiff(lastDt, today);
-                        if (diffMonths !== null && diffMonths >= 0) {
-                            progressMonths = clamp((diffMonths / intervalMonths) * 100, 0, 200);
-                            hasDataMonths = true;
-                        }
-                    }
-                }
-                let maxScore = 0;
-                if (hasDataKm) { if (progressKm > 100) maxScore = Math.max(maxScore, 2);
-                    else if (progressKm > 80) maxScore = Math.max(maxScore, 1); }
-                if (hasDataMonths) { if (progressMonths > 100) maxScore = Math.max(maxScore, 2);
-                    else if (progressMonths > 80) maxScore = Math.max(maxScore, 1); }
-                if (!hasDataKm && !hasDataMonths) status = { badge: 'warn', label: '⚠️ Нет данных', score: 1 };
-                else if (maxScore === 2) status = { badge: 'crit', label: '🔴 Срочно заменить!', score: 2 };
-                else if (maxScore === 1) status = { badge: 'warn', label: '🟡 Скоро замена', score: 1 };
-                else status = { badge: 'ok', label: '🟢 ОК', score: 0 };
-                return { status, progressKm, progressMonths, hasDataKm, hasDataMonths };
-            }
-
-            function isFieldChanged(item, field) {
-                const original = originalItemsData.find(i => i.id === item.id);
-                if (!original) return false;
-                let currentVal, originalVal;
-                if (field === 'lastDate') { currentVal = item.lastDate || null;
-                    originalVal = original.lastDate || null; } else if (field === 'lastMileage') { currentVal = (item
-                        .lastMileage !== null && item.lastMileage !== undefined) ? item.lastMileage : null;
-                    originalVal = (original.lastMileage !== null && original.lastMileage !== undefined) ? original
-                    .lastMileage : null; } else if (field === 'lastAction') { currentVal = item.lastAction || '';
-                    originalVal = original.lastAction || ''; } else return false;
-                return currentVal !== originalVal;
-            }
-
-            function getSortScore(item, mileage, today) {
-                const { lastDate, lastMileage, intervalKm, intervalMonths } = item;
-                let maxScore = 0;
-                let hasData = false;
-                if (lastMileage !== null && intervalKm && mileage !== null && mileage !== undefined) {
-                    const diff = Math.max(0, mileage - lastMileage);
-                    const progress = clamp((diff / intervalKm) * 100, 0, 200);
-                    if (progress > 100) { maxScore = Math.max(maxScore, 2);
-                        hasData = true; } else if (progress > 80) { maxScore = Math.max(maxScore, 1);
-                        hasData = true; } else { maxScore = Math.max(maxScore, 0);
-                        hasData = true; }
-                }
-                if (lastDate && intervalMonths) {
-                    const lastDt = parseDate(lastDate);
-                    if (lastDt && today) {
-                        const diffMonths = monthsDiff(lastDt, today);
-                        if (diffMonths !== null && diffMonths >= 0) {
-                            const progress = clamp((diffMonths / intervalMonths) * 100, 0, 200);
-                            if (progress > 100) { maxScore = Math.max(maxScore, 2);
-                                hasData = true; } else if (progress > 80) { maxScore = Math.max(maxScore, 1);
-                                hasData = true; } else { maxScore = Math.max(maxScore, 0);
-                                hasData = true; }
-                        }
-                    }
-                }
-                if (!hasData) return 0.5;
-                return maxScore;
-            }
-
             // ---- УПРАВЛЕНИЕ МОДАЛКАМИ ----
             function openModal(item) {
                 hapticMedium();
@@ -1737,6 +1642,82 @@
                         replaceCardId = null;
                     }
                 });
+            }
+
+            function calcStatusAndProgress(item, mileage, today) {
+                const { lastDate, lastMileage, intervalKm, intervalMonths } = item;
+                let status = { badge: 'ok', label: '🟢 ОК', score: 0 };
+                let progressKm = 0,
+                    progressMonths = 0,
+                    hasDataKm = false,
+                    hasDataMonths = false;
+                if (lastMileage !== null && intervalKm && mileage !== null && mileage !== undefined) {
+                    const diff = Math.max(0, mileage - lastMileage);
+                    progressKm = clamp((diff / intervalKm) * 100, 0, 200);
+                    hasDataKm = true;
+                }
+                if (lastDate && intervalMonths) {
+                    const lastDt = parseDate(lastDate);
+                    if (lastDt && today) {
+                        const diffMonths = monthsDiff(lastDt, today);
+                        if (diffMonths !== null && diffMonths >= 0) {
+                            progressMonths = clamp((diffMonths / intervalMonths) * 100, 0, 200);
+                            hasDataMonths = true;
+                        }
+                    }
+                }
+                let maxScore = 0;
+                if (hasDataKm) { if (progressKm > 100) maxScore = Math.max(maxScore, 2);
+                    else if (progressKm > 80) maxScore = Math.max(maxScore, 1); }
+                if (hasDataMonths) { if (progressMonths > 100) maxScore = Math.max(maxScore, 2);
+                    else if (progressMonths > 80) maxScore = Math.max(maxScore, 1); }
+                if (!hasDataKm && !hasDataMonths) status = { badge: 'warn', label: '⚠️ Нет данных', score: 1 };
+                else if (maxScore === 2) status = { badge: 'crit', label: '🔴 Срочно заменить!', score: 2 };
+                else if (maxScore === 1) status = { badge: 'warn', label: '🟡 Скоро замена', score: 1 };
+                else status = { badge: 'ok', label: '🟢 ОК', score: 0 };
+                return { status, progressKm, progressMonths, hasDataKm, hasDataMonths };
+            }
+
+            function isFieldChanged(item, field) {
+                const original = originalItemsData.find(i => i.id === item.id);
+                if (!original) return false;
+                let currentVal, originalVal;
+                if (field === 'lastDate') { currentVal = item.lastDate || null;
+                    originalVal = original.lastDate || null; } else if (field === 'lastMileage') { currentVal = (item
+                        .lastMileage !== null && item.lastMileage !== undefined) ? item.lastMileage : null;
+                    originalVal = (original.lastMileage !== null && original.lastMileage !== undefined) ? original
+                    .lastMileage : null; } else if (field === 'lastAction') { currentVal = item.lastAction || '';
+                    originalVal = original.lastAction || ''; } else return false;
+                return currentVal !== originalVal;
+            }
+
+            function getSortScore(item, mileage, today) {
+                const { lastDate, lastMileage, intervalKm, intervalMonths } = item;
+                let maxScore = 0;
+                let hasData = false;
+                if (lastMileage !== null && intervalKm && mileage !== null && mileage !== undefined) {
+                    const diff = Math.max(0, mileage - lastMileage);
+                    const progress = clamp((diff / intervalKm) * 100, 0, 200);
+                    if (progress > 100) { maxScore = Math.max(maxScore, 2);
+                        hasData = true; } else if (progress > 80) { maxScore = Math.max(maxScore, 1);
+                        hasData = true; } else { maxScore = Math.max(maxScore, 0);
+                        hasData = true; }
+                }
+                if (lastDate && intervalMonths) {
+                    const lastDt = parseDate(lastDate);
+                    if (lastDt && today) {
+                        const diffMonths = monthsDiff(lastDt, today);
+                        if (diffMonths !== null && diffMonths >= 0) {
+                            const progress = clamp((diffMonths / intervalMonths) * 100, 0, 200);
+                            if (progress > 100) { maxScore = Math.max(maxScore, 2);
+                                hasData = true; } else if (progress > 80) { maxScore = Math.max(maxScore, 1);
+                                hasData = true; } else { maxScore = Math.max(maxScore, 0);
+                                hasData = true; }
+                        }
+                    }
+                }
+                if (!hasData) return 0.5;
+                return maxScore;
             }
 
             function showReplaceModal(cardId) {
@@ -2327,7 +2308,7 @@
                     exportData();
                 });
 
-                // ---- ЗАГРУЗКА ИЗ ФАЙЛА (ПРЯМОЙ ВЫЗОВ) ----
+                // ---- ЗАГРУЗКА ИЗ ФАЙЛА (ПРОСТОЙ КЛИК) ----
                 document.getElementById('loadFileBtn').addEventListener('click', function(e) {
                     e.preventDefault();
                     triggerFileInput();
