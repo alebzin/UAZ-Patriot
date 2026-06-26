@@ -321,6 +321,7 @@
             gap: 4px;
             align-items: center;
             flex-shrink: 0;
+            padding-left: 8px; /* Отступ между поиском и группой */
         }
         .group-controls-label {
             font-size: 13px;
@@ -855,19 +856,20 @@
         .group-header {
             background: #e8ecf0;
             border-radius: 12px;
-            padding: 8px 16px;
+            padding: 10px 16px; /* Увеличил вертикальный паддинг */
             margin-top: 0;
             font-weight: 700;
-            font-size: 13px;
+            font-size: 18px; /* Увеличил шрифт, как в панели управления */
             color: #1e2a3a;
             display: flex;
             align-items: center;
             gap: 8px;
             cursor: pointer;
             user-select: none;
+            letter-spacing: -0.2px; /* Чуть плотнее, как в панели */
         }
         .group-header .group-toggle {
-            font-size: 12px;
+            font-size: 14px;
             transition: transform 0.2s;
             display: inline-block;
         }
@@ -1036,8 +1038,8 @@
                 height: 16px;
             }
             .group-header {
-                font-size: 12px;
-                padding: 6px 12px;
+                font-size: 16px; /* Адаптивный размер */
+                padding: 8px 12px;
             }
             .group-controls-label {
                 font-size: 12px;
@@ -1045,6 +1047,9 @@
             .group-toggle-all svg {
                 width: 16px;
                 height: 16px;
+            }
+            .group-controls {
+                padding-left: 6px; /* Адаптивный отступ */
             }
         }
         @media (max-width: 420px) {
@@ -1129,8 +1134,8 @@
                 font-size: 10px;
             }
             .group-header {
-                font-size: 11px;
-                padding: 5px 10px;
+                font-size: 14px;
+                padding: 6px 10px;
             }
             .group-controls-label {
                 font-size: 11px;
@@ -1142,6 +1147,9 @@
             .search-wrapper .search-clear svg {
                 width: 14px;
                 height: 14px;
+            }
+            .group-controls {
+                padding-left: 4px;
             }
         }
 
@@ -2364,6 +2372,21 @@
                 }
                 pullStartY = 0;
             }, { passive: true });
+
+            // ---- ДОБАВЛЯЕМ ОБРАБОТЧИК ДЛЯ ОЧИСТКИ ПОЛЯ ПРОБЕГА ПРИ ФОКУСЕ ----
+            document.addEventListener('DOMContentLoaded', function() {
+                const mileageInput = document.getElementById('mileageInput');
+                mileageInput.addEventListener('focus', function() {
+                    if (this.value === '0') {
+                        this.value = '';
+                    }
+                });
+                mileageInput.addEventListener('blur', function() {
+                    if (this.value === '') {
+                        this.value = '0';
+                    }
+                });
+            });
 
             document.addEventListener('DOMContentLoaded', function() {
                 loadFromStorage();
