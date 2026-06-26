@@ -61,13 +61,13 @@
             gap: 10px;
         }
 
-        .header-logo img {
+        .header-logo svg {
             width: 40px;
             height: 40px;
             border-radius: 6px;
-            object-fit: contain;
-            background: white;
             flex-shrink: 0;
+            background: white;
+            padding: 4px;
         }
 
         .header-logo h1 {
@@ -120,10 +120,10 @@
             background: #1e7e34;
         }
         .action-btn.reset-btn {
-            background: #dc3545;
+            background: #6c757d;
         }
         .action-btn.reset-btn:active {
-            background: #a71d2a;
+            background: #5a6268;
         }
         .action-btn svg {
             width: 16px;
@@ -134,19 +134,6 @@
             stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
-        }
-        .action-btn.file-input-btn {
-            position: relative;
-            overflow: hidden;
-        }
-        .action-btn.file-input-btn input[type="file"] {
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            opacity: 0;
-            cursor: pointer;
         }
 
         .control-panel {
@@ -181,7 +168,7 @@
             min-height: 42px;
             border: 1.5px solid #d0d7de;
             border-radius: 30px;
-            font-size: 15px;
+            font-size: 13px;
             width: 100px;
             background: #f9fafb;
             transition: 0.2s;
@@ -209,22 +196,61 @@
             background: white;
         }
 
-        .control-row input[type="text"] {
-            padding: 6px 10px;
+        .search-wrapper {
+            flex: 1;
+            min-width: 80px;
+            position: relative;
+            display: flex;
+            align-items: center;
+        }
+        .search-wrapper input[type="text"] {
+            width: 100%;
+            padding: 6px 36px 6px 10px;
             min-height: 38px;
             border: 1.5px solid #d0d7de;
             border-radius: 30px;
             font-size: 13px;
             background: #f9fafb;
             color: #1e2a3a;
-            flex: 1;
-            min-width: 80px;
             transition: 0.2s;
         }
-        .control-row input[type="text"]:focus {
+        .search-wrapper input[type="text"]:focus {
             border-color: #1e2a3a;
             outline: none;
             background: white;
+        }
+        .search-wrapper .search-clear {
+            position: absolute;
+            right: 8px;
+            background: none;
+            border: none;
+            color: #6c757d;
+            cursor: pointer;
+            padding: 4px;
+            min-height: 28px;
+            min-width: 28px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 50%;
+            transition: 0.15s;
+            touch-action: manipulation;
+        }
+        .search-wrapper .search-clear:active {
+            transform: scale(0.85);
+            background: #e8ecf0;
+        }
+        .search-wrapper .search-clear svg {
+            width: 16px;
+            height: 16px;
+            fill: none;
+            stroke: currentColor;
+            stroke-width: 2.5;
+            stroke-linecap: round;
+            stroke-linejoin: round;
+        }
+        .search-wrapper .search-clear.hidden {
+            display: none;
         }
 
         .step-btn {
@@ -290,33 +316,42 @@
             stroke-linejoin: round;
         }
 
-        .btn-clear-search {
-            background: #dc3545;
-            color: white;
-            border: none;
-            border-radius: 30px;
-            padding: 6px 12px;
-            min-height: 38px;
+        .group-controls {
+            display: flex;
+            gap: 4px;
+            align-items: center;
+            flex-shrink: 0;
+        }
+        .group-controls-label {
             font-size: 13px;
             font-weight: 600;
+            color: #1e2a3a;
+            margin-right: 2px;
+        }
+        .group-toggle-all {
+            background: transparent;
+            border: none;
             cursor: pointer;
-            transition: 0.15s;
-            touch-action: manipulation;
-            white-space: nowrap;
+            padding: 4px 6px;
+            color: #6c757d;
+            font-size: 14px;
             display: flex;
             align-items: center;
-            gap: 4px;
+            gap: 2px;
+            transition: 0.15s;
+            touch-action: manipulation;
+            border-radius: 6px;
         }
-        .btn-clear-search:active {
-            background: #a71d2a;
-            transform: scale(0.95);
+        .group-toggle-all:active {
+            transform: scale(0.9);
+            background: #e8ecf0;
         }
-        .btn-clear-search svg {
-            width: 14px;
-            height: 14px;
+        .group-toggle-all svg {
+            width: 18px;
+            height: 18px;
             fill: none;
             stroke: currentColor;
-            stroke-width: 2.5;
+            stroke-width: 2;
             stroke-linecap: round;
             stroke-linejoin: round;
         }
@@ -638,7 +673,8 @@
             text-transform: uppercase;
             letter-spacing: 0.3px;
         }
-        .modal-field input {
+        .modal-field input,
+        .modal-field select {
             width: 100%;
             padding: 10px 12px;
             min-height: 44px;
@@ -648,7 +684,8 @@
             background: #f9fafb;
             transition: 0.2s;
         }
-        .modal-field input:focus {
+        .modal-field input:focus,
+        .modal-field select:focus {
             border-color: #1e2a3a;
             outline: none;
             background: white;
@@ -776,17 +813,6 @@
             opacity: 1;
         }
 
-        .card.swiping {
-            transform: translateX(-100%);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-        .card.swiping-right {
-            transform: translateX(100%);
-            opacity: 0;
-            transition: transform 0.3s ease, opacity 0.3s ease;
-        }
-
         .footer {
             margin-top: 20px;
             font-size: 12px;
@@ -818,6 +844,53 @@
             margin-top: 2px;
         }
 
+        /* Группировка карточек */
+        .group-wrapper {
+            margin-top: 4px;
+        }
+        .group-wrapper:first-child {
+            margin-top: 0;
+        }
+
+        .group-header {
+            background: #e8ecf0;
+            border-radius: 12px;
+            padding: 8px 16px;
+            margin-top: 0;
+            font-weight: 700;
+            font-size: 13px;
+            color: #1e2a3a;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            user-select: none;
+        }
+        .group-header .group-toggle {
+            font-size: 12px;
+            transition: transform 0.2s;
+            display: inline-block;
+        }
+        .group-header .group-toggle.collapsed {
+            transform: rotate(-90deg);
+        }
+        .group-cards {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            padding-left: 4px;
+            padding-top: 10px;
+            padding-bottom: 10px;
+            overflow: hidden;
+            transition: max-height 0.3s ease;
+        }
+        .group-cards.collapsed {
+            max-height: 0 !important;
+            padding-top: 0;
+            padding-bottom: 0;
+            gap: 0;
+        }
+
         @media (max-width: 600px) {
             .header {
                 flex-direction: column;
@@ -841,7 +914,7 @@
             .header-logo h1 {
                 font-size: 15px;
             }
-            .header-logo img {
+            .header-logo svg {
                 width: 36px;
                 height: 36px;
             }
@@ -866,10 +939,10 @@
                 padding: 6px 8px;
                 min-height: 38px;
             }
-            .control-row input[type="text"] {
+            .search-wrapper input[type="text"] {
                 min-height: 38px;
                 font-size: 12px;
-                padding: 6px 10px;
+                padding: 6px 34px 6px 10px;
             }
             .step-btn {
                 font-size: 12px;
@@ -887,15 +960,6 @@
                 min-height: 36px;
             }
             .btn-today svg {
-                width: 14px;
-                height: 14px;
-            }
-            .btn-clear-search {
-                font-size: 12px;
-                padding: 4px 10px;
-                min-height: 36px;
-            }
-            .btn-clear-search svg {
                 width: 14px;
                 height: 14px;
             }
@@ -971,6 +1035,17 @@
                 width: 16px;
                 height: 16px;
             }
+            .group-header {
+                font-size: 12px;
+                padding: 6px 12px;
+            }
+            .group-controls-label {
+                font-size: 12px;
+            }
+            .group-toggle-all svg {
+                width: 16px;
+                height: 16px;
+            }
         }
         @media (max-width: 420px) {
             .card-info {
@@ -1003,10 +1078,10 @@
                 padding: 4px 6px;
                 min-height: 34px;
             }
-            .control-row input[type="text"] {
+            .search-wrapper input[type="text"] {
                 min-height: 34px;
                 font-size: 11px;
-                padding: 4px 8px;
+                padding: 4px 30px 4px 8px;
             }
             .step-btn {
                 font-size: 11px;
@@ -1024,15 +1099,6 @@
                 min-height: 32px;
             }
             .btn-today svg {
-                width: 12px;
-                height: 12px;
-            }
-            .btn-clear-search {
-                font-size: 11px;
-                padding: 3px 8px;
-                min-height: 32px;
-            }
-            .btn-clear-search svg {
                 width: 12px;
                 height: 12px;
             }
@@ -1062,6 +1128,21 @@
             .footer .line4 {
                 font-size: 10px;
             }
+            .group-header {
+                font-size: 11px;
+                padding: 5px 10px;
+            }
+            .group-controls-label {
+                font-size: 11px;
+            }
+            .group-toggle-all svg {
+                width: 14px;
+                height: 14px;
+            }
+            .search-wrapper .search-clear svg {
+                width: 14px;
+                height: 14px;
+            }
         }
 
         * {
@@ -1070,7 +1151,8 @@
             user-select: none;
         }
         input,
-        textarea {
+        textarea,
+        select {
             -webkit-user-select: text;
             user-select: text;
         }
@@ -1080,7 +1162,12 @@
     <div class="app-container">
         <div class="header">
             <div class="header-logo">
-                <img src="https://toplogos.ru/images/thumbs/preview-logo-uaz.jpg" alt="Логотип УАЗ" loading="lazy">
+                <svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+                    <rect width="100" height="100" rx="8" fill="#1e2a3a" />
+                    <rect x="10" y="10" width="80" height="80" rx="4" fill="white" />
+                    <text x="50" y="45" font-family="Arial, sans-serif" font-size="22" font-weight="bold" fill="#1e2a3a" text-anchor="middle">УАЗ</text>
+                    <text x="50" y="70" font-family="Arial, sans-serif" font-size="14" fill="#1e2a3a" text-anchor="middle">Патриот</text>
+                </svg>
                 <h1>
                     УАЗ Патриот
                     <small>Журнал ТО • Универсальный</small>
@@ -1089,20 +1176,11 @@
             <div class="header-actions">
                 <button class="action-btn add-btn" id="addCardBtn" type="button">
                     <svg viewBox="0 0 24 24"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
-                    Добавить
+                    Добавить работу
                 </button>
                 <button class="action-btn reset-btn" id="resetBtn" type="button">
                     <svg viewBox="0 0 24 24"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"/></svg>
-                    Сброс
-                </button>
-                <button class="action-btn" id="saveFileBtn" type="button">
-                    <svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="12" y1="18" x2="12" y2="12"/><polyline points="9 15 12 18 15 15"/></svg>
-                    В файл
-                </button>
-                <button class="action-btn file-input-btn" id="loadFileBtn" type="button">
-                    <svg viewBox="0 0 24 24"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/></svg>
-                    Из файла
-                    <input type="file" id="fileInput" accept=".json,.html,.htm">
+                    Начать сначала
                 </button>
             </div>
         </div>
@@ -1119,7 +1197,7 @@
                 <button class="step-btn" id="dateInc" type="button">&gt;1 мес</button>
             </div>
             <div class="control-row">
-                <label style="min-width:70px;font-size:18px;font-weight:700;">📟 Пробег</label>
+                <label style="min-width:70px;font-size:13px;font-weight:700;">📟 Пробег</label>
                 <input type="number" id="mileageInput" value="0" step="1000" min="0" style="width:100px;">
                 <button class="step-btn" id="mileageDec" type="button">
                     <svg viewBox="0 0 24 24"><line x1="5" y1="12" x2="19" y2="12"/></svg> 1000
@@ -1129,12 +1207,22 @@
                 </button>
             </div>
             <div class="control-row" style="gap:4px;">
-                <label style="min-width:70px;font-size:16px;font-weight:700;color:#1e2a3a;">🔍 Поиск</label>
-                <input type="text" id="searchInput" placeholder="Фильтр по названию..." style="flex:1;min-width:80px;">
-                <button class="btn-clear-search" id="clearSearchBtn" type="button">
-                    <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
-                    Очистить
-                </button>
+                <label style="min-width:70px;font-size:13px;font-weight:700;color:#1e2a3a;">🔍 Поиск</label>
+                <div class="search-wrapper">
+                    <input type="text" id="searchInput" placeholder="Фильтр по названию...">
+                    <button class="search-clear hidden" id="clearSearchBtn" type="button" aria-label="Очистить поиск">
+                        <svg viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+                    </button>
+                </div>
+                <div class="group-controls">
+                    <span class="group-controls-label">Группы</span>
+                    <button class="group-toggle-all" id="expandAllBtn" title="Развернуть все группы">
+                        <svg viewBox="0 0 24 24"><polyline points="6 9 12 15 18 9"/></svg>
+                    </button>
+                    <button class="group-toggle-all" id="collapseAllBtn" title="Свернуть все группы">
+                        <svg viewBox="0 0 24 24"><polyline points="18 15 12 9 6 15"/></svg>
+                    </button>
+                </div>
             </div>
         </div>
 
@@ -1160,6 +1248,14 @@
                 <div class="modal-field">
                     <label>Название</label>
                     <input type="text" id="modalTitleInput" placeholder="Например: Масло в двигателе">
+                </div>
+                <div class="modal-field">
+                    <label>Группа</label>
+                    <select id="modalGroupInput">
+                        <option value="Двигатель">Двигатель</option>
+                        <option value="Ходовая">Ходовая</option>
+                        <option value="Остальное">Остальное</option>
+                    </select>
                 </div>
                 <div class="modal-field">
                     <label>Последнее действие</label>
@@ -1212,6 +1308,8 @@
                 <strong>Последнее действие</strong> будет очищено.
                 <br><br>
                 <strong>Пробег в панели управления</strong> будет сброшен в <strong>0</strong>.
+                <br><br>
+                Все карточки будут восстановлены до заводских настроек.
             </div>
             <div class="modal-field">
                 <label>Дата начала отсчёта</label>
@@ -1252,16 +1350,7 @@
 
     <script>
         (function() {
-            let itemsData = [{
-                id: 'akpp',
-                title: 'Масло в АКПП',
-                lastAction: '',
-                lastDate: null,
-                lastMileage: 0,
-                intervalKm: 45000,
-                intervalMonths: 48,
-                note: 'Рекомендуется замена масла в автоматической коробке передач каждые 45 000 км или раз в 4 года. Используйте только рекомендованные жидкости.'
-            }, {
+            const DEFAULT_ITEMS = [{
                 id: 'engineOil',
                 title: 'Масло моторное',
                 lastAction: '',
@@ -1269,7 +1358,8 @@
                 lastMileage: 0,
                 intervalKm: 15000,
                 intervalMonths: 12,
-                note: 'Замена моторного масла и масляного фильтра каждые 15 000 км или раз в год. Рекомендуется масло 5W-40 или 10W-40 по классификации API не ниже SL.'
+                note: 'Замена моторного масла и масляного фильтра каждые 15 000 км или раз в год.',
+                group: 'Двигатель'
             }, {
                 id: 'airFilter',
                 title: 'Воздушный фильтр',
@@ -1278,61 +1368,8 @@
                 lastMileage: 0,
                 intervalKm: 15000,
                 intervalMonths: 12,
-                note: 'Замена воздушного фильтра каждые 15 000 км или при сильном загрязнении. В пыльных условиях интервал сокращается до 7 500 км.'
-            }, {
-                id: 'cabinFilter',
-                title: 'Салонный фильтр',
-                lastAction: '',
-                lastDate: null,
-                lastMileage: 0,
-                intervalKm: 20000,
-                intervalMonths: 12,
-                note: 'Рекомендуется замена салонного фильтра раз в год или каждые 20 000 км для обеспечения качественной очистки воздуха в салоне.'
-            }, {
-                id: 'axles',
-                title: 'Масло в мостах (перед/зад)',
-                lastAction: '',
-                lastDate: null,
-                lastMileage: 0,
-                intervalKm: 45000,
-                intervalMonths: 36,
-                note: 'Замена масла в переднем и заднем мостах каждые 45 000 км или раз в 3 года. Используйте трансмиссионное масло 75W-90 GL-5.'
-            }, {
-                id: 'transferCase',
-                title: 'Масло в раздатке',
-                lastAction: '',
-                lastDate: null,
-                lastMileage: 0,
-                intervalKm: 45000,
-                intervalMonths: 36,
-                note: 'Замена масла в раздаточной коробке каждые 45 000 км или раз в 3 года. Объём зависит от модели раздатки.'
-            }, {
-                id: 'gur',
-                title: 'Масло в ГУР',
-                lastAction: '',
-                lastDate: null,
-                lastMileage: 0,
-                intervalKm: 45000,
-                intervalMonths: 24,
-                note: 'Замена жидкости гидроусилителя руля каждые 45 000 км или раз в 2 года. Используйте ATF Dexron III.'
-            }, {
-                id: 'coolant',
-                title: 'Охлаждающая жидкость',
-                lastAction: '',
-                lastDate: null,
-                lastMileage: 0,
-                intervalKm: 60000,
-                intervalMonths: 36,
-                note: 'Замена антифриза каждые 60 000 км или раз в 3 года. Используйте G12+ или G12++ с интервалом замены согласно рекомендациям.'
-            }, {
-                id: 'brakeFluid',
-                title: 'Тормозная жидкость',
-                lastAction: '',
-                lastDate: null,
-                lastMileage: 0,
-                intervalKm: 60000,
-                intervalMonths: 24,
-                note: 'Замена тормозной жидкости раз в 2 года или при пробеге 60 000 км. Используйте DOT-4. Влажность ухудшает свойства жидкости.'
+                note: 'Замена воздушного фильтра каждые 15 000 км или при сильном загрязнении.',
+                group: 'Двигатель'
             }, {
                 id: 'sparkPlugs',
                 title: 'Свечи зажигания',
@@ -1341,7 +1378,8 @@
                 lastMileage: 0,
                 intervalKm: 45000,
                 intervalMonths: 48,
-                note: 'Замена свечей зажигания каждые 45 000 км или раз в 4 года. Для двигателей ЗМЗ-409 рекомендуется зазор 0,7–0,8 мм.'
+                note: 'Замена свечей зажигания каждые 45 000 км или раз в 4 года.',
+                group: 'Двигатель'
             }, {
                 id: 'fuelFilter',
                 title: 'Топливный фильтр',
@@ -1350,7 +1388,8 @@
                 lastMileage: 0,
                 intervalKm: 40000,
                 intervalMonths: 36,
-                note: 'Замена топливного фильтра каждые 40 000 км или раз в 3 года. Защищает топливную систему от загрязнений.'
+                note: 'Замена топливного фильтра каждые 40 000 км или раз в 3 года.',
+                group: 'Двигатель'
             }, {
                 id: 'timingChain',
                 title: 'Цепь ГРМ',
@@ -1359,7 +1398,8 @@
                 lastMileage: 0,
                 intervalKm: 50000,
                 intervalMonths: null,
-                note: 'Срочная диагностика цепи ГРМ при пробеге 40 000 – 50 000 км. Проверка натяжения, износ звёздочек и успокоителей.'
+                note: 'Диагностика цепи ГРМ при пробеге 40 000 – 50 000 км.',
+                group: 'Двигатель'
             }, {
                 id: 'driveBelt',
                 title: 'Приводной ремень',
@@ -1368,16 +1408,58 @@
                 lastMileage: 0,
                 intervalKm: null,
                 intervalMonths: null,
-                note: 'Проверка состояния приводного ремня по признакам износа: трещины, износ ручьёв, натяжение. При обнаружении дефектов — замена.'
+                note: 'Проверка состояния приводного ремня по признакам износа.',
+                group: 'Двигатель'
             }, {
-                id: 'rollers',
-                title: 'Ролики (натяжной/обводные)',
+                id: 'coolant',
+                title: 'Охлаждающая жидкость',
                 lastAction: '',
                 lastDate: null,
                 lastMileage: 0,
-                intervalKm: null,
-                intervalMonths: null,
-                note: 'Проверка состояния натяжного и обводных роликов. Признаки: шум, люфт, неравномерный износ. При обнаружении — замена.'
+                intervalKm: 60000,
+                intervalMonths: 36,
+                note: 'Замена антифриза каждые 60 000 км или раз в 3 года.',
+                group: 'Двигатель'
+            }, {
+                id: 'axles',
+                title: 'Масло в мостах (перед/зад)',
+                lastAction: '',
+                lastDate: null,
+                lastMileage: 0,
+                intervalKm: 45000,
+                intervalMonths: 36,
+                note: 'Замена масла в переднем и заднем мостах каждые 45 000 км.',
+                group: 'Ходовая'
+            }, {
+                id: 'transferCase',
+                title: 'Масло в раздатке',
+                lastAction: '',
+                lastDate: null,
+                lastMileage: 0,
+                intervalKm: 45000,
+                intervalMonths: 36,
+                note: 'Замена масла в раздаточной коробке каждые 45 000 км.',
+                group: 'Ходовая'
+            }, {
+                id: 'gur',
+                title: 'Масло в ГУР',
+                lastAction: '',
+                lastDate: null,
+                lastMileage: 0,
+                intervalKm: 45000,
+                intervalMonths: 24,
+                note: 'Замена жидкости гидроусилителя руля каждые 45 000 км или раз в 2 года.',
+                group: 'Ходовая'
+            }, {
+                id: 'brakeFluid',
+                title: 'Тормозная жидкость',
+                lastAction: '',
+                lastDate: null,
+                lastMileage: 0,
+                intervalKm: 60000,
+                intervalMonths: 24,
+                note: 'Замена тормозной жидкости раз в 2 года или при пробеге 60 000 км.',
+                group: 'Ходовая'
             }, {
                 id: 'tieRods',
                 title: 'Рулевые наконечники',
@@ -1386,7 +1468,8 @@
                 lastMileage: 0,
                 intervalKm: 40000,
                 intervalMonths: 48,
-                note: 'Проверка рулевых наконечников при пробеге 40 000 км. При наличии люфта или повреждений пыльников — замена.'
+                note: 'Проверка рулевых наконечников при пробеге 40 000 км.',
+                group: 'Ходовая'
             }, {
                 id: 'kingpins',
                 title: 'Шкворни (поворотные кулаки)',
@@ -1395,7 +1478,8 @@
                 lastMileage: 0,
                 intervalKm: 45000,
                 intervalMonths: 48,
-                note: 'Проверка шкворней поворотных кулаков при пробеге 45 000 км. Смазка через пресс-масленки, проверка люфта.'
+                note: 'Проверка шкворней поворотных кулаков при пробеге 45 000 км.',
+                group: 'Ходовая'
             }, {
                 id: 'brakePads',
                 title: 'Тормозные колодки и диски',
@@ -1404,7 +1488,38 @@
                 lastMileage: 0,
                 intervalKm: 40000,
                 intervalMonths: null,
-                note: 'Проверка состояния тормозных колодок и дисков при пробеге 40 000 км. При износе колодок менее 3 мм или появлении рисок на дисках — замена.'
+                note: 'Проверка состояния тормозных колодок и дисков при пробеге 40 000 км.',
+                group: 'Ходовая'
+            }, {
+                id: 'rollers',
+                title: 'Ролики (натяжной/обводные)',
+                lastAction: '',
+                lastDate: null,
+                lastMileage: 0,
+                intervalKm: null,
+                intervalMonths: null,
+                note: 'Проверка состояния натяжного и обводных роликов.',
+                group: 'Ходовая'
+            }, {
+                id: 'akpp',
+                title: 'Масло в АКПП',
+                lastAction: '',
+                lastDate: null,
+                lastMileage: 0,
+                intervalKm: 45000,
+                intervalMonths: 48,
+                note: 'Замена масла в автоматической коробке передач каждые 45 000 км.',
+                group: 'Остальное'
+            }, {
+                id: 'cabinFilter',
+                title: 'Салонный фильтр',
+                lastAction: '',
+                lastDate: null,
+                lastMileage: 0,
+                intervalKm: 20000,
+                intervalMonths: 12,
+                note: 'Замена салонного фильтра раз в год или каждые 20 000 км.',
+                group: 'Остальное'
             }, {
                 id: 'maintenance',
                 title: 'ТО (плановое обслуживание)',
@@ -1413,11 +1528,13 @@
                 lastMileage: 0,
                 intervalKm: 15000,
                 intervalMonths: 12,
-                note: 'Плановое техническое обслуживание каждые 15 000 км или раз в год. Включает замену масла, фильтров, проверку всех систем и узлов.'
+                note: 'Плановое техническое обслуживание каждые 15 000 км или раз в год.',
+                group: 'Остальное'
             }];
 
+            let itemsData = [];
             let nextId = 100;
-            let originalItemsData = JSON.parse(JSON.stringify(itemsData));
+            let originalItemsData = [];
             const STORAGE_KEY = 'uaz_patriot_data';
             const SCROLL_KEY = 'uaz_patriot_scroll';
             let currentMileage = 0;
@@ -1431,59 +1548,6 @@
             let searchQuery = '';
             let isModalOpen = false;
 
-            // ---- ЗАГРУЗКА ИЗ ФАЙЛА (ПРОСТОЙ И НАДЁЖНЫЙ СПОСОБ) ----
-            function triggerFileInput() {
-                const fileInput = document.getElementById('fileInput');
-                fileInput.value = '';
-                // Вызываем клик напрямую
-                fileInput.click();
-            }
-
-            function importData(file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        const data = JSON.parse(e.target.result);
-                        if (data.items && Array.isArray(data.items)) {
-                            itemsData = data.items;
-                            data.items.forEach(item => {
-                                if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
-                                    const num = parseInt(item.id);
-                                    if (num >= nextId) nextId = num + 1;
-                                }
-                            });
-                            if (data.currentMileage !== undefined) {
-                                currentMileage = data.currentMileage;
-                                document.getElementById('mileageInput').value = currentMileage;
-                            }
-                            if (data.currentDate) {
-                                currentDate = parseDate(data.currentDate) || new Date();
-                                document.getElementById('dateInput').value = formatDate(currentDate);
-                            }
-                            originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                            saveToStorage();
-                            const mileageInput = document.getElementById('mileageInput');
-                            const dateInput = document.getElementById('dateInput');
-                            const mileage = parseInt(mileageInput.value) || 0;
-                            const parts = dateInput.value.split('-');
-                            const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-                            renderTable(mileage, today, false);
-                            showNotification('✅ Данные импортированы!');
-                            hapticMedium();
-                            return;
-                        }
-                        showNotification('❌ Файл не содержит данных!');
-                    } catch (err) {
-                        console.error('Ошибка чтения файла:', err);
-                        showNotification('❌ Ошибка чтения файла!');
-                    }
-                };
-                reader.onerror = function() {
-                    showNotification('❌ Ошибка чтения файла!');
-                };
-                reader.readAsText(file);
-            }
-
             function isFirstLaunch() {
                 return !localStorage.getItem(STORAGE_KEY);
             }
@@ -1493,14 +1557,21 @@
                     const saved = localStorage.getItem(STORAGE_KEY);
                     if (saved) {
                         const data = JSON.parse(saved);
-                        if (data.items && Array.isArray(data.items)) {
+                        if (data.items && Array.isArray(data.items) && data.items.length > 0) {
                             itemsData = data.items;
                             data.items.forEach(item => {
                                 if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
                                     const num = parseInt(item.id);
                                     if (num >= nextId) nextId = num + 1;
                                 }
+                                if (!item.group) {
+                                    const def = DEFAULT_ITEMS.find(d => d.id === item.id);
+                                    item.group = def ? def.group : 'Остальное';
+                                }
                             });
+                            originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                        } else {
+                            itemsData = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
                             originalItemsData = JSON.parse(JSON.stringify(itemsData));
                         }
                         if (data.currentMileage !== undefined) currentMileage = data.currentMileage;
@@ -1509,6 +1580,8 @@
                             currentDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
                         }
                     } else {
+                        itemsData = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+                        originalItemsData = JSON.parse(JSON.stringify(itemsData));
                         const today = new Date();
                         const todayStr = formatDate(today);
                         itemsData.forEach(item => {
@@ -1520,7 +1593,21 @@
                         currentMileage = 0;
                         saveToStorage();
                     }
-                } catch (e) { console.warn('Ошибка загрузки из localStorage', e); }
+                } catch (e) {
+                    console.warn('Ошибка загрузки из localStorage, загружаем дефолтные', e);
+                    itemsData = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
+                    originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                    const today = new Date();
+                    const todayStr = formatDate(today);
+                    itemsData.forEach(item => {
+                        item.lastDate = todayStr;
+                        item.lastMileage = 0;
+                    });
+                    originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                    currentDate = today;
+                    currentMileage = 0;
+                    saveToStorage();
+                }
             }
 
             function saveToStorage() {
@@ -1543,20 +1630,33 @@
                 if (navigator.vibrate) navigator.vibrate(10);
             }
 
-            function parseDate(str) { if (!str) return null; const parts = str.split('-'); return new Date(parseInt(parts[0]),
-                    parseInt(parts[1]) - 1, parseInt(parts[2])); }
+            function parseDate(str) {
+                if (!str) return null;
+                const parts = str.split('-');
+                return new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+            }
 
-            function monthsDiff(d1, d2) { if (!d1 || !d2) return null; return (d2.getFullYear() - d1.getFullYear()) * 12 + (
-                    d2.getMonth() - d1.getMonth()); }
+            function formatDateToDisplay(str) {
+                if (!str) return '—';
+                const parts = str.split('-');
+                if (parts.length !== 3) return str;
+                return `${parts[2]}.${parts[1]}.${parts[0]}`;
+            }
+
+            function monthsDiff(d1, d2) {
+                if (!d1 || !d2) return null;
+                return (d2.getFullYear() - d1.getFullYear()) * 12 + (d2.getMonth() - d1.getMonth());
+            }
 
             function clamp(v, min, max) { return Math.min(Math.max(v, min), max); }
 
-            function formatDate(d) { if (!d) return ''; const y = d.getFullYear(); const m = String(d.getMonth() + 1)
-                    .padStart(2, '0'); const day = String(d.getDate()).padStart(2, '0'); return `${y}-${m}-${day}`; }
-
-            function formatDateTime(d) { if (!d) return ''; return formatDate(d) + '_' + String(d.getHours()).padStart(2,
-                    '0') + '-' + String(d.getMinutes()).padStart(2, '0') + '-' + String(d.getSeconds()).padStart(2,
-                    '0'); }
+            function formatDate(d) {
+                if (!d) return '';
+                const y = d.getFullYear();
+                const m = String(d.getMonth() + 1).padStart(2, '0');
+                const day = String(d.getDate()).padStart(2, '0');
+                return `${y}-${m}-${day}`;
+            }
 
             function addMonths(date, months) { const d = new Date(date); d.setMonth(d.getMonth() + months); return d; }
 
@@ -1570,6 +1670,7 @@
                 const overlay = document.getElementById('modalOverlay');
                 document.getElementById('modalTitle').textContent = item ? 'Редактирование' : 'Новая карточка';
                 document.getElementById('modalTitleInput').value = item ? item.title || '' : '';
+                document.getElementById('modalGroupInput').value = item ? item.group || 'Остальное' : 'Остальное';
                 document.getElementById('modalActionInput').value = item ? item.lastAction || '' : '';
                 document.getElementById('modalDateInput').value = item ? item.lastDate || '' : '';
                 document.getElementById('modalMileageInput').value = item && item.lastMileage !== null ? item.lastMileage :
@@ -1750,7 +1851,7 @@
 
                 item.lastDate = date;
                 item.lastMileage = mileage;
-                item.lastAction = 'Заменено ' + date;
+                item.lastAction = 'Заменено ' + formatDateToDisplay(date);
 
                 originalItemsData = JSON.parse(JSON.stringify(itemsData));
                 document.getElementById('replaceModalOverlay').classList.remove('active');
@@ -1763,7 +1864,7 @@
                 const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
                 renderTable(mileageVal, today, false);
                 saveToStorage();
-                showNotification('✅ Заменено! Дата: ' + date + ', пробег: ' + mileage + ' км');
+                showNotification('✅ Заменено! Дата: ' + formatDateToDisplay(date) + ', пробег: ' + mileage + ' км');
                 hapticMedium();
             }
 
@@ -1783,6 +1884,7 @@
                 const today = new Date();
                 if (selectedDate && selectedDate > today) { showNotification('❌ Дата не может быть в будущем!'); return; }
 
+                itemsData = JSON.parse(JSON.stringify(DEFAULT_ITEMS));
                 itemsData.forEach(item => {
                     item.lastAction = '';
                     item.lastDate = resetDate;
@@ -1803,7 +1905,7 @@
                 const todayDate = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
                 renderTable(0, todayDate, false);
                 saveToStorage();
-                showNotification('🔄 Все карточки сброшены! Пробег = 0, дата начала отсчёта: ' + resetDate);
+                showNotification('🔄 Все карточки восстановлены до заводских!');
                 hapticMedium();
             }
 
@@ -1813,6 +1915,7 @@
                 if (!title) { showNotification('❌ Введите название!'); return; }
                 const itemData = {
                     title: title,
+                    group: document.getElementById('modalGroupInput').value || 'Остальное',
                     lastAction: document.getElementById('modalActionInput').value.trim() || '',
                     lastDate: document.getElementById('modalDateInput').value || null,
                     lastMileage: document.getElementById('modalMileageInput').value ? parseInt(document.getElementById(
@@ -1860,40 +1963,51 @@
                 hapticMedium();
             }
 
-            function exportData() {
-                const dataToSave = {
-                    version: '2.0',
-                    exportedAt: new Date().toISOString(),
-                    items: itemsData,
-                    currentMileage: currentMileage,
-                    currentDate: formatDate(currentDate)
-                };
-                const json = JSON.stringify(dataToSave, null, 2);
-                const blob = new Blob([json], { type: 'application/json;charset=utf-8' });
-                const url = URL.createObjectURL(blob);
-                const a = document.createElement('a');
-                const now = new Date();
-                a.download = `uaz_patriot_data_${formatDateTime(now)}.json`;
-                a.href = url;
-                document.body.appendChild(a);
-                a.click();
-                document.body.removeChild(a);
-                URL.revokeObjectURL(url);
-                showNotification('✅ Данные экспортированы в JSON!');
-                hapticMedium();
-            }
-
             function filterCards(query) {
                 searchQuery = query.toLowerCase().trim();
-                const cards = document.querySelectorAll('.card');
-                cards.forEach(card => {
-                    const title = card.querySelector('.card-title');
-                    if (!title) return;
-                    const titleText = title.textContent.toLowerCase();
-                    if (searchQuery === '' || titleText.includes(searchQuery)) {
-                        card.classList.remove('hidden');
+                const clearBtn = document.getElementById('clearSearchBtn');
+                if (searchQuery === '') {
+                    clearBtn.classList.add('hidden');
+                } else {
+                    clearBtn.classList.remove('hidden');
+                }
+
+                const groups = document.querySelectorAll('.group-cards');
+                groups.forEach(group => {
+                    const cards = group.querySelectorAll('.card');
+                    let hasVisible = false;
+                    cards.forEach(card => {
+                        const title = card.querySelector('.card-title');
+                        if (!title) return;
+                        const titleText = title.textContent.toLowerCase();
+                        if (searchQuery === '' || titleText.includes(searchQuery)) {
+                            card.classList.remove('hidden');
+                            hasVisible = true;
+                        } else {
+                            card.classList.add('hidden');
+                        }
+                    });
+                    const groupContainer = group.closest('.group-wrapper');
+                    if (groupContainer) {
+                        if (hasVisible || searchQuery === '') {
+                            groupContainer.style.display = '';
+                        } else {
+                            groupContainer.style.display = 'none';
+                        }
+                    }
+                });
+            }
+
+            function toggleAllGroups(expand) {
+                const groups = document.querySelectorAll('.group-cards');
+                groups.forEach(group => {
+                    const toggle = group.closest('.group-wrapper').querySelector('.group-toggle');
+                    if (expand) {
+                        group.classList.remove('collapsed');
+                        if (toggle) toggle.classList.remove('collapsed');
                     } else {
-                        card.classList.add('hidden');
+                        group.classList.add('collapsed');
+                        if (toggle) toggle.classList.add('collapsed');
                     }
                 });
             }
@@ -1917,111 +2031,156 @@
                         `<div style="text-align:center;padding:40px 20px;color:#7a8a9a;background:white;border-radius:16px;border:2px dashed #d0d7de;">
                     <div style="font-size:48px;margin-bottom:12px;">📋</div>
                     <div style="font-size:16px;font-weight:500;">Нет карточек</div>
-                    <div style="font-size:13px;margin-top:4px;">Нажмите «➕ Добавить» в шапке</div>
+                    <div style="font-size:13px;margin-top:4px;">Нажмите «➕ Добавить работу» в шапке</div>
                 </div>`;
                     return;
                 }
 
+                const groups = {};
                 items.forEach(item => {
-                    const { status, progressKm, progressMonths, hasDataKm, hasDataMonths } = calcStatusAndProgress(
-                        item, mileage, today);
-                    let borderClass = 'border-ok';
-                    if (status.badge === 'crit') borderClass = 'border-crit';
-                    else if (status.badge === 'warn') borderClass = 'border-warn';
-                    let dateStr = item.lastDate || '—';
-                    let mileageStr = (item.lastMileage !== null && item.lastMileage !== undefined) ? item
-                        .lastMileage + ' км' : '—';
-                    const dateChanged = isFieldChanged(item, 'lastDate');
-                    const mileChanged = isFieldChanged(item, 'lastMileage');
-                    const actionChanged = isFieldChanged(item, 'lastAction');
-                    let intervalStr = '';
-                    if (item.intervalKm && item.intervalMonths) intervalStr = `${item.intervalKm} км / ${item.intervalMonths} мес.`;
-                    else if (item.intervalKm) intervalStr = `${item.intervalKm} км`;
-                    else if (item.intervalMonths) intervalStr = `${item.intervalMonths} мес.`;
-                    else intervalStr = 'По состоянию';
-                    const kmDisplay = Math.min(progressKm, 100);
-                    const monDisplay = Math.min(progressMonths, 100);
-                    const kmClass = progressKm > 100 ? 'crit' : (progressKm > 80 ? 'warn' : '');
-                    const monClass = progressMonths > 100 ? 'crit' : (progressMonths > 80 ? 'warn' : '');
-                    const kmLabel = hasDataKm ? `${Math.round(progressKm)}%` : '—';
-                    const monLabel = hasDataMonths ? `${Math.round(progressMonths)}%` : '—';
-
-                    let hintParts = [],
-                        hintHtml = '';
-                    if (hasDataKm && item.intervalKm && mileage !== null && mileage !== undefined && item
-                        .lastMileage !== null) {
-                        const diff = mileage - item.lastMileage;
-                        const remain = item.intervalKm - diff;
-                        if (remain > 0) hintParts.push({ text: `остаток ~ ${Math.round(remain)} км`,
-                            overdue: false });
-                        else if (remain <= 0) hintParts.push({ text: `перепробег ${Math.abs(Math.round(remain))} км`,
-                            overdue: true });
-                    }
-                    if (hasDataMonths && item.lastDate && item.intervalMonths) {
-                        const lastDt = parseDate(item.lastDate);
-                        if (lastDt) {
-                            const diff = monthsDiff(lastDt, today);
-                            if (diff !== null && diff >= 0) {
-                                const remain = item.intervalMonths - diff;
-                                if (remain > 0) hintParts.push({ text: `остаток ~ ${Math.round(remain)} мес.`,
-                                    overdue: false });
-                                else if (remain <= 0) hintParts.push({ text: `просрочка ${Math.abs(Math.round(remain))} мес.`,
-                                    overdue: true });
-                            }
-                        }
-                    }
-                    if (hintParts.length) {
-                        hintHtml = hintParts.map(p => p.overdue ?
-                            `<strong class="text-overdue">${p.text}</strong>` :
-                            `<strong>${p.text}</strong>`).join(' • ');
-                    }
-
-                    const card = document.createElement('div');
-                    card.className = `card ${borderClass}`;
-                    card.dataset.itemId = item.id;
-                    card.innerHTML = `
-                    <div class="card-top">
-                        <span class="card-title">${item.title}</span>
-                        <div class="card-actions">
-                            <button class="card-icon-btn edit-btn" data-id="${item.id}" title="Редактировать" aria-label="Редактировать">
-                                <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
-                            </button>
-                            <button class="card-icon-btn delete-btn" data-id="${item.id}" title="Удалить" aria-label="Удалить">
-                                <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
-                            </button>
-                            <span class="card-badge ${status.badge}">${status.label}</span>
-                        </div>
-                    </div>
-                    <div class="card-body-row">
-                        <div class="card-info">
-                            <div class="item"><span class="label">Последнее действие</span><span class="value ${actionChanged ? 'changed-text' : ''}">${item.lastAction || '—'}</span></div>
-                            <div class="item"><span class="label">Дата замены</span><span class="value ${dateChanged ? 'changed-text' : ''}">${dateStr}</span></div>
-                            <div class="item"><span class="label">Пробег при замене</span><span class="value ${mileChanged ? 'changed-text' : ''}">${mileageStr}</span></div>
-                            <div class="item"><span class="label">Регламент</span><span class="value">${intervalStr}</span></div>
-                        </div>
-                        <div class="progress-vertical-group">
-                            <div class="progress-vertical">
-                                <span class="p-value">${kmLabel}</span>
-                                <div class="p-track"><div class="fill ${kmClass}" style="height:${kmDisplay}%;"></div></div>
-                                <span class="p-label">км</span>
-                            </div>
-                            <div class="progress-vertical">
-                                <span class="p-value">${monLabel}</span>
-                                <div class="p-track"><div class="fill ${monClass}" style="height:${monDisplay}%;"></div></div>
-                                <span class="p-label">мес</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="card-footnote">${item.note || ''}${hintHtml ? ' ' + hintHtml : ''}</div>
-                `;
-                    container.appendChild(card);
+                    const groupName = item.group || 'Остальное';
+                    if (!groups[groupName]) groups[groupName] = [];
+                    groups[groupName].push(item);
                 });
 
-                const searchInput = document.getElementById('searchInput');
-                if (searchInput && searchInput.value) {
-                    filterCards(searchInput.value);
-                }
+                const groupOrder = ['Двигатель', 'Ходовая', 'Остальное'];
+                const sortedGroupNames = Object.keys(groups).sort((a, b) => {
+                    const idxA = groupOrder.indexOf(a);
+                    const idxB = groupOrder.indexOf(b);
+                    if (idxA === -1 && idxB === -1) return a.localeCompare(b);
+                    if (idxA === -1) return 1;
+                    if (idxB === -1) return -1;
+                    return idxA - idxB;
+                });
 
+                sortedGroupNames.forEach(groupName => {
+                    const groupItems = groups[groupName];
+                    if (!groupItems || groupItems.length === 0) return;
+
+                    const wrapper = document.createElement('div');
+                    wrapper.className = 'group-wrapper';
+
+                    const header = document.createElement('div');
+                    header.className = 'group-header';
+                    header.innerHTML =
+                        `<span class="group-toggle">▼</span> ${groupName} (${groupItems.length})`;
+                    header.dataset.group = groupName;
+
+                    const cardsContainer = document.createElement('div');
+                    cardsContainer.className = 'group-cards';
+                    cardsContainer.id = `group-${groupName.replace(/\s/g, '_')}`;
+
+                    groupItems.forEach(item => {
+                        const { status, progressKm, progressMonths, hasDataKm, hasDataMonths } =
+                            calcStatusAndProgress(item, mileage, today);
+                        let borderClass = 'border-ok';
+                        if (status.badge === 'crit') borderClass = 'border-crit';
+                        else if (status.badge === 'warn') borderClass = 'border-warn';
+                        let dateStr = item.lastDate ? formatDateToDisplay(item.lastDate) : '—';
+                        let mileageStr = (item.lastMileage !== null && item.lastMileage !== undefined) ? item
+                            .lastMileage + ' км' : '—';
+                        const dateChanged = isFieldChanged(item, 'lastDate');
+                        const mileChanged = isFieldChanged(item, 'lastMileage');
+                        const actionChanged = isFieldChanged(item, 'lastAction');
+                        let intervalStr = '';
+                        if (item.intervalKm && item.intervalMonths) intervalStr =
+                            `${item.intervalKm} км / ${item.intervalMonths} мес.`;
+                        else if (item.intervalKm) intervalStr = `${item.intervalKm} км`;
+                        else if (item.intervalMonths) intervalStr = `${item.intervalMonths} мес.`;
+                        else intervalStr = 'По состоянию';
+                        const kmDisplay = Math.min(progressKm, 100);
+                        const monDisplay = Math.min(progressMonths, 100);
+                        const kmClass = progressKm > 100 ? 'crit' : (progressKm > 80 ? 'warn' : '');
+                        const monClass = progressMonths > 100 ? 'crit' : (progressMonths > 80 ? 'warn' : '');
+                        const kmLabel = hasDataKm ? `${Math.round(progressKm)}%` : '—';
+                        const monLabel = hasDataMonths ? `${Math.round(progressMonths)}%` : '—';
+
+                        let hintParts = [],
+                            hintHtml = '';
+                        if (hasDataKm && item.intervalKm && mileage !== null && mileage !== undefined && item
+                            .lastMileage !== null) {
+                            const diff = mileage - item.lastMileage;
+                            const remain = item.intervalKm - diff;
+                            if (remain > 0) hintParts.push({ text: `остаток ~ ${Math.round(remain)} км`,
+                                overdue: false });
+                            else if (remain <= 0) hintParts.push({ text: `перепробег ${Math.abs(Math.round(remain))} км`,
+                                overdue: true });
+                        }
+                        if (hasDataMonths && item.lastDate && item.intervalMonths) {
+                            const lastDt = parseDate(item.lastDate);
+                            if (lastDt) {
+                                const diff = monthsDiff(lastDt, today);
+                                if (diff !== null && diff >= 0) {
+                                    const remain = item.intervalMonths - diff;
+                                    if (remain > 0) hintParts.push({ text: `остаток ~ ${Math.round(remain)} мес.`,
+                                        overdue: false });
+                                    else if (remain <= 0) hintParts.push({ text: `просрочка ${Math.abs(Math.round(remain))} мес.`,
+                                        overdue: true });
+                                }
+                            }
+                        }
+                        if (hintParts.length) {
+                            hintHtml = hintParts.map(p => p.overdue ?
+                                `<strong class="text-overdue">${p.text}</strong>` :
+                                `<strong>${p.text}</strong>`).join(' • ');
+                        }
+
+                        const card = document.createElement('div');
+                        card.className = `card ${borderClass}`;
+                        card.dataset.itemId = item.id;
+                        card.innerHTML = `
+                        <div class="card-top">
+                            <span class="card-title">${item.title}</span>
+                            <div class="card-actions">
+                                <button class="card-icon-btn edit-btn" data-id="${item.id}" title="Редактировать" aria-label="Редактировать">
+                                    <svg viewBox="0 0 24 24"><path d="M11 4H4a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2v-7"/><path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"/></svg>
+                                </button>
+                                <button class="card-icon-btn delete-btn" data-id="${item.id}" title="Удалить" aria-label="Удалить">
+                                    <svg viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6v14a2 2 0 0 1-2 2H7a2 2 0 0 1-2-2V6m3 0V4a2 2 0 0 1 2-2h4a2 2 0 0 1 2 2v2"/><line x1="10" y1="11" x2="10" y2="17"/><line x1="14" y1="11" x2="14" y2="17"/></svg>
+                                </button>
+                                <span class="card-badge ${status.badge}">${status.label}</span>
+                            </div>
+                        </div>
+                        <div class="card-body-row">
+                            <div class="card-info">
+                                <div class="item"><span class="label">Последнее действие</span><span class="value ${actionChanged ? 'changed-text' : ''}">${item.lastAction || '—'}</span></div>
+                                <div class="item"><span class="label">Дата замены</span><span class="value ${dateChanged ? 'changed-text' : ''}">${dateStr}</span></div>
+                                <div class="item"><span class="label">Пробег при замене</span><span class="value ${mileChanged ? 'changed-text' : ''}">${mileageStr}</span></div>
+                                <div class="item"><span class="label">Регламент</span><span class="value">${intervalStr}</span></div>
+                            </div>
+                            <div class="progress-vertical-group">
+                                <div class="progress-vertical">
+                                    <span class="p-value">${kmLabel}</span>
+                                    <div class="p-track"><div class="fill ${kmClass}" style="height:${kmDisplay}%;"></div></div>
+                                    <span class="p-label">км</span>
+                                </div>
+                                <div class="progress-vertical">
+                                    <span class="p-value">${monLabel}</span>
+                                    <div class="p-track"><div class="fill ${monClass}" style="height:${monDisplay}%;"></div></div>
+                                    <span class="p-label">мес</span>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="card-footnote">${item.note || ''}${hintHtml ? ' ' + hintHtml : ''}</div>
+                    `;
+                        cardsContainer.appendChild(card);
+                    });
+
+                    wrapper.appendChild(header);
+                    wrapper.appendChild(cardsContainer);
+                    container.appendChild(wrapper);
+
+                    header.addEventListener('click', function() {
+                        const toggle = this.querySelector('.group-toggle');
+                        const cards = this.nextElementSibling;
+                        if (cards) {
+                            cards.classList.toggle('collapsed');
+                            toggle.classList.toggle('collapsed');
+                        }
+                    });
+                });
+
+                // Обработчики для кнопок
                 document.querySelectorAll('.card-icon-btn.edit-btn').forEach(btn => {
                     btn.addEventListener('click', function(e) {
                         e.stopPropagation();
@@ -2088,16 +2247,16 @@
                         if (!swipingCard) return;
                         const dx = e.touches[0].clientX - touchStartX;
                         const dy = e.touches[0].clientY - touchStartY;
-                        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 20) {
-                            swipingCard.style.transform = `translateX(${dx}px)`;
-                            swipingCard.style.opacity = 1 - Math.min(Math.abs(dx) / 200, 0.5);
+                        if (Math.abs(dx) > Math.abs(dy) && Math.abs(dx) > 30) {
+                            swipingCard.style.transform = `translateX(${dx * 0.5}px)`;
+                            swipingCard.style.opacity = 1 - Math.min(Math.abs(dx) / 300, 0.4);
                         }
                     }, { passive: true });
 
                     card.addEventListener('touchend', function(e) {
                         if (!swipingCard) return;
                         const dx = e.changedTouches[0].clientX - touchStartX;
-                        if (Math.abs(dx) > 80) {
+                        if (Math.abs(dx) > 150) {
                             const id = swipingCard.dataset.itemId;
                             swipingCard.style.transform = '';
                             swipingCard.style.opacity = '';
@@ -2109,6 +2268,14 @@
                         swipingCard = null;
                     }, { passive: true });
                 });
+
+                const searchInput = document.getElementById('searchInput');
+                if (searchInput && searchInput.value) {
+                    filterCards(searchInput.value);
+                } else {
+                    const clearBtn = document.getElementById('clearSearchBtn');
+                    clearBtn.classList.add('hidden');
+                }
             }
 
             function updateAppFromPanel() {
@@ -2199,29 +2366,15 @@
             }, { passive: true });
 
             document.addEventListener('DOMContentLoaded', function() {
-                const isFirst = isFirstLaunch();
                 loadFromStorage();
 
                 const mileageInput = document.getElementById('mileageInput');
                 const dateInput = document.getElementById('dateInput');
                 const searchInput = document.getElementById('searchInput');
+                const clearBtn = document.getElementById('clearSearchBtn');
 
-                if (isFirst) {
-                    mileageInput.value = 0;
-                    dateInput.value = formatDate(new Date());
-                    currentMileage = 0;
-                    currentDate = new Date();
-                    const todayStr = formatDate(new Date());
-                    itemsData.forEach(item => {
-                        item.lastDate = todayStr;
-                        item.lastMileage = 0;
-                    });
-                    originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                    saveToStorage();
-                } else {
-                    mileageInput.value = currentMileage;
-                    dateInput.value = formatDate(currentDate);
-                }
+                mileageInput.value = currentMileage;
+                dateInput.value = formatDate(currentDate);
 
                 // ---- МОДАЛКИ ----
                 document.getElementById('modalClose').addEventListener('click', closeModal);
@@ -2303,58 +2456,24 @@
                 mileageInput.addEventListener('input', updateAppFromPanel);
                 dateInput.addEventListener('input', updateAppFromPanel);
 
-                document.getElementById('saveFileBtn').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    exportData();
-                });
-
-                // ---- ЗАГРУЗКА ИЗ ФАЙЛА (ПРОСТОЙ КЛИК) ----
-                document.getElementById('loadFileBtn').addEventListener('click', function(e) {
-                    e.preventDefault();
-                    triggerFileInput();
-                });
-
-                document.getElementById('fileInput').addEventListener('change', function(e) {
-                    if (this.files && this.files.length > 0) {
-                        importData(this.files[0]);
-                    }
-                    this.value = '';
-                });
-
                 searchInput.addEventListener('input', function() {
                     filterCards(this.value);
                 });
-                document.getElementById('clearSearchBtn').addEventListener('click', function() {
+
+                clearBtn.addEventListener('click', function() {
                     searchInput.value = '';
                     filterCards('');
                     searchInput.focus();
+                    clearBtn.classList.add('hidden');
                 });
 
-                const savedDataScript = document.getElementById('savedData');
-                if (savedDataScript) {
-                    try {
-                        const data = JSON.parse(savedDataScript.textContent);
-                        if (data.items && Array.isArray(data.items)) {
-                            itemsData = data.items;
-                            data.items.forEach(item => {
-                                if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
-                                    const num = parseInt(item.id);
-                                    if (num >= nextId) nextId = num + 1;
-                                }
-                            });
-                            originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                            if (data.currentMileage !== undefined) {
-                                currentMileage = data.currentMileage;
-                                mileageInput.value = currentMileage;
-                            }
-                            if (data.currentDate) {
-                                currentDate = parseDate(data.currentDate) || new Date();
-                                dateInput.value = formatDate(currentDate);
-                            }
-                            saveToStorage();
-                        }
-                    } catch (e) { console.warn('Ошибка загрузки встроенных данных', e); }
-                }
+                // Кнопки управления группами
+                document.getElementById('expandAllBtn').addEventListener('click', function() {
+                    toggleAllGroups(true);
+                });
+                document.getElementById('collapseAllBtn').addEventListener('click', function() {
+                    toggleAllGroups(false);
+                });
 
                 updateAppFromPanel();
                 restoreScrollPosition();
