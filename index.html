@@ -11,6 +11,7 @@
     <link rel="apple-touch-icon" href="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAACAAAAAgCAYAAABzenr0AAAACXBIWXMAAAsTAAALEwEAmpwYAAABaElEQVR4nO2XvUoDQRDHZ/MB+AY2KUKKFFZKVikErVSC+BGkS5HCQhBFQbTQRhC0SGERBMVOSxWLTQgkbxDsTIlgIVe5bHa3dG/3LnP7h6C4u8nsz/82s7M7IQzD0DRgSVr3uqdcPp97D7VodvsADb5AGuZ5FCS0JgYJrmIXdINJjjHnYZ8DA50P5nFS8gpvjR7Qz/ADmFYEeiwyyF2NJC2Pj9vwQQN6GQrAtBq4ZVFABsct6KET9KMl58pWQHEoAFNWCY8r3bjUjKlGEBpmcZ8qQzIECnPWAL+u/MVbRZycABv4DFr0sTd9QvT1pU85tzUC+YWM2E3rsI5BLnaDzq3Aoj4GGfTg0lV0DwWU4QxAh1cX0DmZ0B3LsCILaCGHpE5JRjO6USc9P68i15xq7TOkS2RlnvsoF7YwXfOi7z8HaRusRZ3AZ1eUYcyhAmkS5Nco4gH9j+fiEjQNaLW/1wZNg34BmNFAbPzNAE8AAAAASUVORK5CYII=">
 
     <style>
+        /* ... все стили те же, что и раньше ... */
         * {
             margin: 0;
             padding: 0;
@@ -1422,6 +1423,83 @@
             let swipingCard = null;
             let searchQuery = '';
 
+            // ---- ФУНКЦИЯ ДЛЯ ОБРАБОТКИ ВЫБОРА ФАЙЛА (исправлена для WebView) ----
+            function triggerFileInput() {
+                const fileInput = document.getElementById('fileInput');
+
+                // Пытаемся использовать showOpenFilePicker (современные браузеры)
+                if (window.showOpenFilePicker) {
+                    window.showOpenFilePicker({
+                            types: [{
+                                description: 'JSON или HTML',
+                                accept: {
+                                    'application/json': ['.json'],
+                                    'text/html': ['.html', '.htm']
+                                }
+                            }],
+                            multiple: false
+                        })
+                        .then(async (handles) => {
+                            const file = await handles[0].getFile();
+                            importData(file);
+                        })
+                        .catch((err) => {
+                            console.warn('showOpenFilePicker отменён или не поддерживается:', err);
+                            // fallback
+                            fileInput.click();
+                        });
+                } else {
+                    // Стандартный способ для WebView
+                    fileInput.click();
+                }
+            }
+
+            // ---- ОБРАБОТКА ИМПОРТА (остаётся без изменений) ----
+            function importData(file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    try {
+                        const data = JSON.parse(e.target.result);
+                        if (data.items && Array.isArray(data.items)) {
+                            itemsData = data.items;
+                            data.items.forEach(item => {
+                                if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
+                                    const num = parseInt(item.id);
+                                    if (num >= nextId) nextId = num + 1;
+                                }
+                            });
+                            if (data.currentMileage !== undefined) {
+                                currentMileage = data.currentMileage;
+                                document.getElementById('mileageInput').value = currentMileage;
+                            }
+                            if (data.currentDate) {
+                                currentDate = parseDate(data.currentDate) || new Date();
+                                document.getElementById('dateInput').value = formatDate(currentDate);
+                            }
+                            originalItemsData = JSON.parse(JSON.stringify(itemsData));
+                            saveToStorage();
+                            const mileageInput = document.getElementById('mileageInput');
+                            const dateInput = document.getElementById('dateInput');
+                            const mileage = parseInt(mileageInput.value) || 0;
+                            const parts = dateInput.value.split('-');
+                            const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
+                            renderTable(mileage, today, false);
+                            showNotification('✅ Данные импортированы!');
+                            hapticMedium();
+                            return;
+                        }
+                        showNotification('❌ Файл не содержит данных!');
+                    } catch (err) {
+                        console.error('Ошибка чтения файла:', err);
+                        showNotification('❌ Ошибка чтения файла!');
+                    }
+                };
+                reader.onerror = function() {
+                    showNotification('❌ Ошибка чтения файла!');
+                };
+                reader.readAsText(file);
+            }
+
             function isFirstLaunch() {
                 return !localStorage.getItem(STORAGE_KEY);
             }
@@ -1764,51 +1842,6 @@
                 URL.revokeObjectURL(url);
                 showNotification('✅ Данные экспортированы в JSON!');
                 hapticMedium();
-            }
-
-            function importData(file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    try {
-                        const data = JSON.parse(e.target.result);
-                        if (data.items && Array.isArray(data.items)) {
-                            itemsData = data.items;
-                            data.items.forEach(item => {
-                                if (item.id && typeof item.id === 'string' && !isNaN(parseInt(item.id))) {
-                                    const num = parseInt(item.id);
-                                    if (num >= nextId) nextId = num + 1;
-                                }
-                            });
-                            if (data.currentMileage !== undefined) {
-                                currentMileage = data.currentMileage;
-                                document.getElementById('mileageInput').value = currentMileage;
-                            }
-                            if (data.currentDate) {
-                                currentDate = parseDate(data.currentDate) || new Date();
-                                document.getElementById('dateInput').value = formatDate(currentDate);
-                            }
-                            originalItemsData = JSON.parse(JSON.stringify(itemsData));
-                            saveToStorage();
-                            const mileageInput = document.getElementById('mileageInput');
-                            const dateInput = document.getElementById('dateInput');
-                            const mileage = parseInt(mileageInput.value) || 0;
-                            const parts = dateInput.value.split('-');
-                            const today = new Date(parseInt(parts[0]), parseInt(parts[1]) - 1, parseInt(parts[2]));
-                            renderTable(mileage, today, false);
-                            showNotification('✅ Данные импортированы!');
-                            hapticMedium();
-                            return;
-                        }
-                        showNotification('❌ Файл не содержит данных!');
-                    } catch (err) {
-                        console.error('Ошибка чтения файла:', err);
-                        showNotification('❌ Ошибка чтения файла!');
-                    }
-                };
-                reader.onerror = function() {
-                    showNotification('❌ Ошибка чтения файла!');
-                };
-                reader.readAsText(file);
             }
 
             function filterCards(query) {
@@ -2187,6 +2220,12 @@
 
                 document.getElementById('saveFileBtn').addEventListener('click', function(e) { e.preventDefault();
                     exportData(); });
+
+                // ---- ИСПРАВЛЕННЫЙ ОБРАБОТЧИК ДЛЯ "ИЗ ФАЙЛА" ----
+                document.getElementById('loadFileBtn').addEventListener('click', function(e) {
+                    e.preventDefault();
+                    triggerFileInput();
+                });
 
                 document.getElementById('fileInput').addEventListener('change', function(e) {
                     if (this.files && this.files[0]) {
